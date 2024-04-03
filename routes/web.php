@@ -125,10 +125,10 @@ Route::get('/OurShop', [LandingPageController::class, 'OurShop'])->name('ourShop
 
 
 //super admin routes
-// Route::get('/super-admin-dashboard', function () {
-//     return view('superadmin.dashboard');
-// })->name('super_admin.home');
-// Route::post('/super-admin-logout', [SuperAdminController::class, 'logout'])->name('super_admin.logout');
+Route::get('/super-admin-dashboard', function () {
+   return view('superadmin.dashboard');
+ })->name('super_admin.home');
+ Route::post('/super-admin-logout', [SuperAdminController::class, 'logout'])->name('super_admin.logout');
 
 
 //User Dashboard
