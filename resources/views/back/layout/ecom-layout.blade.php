@@ -76,6 +76,12 @@
 						<i class="fas fa-calendar-plus"></i> Make Appointment
 					</a>
 					<li><a href="{{ route('shop.index') }}">Shop</a></li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ route('cart.show') }}">Cart</a>
+					</li>
+					
+
+					
 
 					
 				</li>

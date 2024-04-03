@@ -35,7 +35,7 @@
                             <h5 class="card-title">{{ $item->name }}</h5>
                             <p class="card-text">{{ $item->description }}</p>
                             <p class="card-text">Price: ${{ $item->price }}</p>
-                            <a href="#" class="btn btn-primary" onclick="showProductModal('{{ $item->name }}', '{{ $item->description }}', {{ $item->price }}, {{ $item->quantity }})">View Details</a>
+                            <a href="#" class="btn btn-primary" onclick="showProductModal('{{ $item->name }}', '{{ $item->description }}', {{ $item->price }}, {{ $item->quantity }}, '{{ $item->id }}')">View Details</a>
                         </div>
                     </div>
                 </div>
@@ -55,16 +55,16 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <!-- JavaScript to update dropdown text -->
-    <!-- Add this JavaScript code below your existing JavaScript code -->
     <script>
         // Function to show the modal with product details
-        function showProductModal(name, description, price, quantity) {
+        function showProductModal(name, description, price, quantity, productId) {
             document.getElementById('productName').innerText = name;
             document.getElementById('productDescription').innerText = description;
             document.getElementById('productPrice').innerText = price;
             document.getElementById('productQuantity').innerText = quantity;
             document.getElementById('quantity').value = 1; // Reset quantity input to 1
             document.getElementById('totalPrice').innerText = price; // Reset total price to product price
+            document.getElementById('productId').value = productId; // Set the product ID
             $('#productModal').modal('show');
         }
 
@@ -93,22 +93,6 @@
             var totalPrice = quantity * price;
             document.getElementById('totalPrice').innerText = totalPrice.toFixed(2);
         }
-
-        // Event listener for quantity input change
-        //document.getElementById('quantity').addEventListener('input', calculateTotal);
-
-        // Function to handle buy now button click
-        function buyProduct() {
-            var quantity = parseInt(document.getElementById('quantity').value);
-            var price = parseFloat(document.getElementById('productPrice').innerText);
-            var total = parseFloat(document.getElementById('totalPrice').innerText);
-            // Add logic to handle purchase
-            // You can make an AJAX request here to process the purchase
-            // For now, simply log the quantity and total price
-            console.log('Quantity:', quantity);
-            console.log('Total Price:', total);
-            $('#productModal').modal('hide');
-        }
     </script>
 
 
@@ -127,23 +111,27 @@
                     <p id="productDescription"></p>
                     <p>Price: $<span id="productPrice"></span></p>
                     <p>Current Quantity: <span id="productQuantity"></span></p>
-                    <div class="form-group">
-                        <label for="quantity">Quantity:</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <button class="btn btn-outline-secondary" type="button" onclick="decrementQuantity()">-</button>
-                            </div>
-                            <input type="text" class="form-control text-center" id="quantity" name="quantity" value="1" readonly>
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="button" onclick="incrementQuantity()">+</button>
+                    <form id="addToCartForm" action="{{ route('cart.add') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="product_id" id="productId">
+                        <div class="form-group">
+                            <label for="quantity">Quantity:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-outline-secondary" type="button" onclick="decrementQuantity()">-</button>
+                                </div>
+                                <input type="text" class="form-control text-center" id="quantity" name="quantity" value="1" readonly>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button" onclick="incrementQuantity()">+</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <p>Total Price: $<span id="totalPrice"></span></p>
+                        <p>Total Price: $<span id="totalPrice"></span></p>
+                        <button type="submit" class="btn btn-primary">Add to Cart</button>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="buyProduct()">Add to Cart</button>
                 </div>
             </div>
         </div>

@@ -164,3 +164,7 @@ Route::delete('/admin/inventory/{id}', [InventoryController::class, 'destroy'])-
 // ecom routes
 Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
 Route::post('/shop/order', [ShopController::class, 'orderProduct'])->name('shop.order');
+// Cart routes
+Route::get('/cart', [ShopController::class, 'showCart'])->name('cart.show');
+Route::post('/cart/add', [ShopController::class, 'addToCart'])->name('cart.add');
+Route::post('/cart/remove', [ShopController::class, 'removeFromCart'])->name('cart.remove'); // Add this line
