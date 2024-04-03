@@ -36,7 +36,9 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\PreventBackHistory::class, // Add your middleware here
         ],
+        
 
         'api' => [
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
@@ -44,14 +46,14 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];
-        // app/Http/Kernel.php
+    // app/Http/Kernel.php
 
     protected $routeMiddleware = [
-        // ... other middleware
+        // Other middleware...
         'auth.manual' => \App\Http\Middleware\AuthenticateManual::class,
         'redirectIfAuthenticated' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'PreventBackHistory' => \App\Http\Middleware\PreventBackHistory::class,
     ];
-
 
     /**
      * The application's middleware aliases.

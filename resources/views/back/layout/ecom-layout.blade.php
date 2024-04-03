@@ -75,6 +75,8 @@
 					<a class="nav-link header-login" href="{{ route('customer') }}">
 						<i class="fas fa-calendar-plus"></i> Make Appointment
 					</a>
+					<li><a href="{{ route('shop.index') }}">Shop</a></li>
+
 					
 				</li>
 					

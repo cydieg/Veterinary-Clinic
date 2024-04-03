@@ -8,20 +8,22 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\Clinic; 
-use Illuminate\Support\Facades\Mail; 
-use App\Mail\UserRegistered; 
+use App\Models\Branch; // Update namespace
+use Illuminate\Support\Facades\Mail;
+use App\Mail\UserRegistered;
+
 class AuthController extends Controller
 {
+    
     public function showRegistrationForm()
     {
-        // Fetch all clinics from the database
-        $clinics = Clinic::all(); // Update the model
+        // Fetch all branches from the database
+        $branches = Branch::all(); // Update the model
 
-        return view('logins.register', compact('clinics')); // Update the variable name
+        return view('logins.register', compact('branches')); // Update the variable name
     }
 
-        public function register(Request $request)
+    public function register(Request $request)
     {
         // Validate the form data
         $validatedData = $request->validate([
@@ -35,7 +37,7 @@ class AuthController extends Controller
             'email' => 'required|email|max:50',
             'role' => 'required|in:super_admin,admin,staff,patient',
             'password' => 'required|string|max:255',
-            'clinic_id' => $request->role === 'patient' ? 'nullable' : 'required|exists:clinics,id', 
+            'branch_id' => $request->role === 'patient' ? 'nullable' : 'required|exists:branches,id', // Update field name
         ]);
 
         // Hash the password
@@ -49,7 +51,6 @@ class AuthController extends Controller
 
         return redirect()->route('login.form');
     }
-
 
     public function showLoginForm()
     {
@@ -66,8 +67,8 @@ class AuthController extends Controller
         $user = User::where('email', $credentials['email'])->first();
 
         if ($user && Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
-            // Check if the user has access to the current clinic
-            if ($user->clinics_id === auth()->user()->clinics_id) {
+            // Check if the user has access to the current branch
+            if ($user->branch_id === auth()->user()->branch_id) { // Update field name
                 // Redirect based on the user's role
                 switch ($user->role) {
                     case 'super_admin':
@@ -82,9 +83,9 @@ class AuthController extends Controller
                         return redirect()->route('dashboard');
                 }
             } else {
-                // User does not have access to the current clinic
+                // User does not have access to the current branch
                 Auth::logout();
-                return redirect()->route('login.form')->with('error', 'You do not have access to this clinic.');
+                return redirect()->route('login.form')->with('error', 'You do not have access to this branch.'); // Update message
             }
         }
 

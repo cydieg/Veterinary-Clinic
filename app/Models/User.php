@@ -15,7 +15,7 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $fillable = [
-        'username', 'email', 'password', 'firstName', 'lastName', 'middleName', 'address', 'gender', 'age', 'role', 'clinic_id', 'picture'
+        'username', 'email', 'password', 'firstName', 'lastName', 'middleName', 'address', 'gender', 'age', 'role', 'branch_id', 'picture'
     ];
     
     protected $hidden = [
@@ -24,10 +24,11 @@ class User extends Authenticatable
     ];
 
     // Adjust the relationship to BelongsTo
-    public function clinic()
+        public function branch()
     {
-        return $this->belongsTo(Clinic::class, 'clinic_id');
+        return $this->belongsTo(Branch::class, 'branch_id');
     }
+
 
     // Add a relationship to appointments
     public function appointments()

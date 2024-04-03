@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ClinicController;
+use App\Http\Controllers\BranchController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserManagmentController;
 use App\Http\Controllers\CashierController;
@@ -12,6 +12,8 @@ use App\Http\Controllers\StaffController;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\SuperAdmin\UserManagementController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\ShopController;
+
 
 
 /*
@@ -44,6 +46,11 @@ Route::middleware(['auth.manual'])->group(function () {
     Route::post('/appointments', [ClientController::class, 'store'])->name('appointments.store');
 });
 
+Route::get('/super-admin-dashboard', function () {
+    return view('superadmin.dashboard');
+})->name('super-admin-dashboard'); // <-- This is the named route
+
+
 // Separate route without the auth.manual middleware for the customer route
 Route::get('/customer', [ClientController::class, 'customer'])->name('customer')->middleware('auth');
 
@@ -52,27 +59,27 @@ Route::get('/customer', [ClientController::class, 'customer'])->name('customer')
 //User Management rout//
 
 Route::group(['prefix' => 'user'], function () {
-    Route::get('table', [UserManagmentController::class, 'index'])->name('userTable');
-    Route::get('edit/{id}', [UserManagmentController::class, 'editUser'])->name('editUser');
-    Route::post('update/{id}', [UserManagmentController::class, 'updateUser'])->name('updateUser');
-    Route::get('archive/{id}', [UserManagmentController::class, 'archiveUser'])->name('archiveUser');
-    Route::get('add-user-form', [UserManagmentController::class, 'showAddUserForm'])->name('addUserForm'); // Add this line
-    Route::post('store-user', [UserManagmentController::class, 'storeUser'])->name('storeUser');
-    Route::get('/user/details/{id}', [UserManagmentController::class, 'getUserDetails'])->name('getUserDetails');
+    Route::get('table', [UserManagmentController::class, 'index'])->name('userTable')->middleware('auth');
+    Route::get('edit/{id}', [UserManagmentController::class, 'editUser'])->name('editUser')->middleware('auth');
+    Route::post('update/{id}', [UserManagmentController::class, 'updateUser'])->name('updateUser')->middleware('auth');
+    Route::get('archive/{id}', [UserManagmentController::class, 'archiveUser'])->name('archiveUser')->middleware('auth');
+    Route::get('add-user-form', [UserManagmentController::class, 'showAddUserForm'])->name('addUserForm')->middleware('auth'); // Add this line
+    Route::post('store-user', [UserManagmentController::class, 'storeUser'])->name('storeUser')->middleware('auth');
+    Route::get('/user/details/{id}', [UserManagmentController::class, 'getUserDetails'])->name('getUserDetails')->middleware('auth');
 });
 
 
 
-// Clinic routes
-Route::get('/clinics/view', [ClinicController::class, 'viewClinics'])->name('clinics.view');
-Route::get('/clinics/create', [ClinicController::class, 'createForm'])->name('clinic.create.form');
-Route::post('/clinics/create', [ClinicController::class, 'create'])->name('clinic.create');
-Route::get('/edit-clinic/{id}', [ClinicController::class, 'edit'])->name('clinic.edit');
-Route::put('/update-clinic/{id}', [ClinicController::class, 'update'])->name('clinic.update');
-Route::get('/view-clinics', [ClinicController::class, 'viewClinics'])->name('clinic.view');
-Route::get('/clinics', [ClinicController::class, 'viewClinics'])->name('clinic.view');
-Route::delete('/clinics/{id}/archive', [ClinicController::class, 'archive'])->name('clinic.archive');
 
+// Branch routes
+Route::get('/branches/view', [BranchController::class, 'viewBranches'])->name('branches.view')->middleware('auth');
+Route::get('/branches/create', [BranchController::class, 'createForm'])->name('branch.create.form')->middleware('auth');
+Route::post('/branches/create', [BranchController::class, 'create'])->name('branch.create')->middleware('auth');
+Route::get('/edit-branch/{id}', [BranchController::class, 'edit'])->name('branch.edit')->middleware('auth');
+Route::put('/update-branch/{id}', [BranchController::class, 'update'])->name('branch.update')->middleware('auth');
+Route::get('/view-branches', [BranchController::class, 'viewBranches'])->name('branch.view')->middleware('auth');
+Route::get('/branches', [BranchController::class, 'viewBranches'])->name('branch.view')->middleware('auth');
+Route::delete('/branches/{id}/archive', [BranchController::class, 'archive'])->name('branch.archive')->middleware('auth');
 
 
 
@@ -81,9 +88,9 @@ Route::delete('/clinics/{id}/archive', [ClinicController::class, 'archive'])->na
 
 //CLIENT side//
 
-Route::get('/home1', [ClientController::class, 'home1'])->name('home1');
-Route::get('/about2', [ClientController::class, 'about2'])->name('about2');
-Route::get('/dentalClinic2', [ClientController::class, 'dentalClinic2'])->name('dentalClinic2');
+Route::get('/home1', [ClientController::class, 'home1'])->name('home1')->middleware('auth');
+Route::get('/about2', [ClientController::class, 'about2'])->name('about2')->middleware('auth');
+Route::get('/dentalClinic2', [ClientController::class, 'dentalClinic2'])->name('dentalClinic2')->middleware('auth');
 
 
 
@@ -118,22 +125,22 @@ Route::get('/OurShop', [LandingPageController::class, 'OurShop'])->name('ourShop
 
 
 //super admin routes
-Route::get('/super-admin-dashboard', function () {
-    return view('superadmin.dashboard');
-})->name('super_admin.home');
-Route::post('/super-admin-logout', [SuperAdminController::class, 'logout'])->name('super_admin.logout');
+// Route::get('/super-admin-dashboard', function () {
+//     return view('superadmin.dashboard');
+// })->name('super_admin.home');
+// Route::post('/super-admin-logout', [SuperAdminController::class, 'logout'])->name('super_admin.logout');
 
 
 //User Dashboard
 Route::get('/UserDashboard', [PageController::class, 'showDashboard']);
 Route::prefix('superadmin')->group(function () {
-    Route::get('users', [UserManagementController::class, 'index'])->name('superadmin.user.index');
-    Route::get('users/create', [UserManagementController::class, 'create'])->name('superadmin.user.create');
-    Route::post('users', [UserManagementController::class, 'store'])->name('superadmin.user.store');
-    Route::get('users/{id}', [UserManagementController::class, 'show'])->name('superadmin.user.show');
-    Route::get('users/{id}/edit', [UserManagementController::class, 'edit'])->name('superadmin.user.edit');
-    Route::put('users/{id}', [UserManagementController::class, 'update'])->name('superadmin.user.update');
-    Route::delete('/superadmin/user/{id}/archive', [UserManagementController::class, 'archive'])->name('superadmin.user.archive');
+    Route::get('users', [UserManagementController::class, 'index'])->name('superadmin.user.index')->middleware('auth');
+    Route::get('users/create', [UserManagementController::class, 'create'])->name('superadmin.user.create')->middleware('auth');
+    Route::post('users', [UserManagementController::class, 'store'])->name('superadmin.user.store')->middleware('auth');
+    Route::get('users/{id}', [UserManagementController::class, 'show'])->name('superadmin.user.show')->middleware('auth');
+    Route::get('users/{id}/edit', [UserManagementController::class, 'edit'])->name('superadmin.user.edit')->middleware('auth');
+    Route::put('users/{id}', [UserManagementController::class, 'update'])->name('superadmin.user.update')->middleware('auth');
+    Route::delete('/superadmin/user/{id}/archive', [UserManagementController::class, 'archive'])->name('superadmin.user.archive')->middleware('auth');
 
 });
 
@@ -145,4 +152,11 @@ Route::get('/inventory/{id}/audit', 'App\Http\Controllers\InventoryController@sh
 Route::post('/inventory/addquantity/{id}', [InventoryController::class, 'addQuantity'])->name('inventory.addquantity');
 
 
+//admin in ventory
+Route::get('/admin/inventory', [InventoryController::class, 'indexadmin'])->name('admin.inventory.indexadmin');
+Route::delete('/admin/inventory/{id}', [InventoryController::class, 'destroy'])->name('admin.inventory.delete');
 
+
+// ecom routes
+Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
+Route::post('/shop/order', [ShopController::class, 'orderProduct'])->name('shop.order');

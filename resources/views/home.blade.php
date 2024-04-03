@@ -49,7 +49,7 @@
                 <img src="/back/images/loginpic.jpg" alt="dental Image">
             </div>
             <div class="col-12">
-                <h1>Welcome to OralEase - Your Trusted Dental Clinics</h1>
+                <h1>Welcome to OralEase - Your Trusted Dental Branch</h1>
                 <p>
                    OralEase is committed to providing quality healthcare services and products. Our experienced
                    dentists are dedicated to ensuring you receive the best possible care for your health needs.

@@ -58,15 +58,15 @@
             </div>
 
             <div class="form-group">
-                <label for="clinic_id">Select Clinic:</label>
-                <select name="clinic_id" class="form-control" required>
-                    @foreach($clinics as $clinic)
-                        <option value="{{ $clinic->id }}">{{ $clinic->name }}</option>
+                <label for="branch_id">Select Branch:</label>
+                <select name="branch_id" class="form-control" required>
+                    @foreach($branches as $branch)
+                        <option value="{{ $branch->id }}">{{ $branch->name }}</option>
                     @endforeach
                 </select>
             </div>
 
-            <button type="submit" class="btn btn-info btn-block">Request  Appointment</button>
+            <button type="submit" class="btn btn-info btn-block">Request Appointment</button> <!-- Changed button text -->
         </form>
     </div>
 </body>

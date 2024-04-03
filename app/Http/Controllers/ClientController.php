@@ -7,18 +7,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Appointment;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Clinic;
+use App\Models\Branch; // Update namespace
 
 class ClientController extends Controller
 {
     public function customer()
     {
-        $clinicId = Auth::user()->clinic_id;
-        $appointments = Auth::user()->appointments()->whereHas('user', function ($query) use ($clinicId) {
-            $query->where('clinic_id', $clinicId);
+        $branchId = Auth::user()->branch_id; // Update clinic_id to branch_id
+        $appointments = Auth::user()->appointments()->whereHas('user', function ($query) use ($branchId) {
+            $query->where('branch_id', $branchId); // Update clinic_id to branch_id
         })->get();
-        $clinics = Clinic::all();
-        return view('client.customer', compact('appointments', 'clinics'));
+        $branches = Branch::all(); // Update model name
+        return view('client.customer', compact('appointments', 'branches')); // Update variable name
     }
 
     public function store(Request $request)
@@ -26,7 +26,7 @@ class ClientController extends Controller
         $request->validate([
             'appointment_date' => 'required|date',
             'appointment_time' => 'required|string|in:08:00,09:00,10:00,11:00,13:00,15:00,17:00',
-            'clinic_id' => 'required|exists:clinics,id',
+            'branch_id' => 'required|exists:branches,id', // Update clinic_id to branch_id
         ]);
     
         $status = 'pending';
@@ -41,7 +41,7 @@ class ClientController extends Controller
         $appointmentData = [
             'appointment_date' => $request->input('appointment_date'),
             'appointment_time' => $request->input('appointment_time'),
-            'clinic_id' => $request->input('clinic_id'),
+            'branch_id' => $request->input('branch_id'), // Update clinic_id to branch_id
             'status' => $status,
             'first_name' => $user->firstName,
             'last_name' => $user->lastName,

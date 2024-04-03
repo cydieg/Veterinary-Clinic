@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Appointment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,8 +19,8 @@ class StaffController extends Controller
 
             // Retrieve appointments for the designated clinic only
             $pendingAppointments = Appointment::where('status', 'pending')
-                ->whereHas('clinic', function ($query) use ($user) {
-                    $query->where('id', $user->clinic_id);
+                ->whereHas('branch', function ($query) use ($user) { // Updated relation to 'branch'
+                    $query->where('id', $user->branch_id); // Updated field name to 'branch_id'
                 })
                 ->get();
 
@@ -35,41 +36,43 @@ class StaffController extends Controller
         }
     }
 
-    public function pendingAppointment(Appointment $appointment) //this is where pending appointment
-{
-    try {
-        // Send email notification
-        Mail::to($appointment->user->email)->send(new AppointmentCompleted($appointment));
+    public function pendingAppointment(Appointment $appointment)
+    {
+        try {
+            // Send email notification
+            Mail::to($appointment->user->email)->send(new AppointmentCompleted($appointment));
 
-        // Update appointment status to 'accepted' for pending appointments
-        $appointment->update(['status' => 'accepted']);
+            // Update appointment status to 'accepted' for pending appointments
+            $appointment->update(['status' => 'accepted']);
 
-        // Redirect with success message
-        return redirect()->route('staff')->with('success', 'Appointment accepted successfully');
-    } catch (\Exception $e) {
-        // Log or handle the exception
-        return back()->with('error', 'An error occurred while accepting the appointment.');
-    }
-}
-    public function acceptedAppointments() //this will show the accepeted appointment
-        {
-            try {
-                // Get the authenticated user
-                $user = Auth::user();
-
-                // Retrieve accepted appointments with user information
-                $acceptedAppointments = Appointment::where('status', 'accepted')
-                    ->where('clinic_id', $user->clinic_id)
-                    ->with('user') // Eager load user information
-                    ->get();
-
-                return view('staff.acceptedappoint', compact('acceptedAppointments'));
-            } catch (\Exception $e) {
-                // Log or handle the exception
-                return back()->with('error', 'An error occurred while retrieving accepted appointments.');
-            }
+            // Redirect with success message
+            return redirect()->route('staff')->with('success', 'Appointment accepted successfully');
+        } catch (\Exception $e) {
+            // Log or handle the exception
+            return back()->with('error', 'An error occurred while accepting the appointment.');
         }
-        public function completeAppointment(Appointment $appointment)
+    }
+
+    public function acceptedAppointments()
+    {
+        try {
+            // Get the authenticated user
+            $user = Auth::user();
+
+            // Retrieve accepted appointments with user information
+            $acceptedAppointments = Appointment::where('status', 'accepted')
+                ->where('branch_id', $user->branch_id) // Updated field name to 'branch_id'
+                ->with('user') // Eager load user information
+                ->get();
+
+            return view('staff.acceptedappoint', compact('acceptedAppointments'));
+        } catch (\Exception $e) {
+            // Log or handle the exception
+            return back()->with('error', 'An error occurred while retrieving accepted appointments.');
+        }
+    }
+
+    public function completeAppointment(Appointment $appointment)
     {
         try {
             // Update appointment status to 'completed'
@@ -82,19 +85,21 @@ class StaffController extends Controller
             return back()->with('error', 'An error occurred while completing the appointment.');
         }
     }
+
     public function homeStaff()
     {
         return view('staff.homeStaff');
     }
+
     public function cancelAppointment(Appointment $appointment)
     {
         try {
             // Update appointment status to 'canceled'
             $appointment->update(['status' => 'canceled']);
-    
+
             // Send email notification
             Mail::to($appointment->user->email)->send(new AppointmentCancelled($appointment));
-    
+
             // Redirect with success message
             return redirect()->route('staff')->with('success', 'Appointment canceled successfully');
         } catch (\Exception $e) {
@@ -102,5 +107,4 @@ class StaffController extends Controller
             return back()->with('error', 'An error occurred while canceling the appointment.');
         }
     }
-    
 }

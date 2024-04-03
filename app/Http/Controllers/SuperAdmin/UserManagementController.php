@@ -5,7 +5,7 @@ namespace App\Http\Controllers\SuperAdmin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\Clinic; 
+use App\Models\Branch; // Update namespace
 
 class UserManagementController extends Controller
 {
@@ -25,29 +25,29 @@ class UserManagementController extends Controller
 
     // Update user for super admin
     public function update(Request $request, $id)
-{
-    // Validation if needed
+    {
+        // Validation if needed
 
-    $user = User::findOrFail($id);
-    $userData = $request->except(['_token', '_method']); // Exclude token and method from request data
+        $user = User::findOrFail($id);
+        $userData = $request->except(['_token', '_method']); // Exclude token and method from request data
 
-    // Check if password field is empty, if not, update password
-    if (empty($userData['password'])) {
-        unset($userData['password']); // Remove password from data if it's empty
-    } else {
-        $userData['password'] = bcrypt($userData['password']); // Hash the new password
+        // Check if password field is empty, if not, update password
+        if (empty($userData['password'])) {
+            unset($userData['password']); // Remove password from data if it's empty
+        } else {
+            $userData['password'] = bcrypt($userData['password']); // Hash the new password
+        }
+
+        $user->update($userData); // Update user data
+
+        return redirect()->route('superadmin.user.index')->with('success', 'User updated successfully');
     }
-
-    $user->update($userData); // Update user data
-
-    return redirect()->route('superadmin.user.index')->with('success', 'User updated successfully');
-}
 
     // Add user for super admin
     public function create()
     {
-        $clinics = Clinic::all(); // Retrieve all clinics
-        return view('superadmin.user.create', compact('clinics'));
+        $branches = Branch::all(); // Retrieve all branches
+        return view('superadmin.user.create', compact('branches')); // Update variable name
     }
 
     // Store user for super admin
@@ -65,7 +65,7 @@ class UserManagementController extends Controller
             'gender' => 'nullable|in:male,female',
             'age' => 'nullable|integer|min:0',
             'role' => 'required|string|in:admin,patient,staff,super_admin',
-            'clinic_id' => 'nullable|exists:clinics,id',
+            'branch_id' => 'nullable|exists:branches,id', // Update field name
         ]);
     
         // Hash the password

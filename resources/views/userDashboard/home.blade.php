@@ -1323,7 +1323,7 @@
 								<div class="footer-widget footer-menu">
 									<h2 class="footer-title">Client Features</h2>
 									<ul>
-										<li><a href="search.html"><i class="fas fa-angle-double-right"></i> Search for Clinics</a></li>
+										<li><a href="search.html"><i class="fas fa-angle-double-right"></i> Search for Branches</a></li>
 										<li><a href="login.html"><i class="fas fa-angle-double-right"></i> Login</a></li>
 										<li><a href="register.html"><i class="fas fa-angle-double-right"></i> Register</a></li>
 										<li><a href="booking.html"><i class="fas fa-angle-double-right"></i> Appointment</a></li>

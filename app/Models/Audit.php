@@ -1,7 +1,5 @@
 <?php
 
-// app\Models\Audit.php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -13,5 +11,10 @@ class Audit extends Model
     public function inventory()
     {
         return $this->belongsTo(Inventory::class);
+    }
+
+    public function sale()
+    {
+        return $this->hasOne(Sale::class, 'productID', 'inventory_id');
     }
 }

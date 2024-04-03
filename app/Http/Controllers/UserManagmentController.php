@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Clinic; // Updated import statement
+use App\Models\Branch; // Updated import statement
 use Illuminate\Support\Facades\Hash;
 
-class UserManagmentController extends Controller
+class UserManagementController extends Controller
 {
     // Display user table
     public function index()
@@ -46,10 +46,10 @@ class UserManagmentController extends Controller
 
     public function showAddUserForm()
     {
-        // Fetch all clinics from the database (updated variable name)
-        $clinics = Clinic::all();
+        // Fetch all branches from the database (updated variable name)
+        $branches = Branch::all();
 
-        return view('usermanagement.adduserform', compact('clinics'));
+        return view('usermanagement.adduserform', compact('branches'));
     }
 
     public function storeUser(Request $request)
@@ -60,7 +60,7 @@ class UserManagmentController extends Controller
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:6',
             'firstName' => 'string|max:255', // Add validation for firstName
-            'clinic_id' => 'required|exists:clinics,id', // Updated validation for clinic_id
+            'branch_id' => 'required|exists:branches,id', // Updated validation for branch_id
 
         ]);
 
@@ -78,7 +78,7 @@ class UserManagmentController extends Controller
             'gender' => $request->input('gender'),
             'age' => $request->input('age'),
             'role' => $request->input('role'),
-            'clinic_id' => $request->input('clinic_id'), // Updated field name
+            'branch_id' => $request->input('branch_id'), // Updated field name
             'created_at' => now(),
         ]);
 

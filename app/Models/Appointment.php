@@ -16,7 +16,7 @@ class Appointment extends Model
         'appointment_time',
         'user_id',
         'status',
-        'clinic_id', // Add this line to the $fillable array
+        'branch_id', // Add this line to the $fillable array
     ];
 
     public function user()
@@ -24,9 +24,10 @@ class Appointment extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function clinic()
+        public function branch()
     {
-        return $this->belongsTo(Clinic::class, 'clinic_id');
+        return $this->belongsTo(Branch::class, 'branch_id');
     }
+
     
 }

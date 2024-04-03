@@ -6,7 +6,7 @@
     <div class="container">
         <div class="row">
             <div class="title-section text-center col-12">
-                <h2 class="text-uppercase">Dental Clinics around Calapan City</h2>
+                <h2 class="text-uppercase">Pet Shop around Calapan City</h2>
             </div>
         </div>
         <div class="row">

@@ -478,6 +478,13 @@
 							</a>
 						</li>
 						<li class="dropdown">
+							<a href="{{ route('admin.inventory.indexadmin') }}" class="dropdown-toggle no-arrow">
+								<span class="micon bi bi-bar-chart"></span>
+								<span class="mtext">Inventory</span>
+							</a>
+						</li>
+						
+						<li class="dropdown">
 							<a href="javascript:;" class="dropdown-toggle no-arrow">
 								<span class="micon bi bi-bar-chart"></span>
 								<span class="mtext">Reports</span>
@@ -597,11 +604,11 @@
 					</div>
 				</div>
 				<div class="card-box mb-30">
-					<h2 class="h4 pd-20">List of Dental Clinics</h2>
+					<h2 class="h4 pd-20">List of Branch</h2>
 					<table class="data-table table nowrap">
 						<thead>
 							<tr>
-								<th>ClinicID</th>
+								<th>BranchID</th>
 								<th>Name</th>
 								<th>Location</th>
 								<th>Contact</th>

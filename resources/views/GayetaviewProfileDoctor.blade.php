@@ -472,7 +472,7 @@
 													</div>
 												</div>
 											</div>
-											<!-- /Clinic Timing -->
+											<!-- /Branch Timing -->
 											
 											<div class="col-md-2">
 												<div class="consult-price">

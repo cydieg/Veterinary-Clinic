@@ -32,7 +32,7 @@
                             <th>Gender</th>
                             <th>Age</th>
                             <th>Role</th>
-                            <th>Clinic Location</th>
+                            <th>Branch Location</th>
                             <th>Created At</th>
                             <th>Action</th> <!-- Add the Action column -->
                         </tr>
@@ -49,7 +49,7 @@
                             <td>{{ $user->gender }}</td>
                             <td>{{ $user->age }}</td>
                             <td>{{ $user->role }}</td>
-                            <td>{{ $user->clinic->name ?? 'N/A' }}</td>
+                            <td>{{ $user->branch->name ?? 'N/A' }}</td>
                             <td>{{ $user->created_at }}</td>
                             <td>
                                 <a href="{{ route('superadmin.user.edit', ['id' => $user->id]) }}" class="btn btn-primary">Edit</a>

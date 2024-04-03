@@ -451,11 +451,11 @@
 						<li class="dropdown">
 							<a href="javascript:;" class="dropdown-toggle no-arrow">
 								<span class="micon bi bi-building"></span>
-								<span class="mtext">Manage Clinics</span>
+								<span class="mtext">Manage Branches</span>
 							</a>
 							<ul class="submenu">
 								<li>
-									<a href="{{ route('clinics.view') }}">View Clinic</a> <!-- Updated link -->
+									<a href="{{ route('branches.view') }}">View Branches</a> <!-- Updated link -->
 								</li>
 							</ul>
 						</li>           
