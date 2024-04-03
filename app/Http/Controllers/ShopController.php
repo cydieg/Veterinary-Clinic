@@ -26,22 +26,5 @@ class ShopController extends Controller
         return view('shop.shop', compact('inventoryItems', 'branches', 'branchId'));
     }
 
-    public function orderProduct(Request $request)
-    {
-        // Validate request
-        $request->validate([
-            'inventory_id' => 'required|exists:inventories,id',
-            'quantity' => 'required|integer|min:1',
-        ]);
-
-        // Create a new sale
-        Sale::create([
-            'inventory_id' => $request->input('inventory_id'),
-            'quantity_sold' => $request->input('quantity'),
-            'user_id' => Auth::id(),
-            'status' => 'pending', // Initial status
-        ]);
-
-        return redirect()->back()->with('success', 'Product ordered successfully!');
-    }
+  
 }

@@ -46,9 +46,17 @@ Route::middleware(['auth.manual'])->group(function () {
     Route::post('/appointments', [ClientController::class, 'store'])->name('appointments.store');
 });
 
+
+
+//super admin routes
 Route::get('/super-admin-dashboard', function () {
     return view('superadmin.dashboard');
-})->name('super-admin-dashboard'); // <-- This is the named route
+  })->name('super_admin.home');
+  Route::post('/super-admin-logout', [SuperAdminController::class, 'logout'])->name('super_admin.logout');
+
+  Route::get('/super-admin-dashboard', function () {
+    return view('superadmin.dashboard');
+})->name('super-admin-dashboard'); // Define the route name here
 
 
 // Separate route without the auth.manual middleware for the customer route
@@ -124,11 +132,7 @@ Route::get('/OurClinic', [LandingPageController::class, 'OurClinic'])->name('our
 Route::get('/OurShop', [LandingPageController::class, 'OurShop'])->name('ourShop');
 
 
-//super admin routes
-Route::get('/super-admin-dashboard', function () {
-   return view('superadmin.dashboard');
- })->name('super_admin.home');
- Route::post('/super-admin-logout', [SuperAdminController::class, 'logout'])->name('super_admin.logout');
+
 
 
 //User Dashboard

@@ -10,13 +10,13 @@
     <div class="container mt-4">
         <h1 class="mb-4">Welcome to Our Shop</h1>
 
-        <!-- Dropdown selection for branch -->
+        <!-- Dropdown selection for branches -->
         <div class="dropdown mb-4">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="branchDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 @if($branchId)
                     {{ $branches->where('id', $branchId)->first()->name }}
                 @else
-                    Select Branch
+                    Select branch
                 @endif
             </button>
             <div class="dropdown-menu" aria-labelledby="branchDropdown">
@@ -36,11 +36,6 @@
                             <p class="card-text">{{ $item->description }}</p>
                             <p class="card-text">Price: ${{ $item->price }}</p>
                             <a href="#" class="btn btn-primary" onclick="showProductModal('{{ $item->name }}', '{{ $item->description }}', {{ $item->price }}, {{ $item->quantity }})">View Details</a>
-                            <form action="{{ route('shop.order') }}" method="post">
-                                @csrf
-                                <input type="hidden" name="inventory_id" value="{{ $item->id }}">
-                                <button type="submit" class="btn btn-success">Order Now</button>
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -99,13 +94,16 @@
             document.getElementById('totalPrice').innerText = totalPrice.toFixed(2);
         }
 
-        // Function to handle order now button click
-        function orderProduct() {
+        // Event listener for quantity input change
+        //document.getElementById('quantity').addEventListener('input', calculateTotal);
+
+        // Function to handle buy now button click
+        function buyProduct() {
             var quantity = parseInt(document.getElementById('quantity').value);
             var price = parseFloat(document.getElementById('productPrice').innerText);
             var total = parseFloat(document.getElementById('totalPrice').innerText);
-            // Add logic to handle order
-            // You can make an AJAX request here to process the order
+            // Add logic to handle purchase
+            // You can make an AJAX request here to process the purchase
             // For now, simply log the quantity and total price
             console.log('Quantity:', quantity);
             console.log('Total Price:', total);
@@ -145,7 +143,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-success" onclick="orderProduct()">Order Now</button>
+                    <button type="button" class="btn btn-primary" onclick="buyProduct()">Add to Cart</button>
                 </div>
             </div>
         </div>
