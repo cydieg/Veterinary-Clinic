@@ -13,71 +13,62 @@
         <div class="row mb-2">
             <div class="col-12">
                 <div class="input-group custom">
-                    <input type="text" class="form-control form-control-lg" placeholder="Fullname" name="fullname" required>
-                    <div class="input-group-append custom">
-                        <span class=""><i ></i></span>
-                    </div>
+                    <input type="text" class="form-control form-control-lg" placeholder="Username" name="username" required>
                 </div>
             </div>
         </div>
 
         <div class="row mb-2">
-            <div class="col-12">
+            <div class="col-md-6">
                 <div class="input-group custom">
-                    <input type="text" class="form-control form-control-lg" placeholder="Address" name="Address" required>
-                    <div class="input-group-append custom">
-                        <span class=""><i></i></span>
-                    </div>
+                    <input type="text" class="form-control form-control-lg" placeholder="First Name" name="firstName" required>
                 </div>
             </div>
-        </div>
-
-        <div class="row mb-2">
-            <div class="col-12">
+            <div class="col-md-6">
                 <div class="input-group custom">
-                    <input type="text" class="form-control form-control-lg" placeholder="Contact No." name="Contact No." required>
-                    <div class="input-group-append custom">
-                        <span class=""><i></i></span>
-                    </div>
+                    <input type="text" class="form-control form-control-lg" placeholder="Last Name" name="lastName" required>
                 </div>
             </div>
         </div>
 
         <div class="row mb-2">
-            <div class="col-12">
+            <div class="col-md-6">
+                <div class="input-group custom">
+                    <input type="text" class="form-control form-control-lg" placeholder="Middle Name" name="middleName">
+                </div>
+            </div>
+            <div class="col-md-6">
                 <div class="input-group custom">
                     <select class="form-control form-control-lg" id="gender" name="gender" required>
-                        <option value="male">Gender</option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                         <option value="other">Other</option>
                     </select>
-                    <div class="input-group-append custom">
-                        <span class=""><i></i></span>
-                    </div>
                 </div>
             </div>
         </div>
 
         <div class="row mb-2">
-            <div class="col-12">
+            <div class="col-md-6">
+                <div class="input-group custom">
+                    <input type="text" class="form-control form-control-lg" placeholder="Address" name="address" required>
+                </div>
+            </div>
+            <div class="col-md-6">
                 <div class="input-group custom">
                     <input type="number" class="form-control form-control-lg" placeholder="Age" name="age" required>
-                    <div class="input-group-append custom">
-                        <span class=""><i></i></span>
-                    </div>
                 </div>
             </div>
         </div>
 
         <div class="row mb-2">
-            <div class="col-12">
+            <div class="col-md-6">
                 <div class="input-group custom">
                     <input type="email" class="form-control form-control-lg" placeholder="Email" name="email" required>
-                    <div class="input-group-append custom">
-                        <span class=""><i></i></span>
-                    </div>
                 </div>
+            </div>
+            <div class="col-md-6">
+               
             </div>
         </div>
 
@@ -85,20 +76,6 @@
             <div class="col-12">
                 <div class="input-group custom">
                     <input type="password" class="form-control form-control-lg" placeholder="Password" name="password" required>
-                    <div class="input-group-append custom">
-                        <span class=""><i></i></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row mb-2">
-            <div class="col-12">
-                <div class="input-group custom">
-                    <input type="password" class="form-control form-control-lg" placeholder="Confirm password" name="Confirm password" required>
-                    <div class="input-group-append custom">
-                        <span class=""><i></i></span>
-                    </div>
                 </div>
             </div>
         </div>
@@ -116,4 +93,6 @@
         </div>
     </form>
 </div>
+
+
 @endsection
