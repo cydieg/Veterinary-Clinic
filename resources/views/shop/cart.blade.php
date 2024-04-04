@@ -19,20 +19,20 @@
                             <th>Price</th>
                             <th>Quantity</th>
                             <th>Total</th>
-                            <th>Action</th> <!-- New column for remove button -->
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($cart as $cartItem)
+                        @foreach($cart as $item)
                             <tr>
-                                <td>{{ $cartItem->product->name }}</td>
-                                <td>${{ $cartItem->product->price }}</td>
-                                <td>{{ $cartItem->quantity }}</td>
-                                <td>${{ $cartItem->product->price * $cartItem->quantity }}</td>
+                                <td>{{ $item->product->name }}</td>
+                                <td>${{ $item->product->price }}</td>
+                                <td>{{ $item->quantity }}</td>
+                                <td>${{ $item->product->price * $item->quantity }}</td>
                                 <td>
                                     <form method="POST" action="{{ route('cart.remove') }}">
                                         @csrf
-                                        <input type="hidden" name="product_id" value="{{ $cartItem->product_id }}">
+                                        <input type="hidden" name="product_id" value="{{ $item->product->id }}">
                                         <button type="submit" class="btn btn-danger">Remove</button>
                                     </form>
                                 </td>
@@ -41,11 +41,14 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-
-        <div class="row">
             <div class="col-md-4">
-                <a href="{{ route('shop.index') }}" class="btn btn-secondary">Continue Shopping</a>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Price</h5>
+                        <p class="card-text">Total: ${{ $totalPrice }}</p>
+                    </div>
+                </div>
+                <a href="{{ route('shop.index') }}" class="btn btn-secondary mt-3">Continue Shopping</a>
             </div>
         </div>
     </div>

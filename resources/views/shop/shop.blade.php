@@ -34,7 +34,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ $item->name }}</h5>
                             <p class="card-text">{{ $item->description }}</p>
-                            <p class="card-text">Price: ${{ $item->price }}</p>
+                            <p class="card-text">Price: ₱   {{ $item->price }}</p>
                             <button class="btn btn-primary" onclick="showProductModal('{{ $item->name }}', '{{ $item->description }}', {{ $item->price }}, {{ $item->quantity }}, '{{ $item->id }}')">Add to Cart</button>
                         </div>
                     </div>
@@ -109,7 +109,7 @@
                 <div class="modal-body">
                     <h5 id="productName"></h5>
                     <p id="productDescription"></p>
-                    <p>Price: $<span id="productPrice"></span></p>
+                    <p>Price: ₱<span id="productPrice"></span></p>
                     <p>Current Quantity: <span id="productQuantity"></span></p>
                     <form id="addToCartForm" action="{{ route('cart.add') }}" method="POST">
                         @csrf
@@ -126,7 +126,7 @@
                                 </div>
                             </div>
                         </div>
-                        <p>Total Price: $<span id="totalPrice"></span></p>
+                        <p>Total Price: ₱<span id="totalPrice"></span></p>
                         <button type="submit" class="btn btn-primary">Add to Cart</button>
                     </form>
                 </div>

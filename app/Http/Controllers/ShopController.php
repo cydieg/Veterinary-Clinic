@@ -56,13 +56,19 @@ class ShopController extends Controller
         return redirect()->back()->with('success', 'Product added to cart successfully.');
     }
 
-    public function showCart()
+        public function showCart()
     {
         $user = Auth::user();
         $cart = $user->cart()->with('product')->get();
 
-        return view('shop.cart', compact('cart'));
+        // Calculate total price
+        $totalPrice = $cart->sum(function ($item) {
+            return $item->product->price * $item->quantity;
+        });
+
+        return view('shop.cart', compact('cart', 'totalPrice'));
     }
+
 
     public function removeFromCart(Request $request)
     {
