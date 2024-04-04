@@ -23,16 +23,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($cart as $productId => $item)
+                        @foreach($cart as $cartItem)
                             <tr>
-                                <td>{{ $item['name'] }}</td>
-                                <td>${{ $item['price'] }}</td>
-                                <td>{{ $item['quantity'] }}</td>
-                                <td>${{ $item['price'] * $item['quantity'] }}</td>
+                                <td>{{ $cartItem->product->name }}</td>
+                                <td>${{ $cartItem->product->price }}</td>
+                                <td>{{ $cartItem->quantity }}</td>
+                                <td>${{ $cartItem->product->price * $cartItem->quantity }}</td>
                                 <td>
                                     <form method="POST" action="{{ route('cart.remove') }}">
                                         @csrf
-                                        <input type="hidden" name="product_id" value="{{ $productId }}">
+                                        <input type="hidden" name="product_id" value="{{ $cartItem->product_id }}">
                                         <button type="submit" class="btn btn-danger">Remove</button>
                                     </form>
                                 </td>

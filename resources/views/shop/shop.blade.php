@@ -35,7 +35,7 @@
                             <h5 class="card-title">{{ $item->name }}</h5>
                             <p class="card-text">{{ $item->description }}</p>
                             <p class="card-text">Price: ${{ $item->price }}</p>
-                            <a href="#" class="btn btn-primary" onclick="showProductModal('{{ $item->name }}', '{{ $item->description }}', {{ $item->price }}, {{ $item->quantity }}, '{{ $item->id }}')">View Details</a>
+                            <button class="btn btn-primary" onclick="showProductModal('{{ $item->name }}', '{{ $item->description }}', {{ $item->price }}, {{ $item->quantity }}, '{{ $item->id }}')">Add to Cart</button>
                         </div>
                     </div>
                 </div>

@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Inventory;
 use App\Models\Branch;
+use App\Models\Cart; 
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class ShopController extends Controller
 {
@@ -30,33 +32,34 @@ class ShopController extends Controller
         $productId = $request->input('product_id');
         $quantity = $request->input('quantity');
 
+        $user = Auth::user();
+
         $product = Inventory::findOrFail($productId);
 
-        // Retrieve the cart from session or create an empty array
-        $cart = Session::get('cart', []);
+        // Check if the product already exists in the user's cart
+        $cartItem = Cart::where('user_id', $user->id)
+                        ->where('product_id', $productId)
+                        ->first();
 
-        // Check if the product already exists in the cart
-        if (array_key_exists($productId, $cart)) {
+        if ($cartItem) {
             // Increment the quantity if the product is already in the cart
-            $cart[$productId]['quantity'] += $quantity;
+            $cartItem->quantity += $quantity;
+            $cartItem->save();
         } else {
-            // Add the product to the cart
-            $cart[$productId] = [
-                'name' => $product->name,
-                'price' => $product->price,
+            // Add the product to the user's cart
+            $user->cart()->create([
+                'product_id' => $productId,
                 'quantity' => $quantity,
-            ];
+            ]);
         }
-
-        // Store the updated cart back into the session
-        Session::put('cart', $cart);
 
         return redirect()->back()->with('success', 'Product added to cart successfully.');
     }
 
     public function showCart()
     {
-        $cart = Session::get('cart', []);
+        $user = Auth::user();
+        $cart = $user->cart()->with('product')->get();
 
         return view('shop.cart', compact('cart'));
     }
@@ -65,19 +68,18 @@ class ShopController extends Controller
     {
         $productId = $request->input('product_id');
 
-        // Retrieve the cart from session
-        $cart = Session::get('cart', []);
+        $user = Auth::user();
 
-        // Check if the product exists in the cart
-        if (array_key_exists($productId, $cart)) {
-            // Remove the product from the cart
-            unset($cart[$productId]);
+        // Find the cart item for the user and the product
+        $cartItem = Cart::where('user_id', $user->id)
+                        ->where('product_id', $productId)
+                        ->first();
+
+        if ($cartItem) {
+            // Remove the cart item
+            $cartItem->delete();
         }
 
-        // Store the updated cart back into the session
-        Session::put('cart', $cart);
-
-        // Return a success response
         return redirect()->route('cart.show')->with('success', 'Product removed from cart successfully.');
     }
 }
