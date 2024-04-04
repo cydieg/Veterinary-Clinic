@@ -104,7 +104,7 @@
 										<img src="assets/img/patients/patient.jpg" alt="User Image" class="avatar-img rounded-circle">
 									</div>
 									<div class="user-text">
-										<h6>Richard Wilson</h6>
+										<h6>Richard Wilsons</h6>
 										<p class="text-muted mb-0">Patient</p>
 									</div>
 								</div>
