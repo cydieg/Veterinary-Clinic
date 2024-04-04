@@ -62,7 +62,7 @@
         </div>
 
         <div class="row mb-2">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="input-group custom">
                     <input type="email" class="form-control form-control-lg" placeholder="Email" name="email" required>
                 </div>
