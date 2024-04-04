@@ -66,7 +66,7 @@ class ShopController extends Controller
     }
 
     public function showCart()
-    {
+    {   
         $user = Auth::user();
         $cart = $user->cart()->with('product')->get();
 

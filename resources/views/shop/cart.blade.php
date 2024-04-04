@@ -48,7 +48,8 @@
                         <p class="card-text">Total: ${{ $totalPrice }}</p>
                     </div>
                 </div>
-                <a href="{{ route('shop.index') }}" class="btn btn-secondary mt-3">Continue Shopping</a>
+                <!-- Add back button here -->
+                <a href="/customer" class="btn btn-secondary mt-3">Back</a>
             </div>
         </div>
     </div>
