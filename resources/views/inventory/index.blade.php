@@ -20,7 +20,7 @@
         <div class="row justify-content-between mb-3">
             <div class="col-md-4">
                 <!-- Back button -->
-                <a href="{{ route('super-admin-dashboard') }}" class="btn btn-secondary">
+                <a href="{{ route('super_admin.dashboard') }}" class="btn btn-secondary">
                     <i class="fas fa-arrow-left"></i> Back
                 </a>
             </div>

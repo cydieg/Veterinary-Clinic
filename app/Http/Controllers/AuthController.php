@@ -72,7 +72,8 @@ class AuthController extends Controller
                 // Redirect based on the user's role
                 switch ($user->role) {
                     case 'super_admin':
-                        return redirect()->route('super_admin.home');
+                        return redirect()->route('super_admin.dashboard');
+
                     case 'admin':
                         return redirect()->route('admin.home');
                     case 'staff':
