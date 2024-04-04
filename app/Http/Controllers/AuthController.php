@@ -79,7 +79,7 @@ class AuthController extends Controller
                     case 'staff':
                         return redirect('/staff');
                     case 'patient':
-                        return redirect()->route('customer');
+                        return redirect()->route('showDashboard');
                     default:
                         return redirect()->route('dashboard');
                 }

@@ -72,13 +72,23 @@
 										<a href="#" class="booking-doc-img">
 											<img src="assets/img/patients/patient.jpg" alt="User Image">
 										</a>
-										<div class="profile-det-info">
-											<h3>Richard Wilson</h3>
-											<div class="patient-details">
-												<h5><i class="fas fa-birthday-cake"></i> 24 Jul 1983, 38 years</h5>
-												<h5 class="mb-0"><i class="fas fa-map-marker-alt"></i> Newyork, USA</h5>
+										@if (Auth::check())
+											<div class="profile-det-info">
+												<h3>{{ Auth::user()->firstName }} {{ Auth::user()->lastName }}</h3>
+												<div class="patient-details">
+													@if (Auth::user()->birthDate)
+														@php
+															$birthDate = new DateTime(Auth::user()->birthDate);
+															$today = new DateTime();
+															$age = $today->diff($birthDate)->y;
+														@endphp
+														<h5><i class="fas fa-birthday-cake"></i> {{ $birthDate->format('d M Y') }}, {{ $age }} years</h5>
+													@endif
+													<h5 class="mb-0"><i class="fas fa-map-marker-alt"></i> {{ Auth::user()->address }}</h5>
+												</div>
 											</div>
-										</div>
+										@endif
+
 									</div>
 								</div>
 								<div class="dashboard-widget">
@@ -117,18 +127,8 @@
 													<small class="unread-msg"></small>
 												</a>
 											</li>
-											<li>
-												<a href="{{ route('profileSetting') }}">
-													<i class="fas fa-user-cog"></i>
-													<span>Profile Settings</span>
-												</a>
-											</li>
-											<li>
-												<a href="{{ route('changePassword') }}">
-													<i class="fas fa-lock"></i>
-													<span>Change Password</span>
-												</a>
-											</li>
+											
+										
 											<li>
 												<a href="{{ route('manual.logout') }}">
 													<i class="fas fa-sign-out-alt"></i>
