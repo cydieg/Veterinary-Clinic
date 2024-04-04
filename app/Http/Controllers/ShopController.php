@@ -7,12 +7,22 @@ use App\Models\Inventory;
 use App\Models\Branch;
 use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 
 class ShopController extends Controller
 {
     public function index(Request $request)
     {
-        $branchId = $request->input('branch_id');
+        $encryptedBranchId = $request->input('branch_id');
+        
+        try {
+            $branchId = $encryptedBranchId ? Crypt::decrypt($encryptedBranchId) : null;
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            // Handle decryption error, log the error message, or fallback to a default value
+            $branchId = null; // Fallback to null in case of decryption failure
+            \Log::error('Error decrypting branch ID: ' . $e->getMessage());
+        }
+
         $branches = Branch::all();
 
         if (!$branchId && $branches->isNotEmpty()) {
@@ -21,7 +31,7 @@ class ShopController extends Controller
 
         $inventoryItems = Inventory::where('branch_id', $branchId)->paginate(9);
 
-        return view('shop.shop', compact('inventoryItems', 'branches', 'branchId'));
+        return view('shop.shop', compact('inventoryItems', 'branches', 'branchId', 'encryptedBranchId'));
     }
 
     public function addToCart(Request $request)

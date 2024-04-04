@@ -21,10 +21,14 @@
             </button>
             <div class="dropdown-menu" aria-labelledby="branchDropdown">
                 @foreach($branches as $branch)
-                    <a class="dropdown-item" href="{{ route('shop.index', ['branch_id' => $branch->id]) }}">{{ $branch->name }}</a>
+                    @php
+                        $encryptedId = Crypt::encrypt($branch->id);
+                    @endphp
+                    <a class="dropdown-item" href="{{ route('shop.index', ['branch_id' => $encryptedId]) }}">{{ $branch->name }}</a>
                 @endforeach
             </div>
         </div>
+        
 
         <div class="row">
             @foreach($inventoryItems as $item)

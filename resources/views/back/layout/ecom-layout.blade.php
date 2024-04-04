@@ -75,7 +75,8 @@
 					<a class="nav-link header-login" href="{{ route('customer') }}">
 						<i class="fas fa-calendar-plus"></i> Make Appointment
 					</a>
-					<li><a href="{{ route('shop.index', ['branch_id' => $branches->isNotEmpty() ? $branches->first()->id : null]) }}">Shop</a></li>
+					<li><a href="{{ route('shop.index', ['branch_id' => $branches->isNotEmpty() ? encrypt($branches->first()->id) : null]) }}">Shop</a></li>
+
 
 					<li class="nav-item">
 						<a class="nav-link" href="{{ route('cart.show') }}">Cart</a>
