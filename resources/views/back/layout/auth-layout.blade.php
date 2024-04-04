@@ -10,13 +10,13 @@
 		<link
 			rel="apple-touch-icon"
 			sizes="180x180"
-			href="/back/images/OralEase.png"
+			href=""
 		/>
 		<link
 			rel="icon"
 			type="image/png"
 			sizes="32x32"
-			href="/back/images/OralEase.png"
+			href=""
 		/>
 		<link
 			rel="icon"
@@ -62,7 +62,7 @@
 			>
 				<div class="brand-logo">
 					<a href="login.html">
-						<img src="/back/images/OralEase.png" alt="" />
+						<img src="" alt="" />
 					</a>
 				</div>
 

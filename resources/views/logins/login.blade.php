@@ -1,7 +1,5 @@
 @extends('back.layout.auth-layout')
-
 @section('pageTitle', isset($pageTitle) ? $pageTitle : 'Login')
-
 @section('content')
 
 <div class="login-box bg-white box-shadow border-radius-10">
@@ -24,17 +22,18 @@
     <form action="{{ route('login') }}" method="post">
         @csrf
 
+
         <div class="input-group custom mb-3">
             <input type="email" class="form-control form-control-lg" placeholder="Email" name="email" required>
             <div class="input-group-append custom">
-                <span class="input-group-text"><i class="icon-copy dw dw-user1"></i></span>
+                <span class=""><i></i></span>
             </div>
         </div>
 
         <div class="input-group custom mb-3">
-            <input type="password" class="form-control form-control-lg" placeholder="********" name="password" required>
+            <input type="password" class="form-control form-control-lg" placeholder="Password" name="password" required>
             <div class="input-group-append custom">
-                <span class="input-group-text"><i class="dw dw-padlock1"></i></span>
+                <span class=""><i ></i></span>
             </div>
         </div>
 

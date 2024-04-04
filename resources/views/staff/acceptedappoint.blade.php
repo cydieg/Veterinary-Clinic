@@ -1,4 +1,6 @@
-
+@extends('back.layout.cashier-layout')
+@section('pageTitle', isset($pageTitle) ? $pageTitle : 'Page Title here')
+@section('content')
 
 <!DOCTYPE html>
 <html lang="en">
@@ -51,3 +53,4 @@
     <!-- Add your JavaScript links here -->
 </body>
 </html>
+@endsection
