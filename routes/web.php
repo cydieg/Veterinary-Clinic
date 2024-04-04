@@ -16,6 +16,7 @@ use App\Http\Controllers\ShopController;
 
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
