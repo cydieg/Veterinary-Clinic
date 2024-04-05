@@ -70,7 +70,7 @@
 								<div class="widget-profile pro-widget-content">
 									<div class="profile-info-widget">
 										<a href="#" class="booking-doc-img">
-											<img src="assets/img/patients/patient.jpg" alt="User Image">
+											<img src="assets/img/patients/rems.jpg" alt="User Image">
 										</a>
 										@if (Auth::check())
 											<div class="profile-det-info">
