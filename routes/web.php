@@ -14,6 +14,7 @@ use App\Http\Controllers\SuperAdmin\UserManagementController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\AdminController;
 
 
 
@@ -160,7 +161,17 @@ Route::post('/inventory/addquantity/{id}', [InventoryController::class, 'addQuan
 //admin in ventory
 Route::get('/admin/inventory', [InventoryController::class, 'indexadmin'])->name('admin.inventory.indexadmin');
 Route::delete('/admin/inventory/{id}', [InventoryController::class, 'destroy'])->name('admin.inventory.delete');
+//addmin usermanagement
 
+Route::prefix('admin')->group(function () {
+    Route::get('/users', [AdminController::class, 'index'])->name('admin.users.index');
+    Route::get('/users/create', [AdminController::class, 'create'])->name('admin.users.create');
+    Route::post('/users', [AdminController::class, 'store'])->name('admin.users.store');
+    Route::get('/users/{user}', [AdminController::class, 'show'])->name('admin.users.show');
+    Route::get('/users/{user}/edit', [AdminController::class, 'edit'])->name('admin.users.edit');
+    Route::put('/users/{user}', [AdminController::class, 'update'])->name('admin.users.update');
+    Route::delete('/users/{user}', [AdminController::class, 'destroy'])->name('admin.users.destroy');
+});
 
 // ecom routes
 Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');

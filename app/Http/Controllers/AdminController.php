@@ -2,52 +2,101 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Branch;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
-    public function loginHandler (Request $request) {
-        $fieldType = filter_var($request-> login_id, FILTER_VALIDATE_EMAIL) ? 'email': 'username';
+    // Display a listing of the users
+    public function index()
+    {
+        // Fetch users with "patient" role
+        $users = User::where('role', 'patient')->get();
+    
+        return view('admin.index', compact('users'));
+    }   // Show the form for creating a new user
+    public function create()
+    {
+        // Assuming you have authenticated user and you're fetching the branch
+        $branch = auth()->user()->branch;
 
-        if ($fieldType == 'email'){
-            $request->validate([
-                'login_id'=>'required|email|exists:admins,email',
-                'password'=>'required|min:5|max:45'
-            ],[
-                'login_id.required'=> 'Email or Username is required',
-                'login_id.email'=> 'Invalid email address',
-                'login_id.exists'=> 'Email in not exists in system',
-                'password.required'=> 'Password is required'
-            ]);
-        }
-        else{
-            $request->validate([
-                'login_id'=>'required|email|exists:admins,username',
-                'password'=>'required|min:5|max:45'
-            ],[
-                'login_id.required'=> 'Email or Username is required',
-                'login_id.exists'=> 'Username in not exists in system',
-                'password.required'=> 'Password is required'
-        ]);
-        }
-
-        $creds = array(
-            $fieldType => $request->login_id,
-            'password' => $request->password
-        );
-
-        if(Auth::guard('admin')->attempt($creds)){
-            return redirect()->route('admin.home');
-        }else{
-            session()->flash('fall','Incorrect credentials');
-            return redirect()->route('admin.login');
-        }
+        // Pass the branch to the view
+        return view('admin.create', compact('branch'));
     }
 
-    public function logoutHandler(Request $request){
-        Auth::guard('admin')->logout();
-        session()->flash('fall', 'You are logged out!');
-        return redirect()->route('admin.login');
+    // Store a newly created user in storage
+    public function store(Request $request)
+    {
+        $request->validate([
+            'username' => 'required|string|max:255|unique:users',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|string|min:6',
+            // Add other validation rules as needed
+        ]);
+
+        $user = new User();
+        $user->fill($request->all());
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return redirect()->route('admin.users.index')->with('success', 'User created successfully');
+    }
+
+    // Display the specified user
+    public function show($id)
+    {
+        $user = User::findOrFail($id);
+        return view('admin.show', compact('user'));
+    }
+
+    // Show the form for editing the specified user
+    public function edit($id)
+    {
+        $user = User::findOrFail($id);
+        return view('admin.edit', compact('user'));
+    }
+
+    // Update the specified user in storage
+    public function update(Request $request, $id)
+{
+    $request->validate([
+        'username' => 'required|string|max:255|unique:users,username,' . $id,
+        'email' => 'required|email|unique:users,email,' . $id,
+        'firstName' => 'required|string|max:255',
+        'lastName' => 'required|string|max:255',
+        'middleName' => 'nullable|string|max:255',
+        'address' => 'nullable|string|max:255',
+        'gender' => 'required|in:male,female',
+        'age' => 'required|integer|min:0',
+        'role' => 'required|in:admin,patient,staff',
+        'password' => 'nullable|string|min:6',
+    ]);
+
+    $user = User::findOrFail($id);
+    $user->fill($request->all());
+
+    // Update password only if provided and not empty
+    if ($request->filled('password')) {
+        $user->password = Hash::make($request->password);
+    } else {
+        // If password is not provided, remove it from the update array
+        unset($user->password);
+    }
+
+    $user->save();
+
+    return redirect()->route('admin.users.index')->with('success', 'User updated successfully');
+}
+
+    
+
+    // Remove the specified user from storage
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect()->route('admin.users.index')->with('success', 'User deleted successfully');
     }
 }

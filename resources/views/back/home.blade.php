@@ -238,7 +238,7 @@
 							<span class="user-icon">
 								<img src="/back/images/cydiepic.jpg" alt="" />
 							</span>
-							<span class="user-name"> Cydie S. Gargullo</span>
+							<span class="user-name"> Cydie S. Gargullos</span>
 						</a>
 						<div
 							class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list"
@@ -499,7 +499,9 @@
 							<!-- Add the button to navigate to the route for managing users -->	
 							<ul class="submenu">
 								<li>				
-							<a href="{{ route('userTable') }}">Manage Users</a>
+							<a href="{{ route('admin.users.index') }}">Manage Users</a>
+
+
 						</li>
 						</ul>
 						<ul>
