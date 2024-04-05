@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,8 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shop</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="assets/img/favicon.png" rel="icon">
+		
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+		
+		<!-- Fontawesome CSS -->
+		<link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
+		<link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
+		
+		<!-- Main CSS -->
+		<link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body>
+
+<div class="card">
+	<div class="card-body">
+		<div class="row">
+			<div class="col-md-9 col-lg-6">
+
     <div class="container mt-4">
         <h1 class="mb-4">Welcome to Our Shop</h1>
 
@@ -26,9 +44,11 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="content">
+				<div class="container-fluid">
+					<div class="row">
             @foreach($inventoryItems as $item)
-                <div class="col-md-4 mb-4">
+                <div class="col-md-6 mb-6">
                     <div class="card">
                         <img src="{{ asset('images/' . $item->image) }}" class="card-img-top" alt="{{ $item->name }}">
                         <div class="card-body">
@@ -42,11 +62,16 @@
             @endforeach
         </div>
         <!-- Pagination links -->
-        <div class="row">
-            <div class="col-md-12">
+        <div class="content">
+				<div class="container-fluid">
+					<div class="row">
                 {{ $inventoryItems->links() }}
             </div>
         </div>
+    </div>
+    </div>
+    </div>
+    </div>
     </div>
 
     <!-- Bootstrap JS -->

@@ -19,6 +19,10 @@
         }
     </style>
 </head>
+
+<div class="card">
+	<div class="card-body">
+			<div class="col-md-12 col-lg-12">
 <body>
     <div>
         <form action="{{ route('appointments.store') }}" method="post" class="bg-light p-4 rounded">
@@ -68,6 +72,10 @@
 
             <button type="submit" class="btn btn-info btn-block">Request Appointment</button> <!-- Changed button text -->
         </form>
+    </div>
+    </div>
+    </div>
+    </div>
     </div>
 </body>
 </html>

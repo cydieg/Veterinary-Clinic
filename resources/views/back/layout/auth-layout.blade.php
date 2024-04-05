@@ -74,7 +74,7 @@
 			<div class="container">
 				<div class="row align-items-center">
 					<div class="col-md-6 col-lg-7">
-						<img src="/back/images/loginpic.jpg" alt="" />
+						<img src="/back/images/Pet Image.jpg" alt="" />
 					</div>
 					<div class="col-md-6 col-lg-5">
 						@yield('content')

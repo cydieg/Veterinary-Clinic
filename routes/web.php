@@ -13,6 +13,7 @@ use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\SuperAdmin\UserManagementController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\PageController;
 
 
 
@@ -131,8 +132,11 @@ Route::get('/Services', [LandingPageController::class, 'Services'])->name('servi
 Route::get('/OurClinic', [LandingPageController::class, 'OurClinic'])->name('ourClinic');
 Route::get('/OurShop', [LandingPageController::class, 'OurShop'])->name('ourShop');
 
-
-
+//Page Controller
+Route::get('/showDashboard', [PageController::class, 'showDashboard'])->name('showDashboard');
+Route::get('/profileSetting', [PageController::class, 'profileSetting'])->name('profileSetting');
+Route::get('/changePassword', [PageController::class, 'changePassword'])->name('changePassword');
+Route::get('/message', [PageController::class, 'message'])->name('message');
 
 
 //User Dashboard

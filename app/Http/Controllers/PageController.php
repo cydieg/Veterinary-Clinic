@@ -6,29 +6,24 @@ use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
-    public function home()
-    {
-        return view('home');
-    }
-
-    public function about()
-    {
-        return view('about');
-    }
-
-    public function dentalClinic()
-    {
-        return view('dentalClinic');
-    }
-
-    public function map()
-    {
-        return view('map');
-    }
-
     public function showDashboard()
     {
         return view('userDashboard.home');
+    }
+
+    public function profileSetting()
+    {
+        return view('userDashboard.Profile setting');
+    }
+
+    public function changePassword()
+    {
+        return view('userDashboard.change password');
+    }
+
+    public function message()
+    {
+        return view('userDashboard.message');
     }
 }
 

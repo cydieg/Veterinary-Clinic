@@ -49,6 +49,7 @@
 		</style>
 </head>
 
+<body>
 		<!-- Main Wrapper -->
 		<div class="main-wrapper">
 		
@@ -64,13 +65,13 @@
 							</span>
 						</a>
 						<a href="index-2.html" class="navbar-brand logo">
-							<img src="/back/images/Rems logo.png" class="img-fluid" alt="Logo">
+							<img src="assets/img/logo.png" class="img-fluid" alt="Logo">
 						</a>
 					</div>
 					<div class="main-menu-wrapper">
 						<div class="menu-header">
 							<a href="index-2.html" class="menu-logo">
-								<img src="/back/images/Rems logo.png" class="img-fluid" alt="Logo">
+								<img src="assets/img/logo.png" class="img-fluid" alt="Logo">
 							</a>
 							<a id="menu_close" class="menu-close" href="javascript:void(0);">
 								<i class="fas fa-times"></i>
@@ -81,16 +82,21 @@
 									 
 					<ul class="nav header-navbar-rht">
 						<li class="nav-item contact-item">
+							<div class="header-contact-img">
+								<i class="far fa-hospital"></i>							
+							</div>
+							<div class="header-contact-detail">
+								<p class="contact-header">Contact</p>
+								<p class="contact-info-header"> +1 315 369 5943</p>
+							</div>
 						</li>
 						
-
 						<!-- User Menu -->
 						<li class="nav-item dropdown has-arrow logged-item">
 							<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
 								<span class="user-img">
 									<img class="rounded-circle" src="assets/img/patients/patient.jpg" width="31" alt="Ryan Taylor">
 								</span>
-								<span class="user-name">{{ auth()->user()->firstName }} {{ auth()->user()->lastName }}</span>
 							</a>
 							<div class="dropdown-menu dropdown-menu-right">
 								<div class="user-header">
@@ -104,7 +110,7 @@
 								</div>
 								<a class="dropdown-item" href="patient-dashboard.html">Dashboard</a>
 								<a class="dropdown-item" href="profile-settings.html">Profile Settings</a>
-								<a class="dropdown-item" href="{{ route('manual.logout') }}">Logout</a>
+								<a class="dropdown-item" href="login.html">Logout</a>
 							</div>
 						</li>
 						<!-- /User Menu -->
@@ -141,7 +147,7 @@
 									<nav class="dashboard-menu">
 										<ul>
 											<li class="active">
-												<a href="{{route('showDashboard')}}">
+												<a href="patient-dashboard.html">
 													<i class="fas fa-columns"></i>
 													<span>Dashboard</span>
 												</a>
@@ -153,32 +159,26 @@
 												</a>
 											</li>
 											<li>
-												<a href="{{ route('shop.index') }}">
-													<i class="fas fa-bookmark"></i>
-													<span>Shop</span>
-												</a>
-											</li>
-											<li>
-												<a href="{{ route('message') }}">
+												<a href="chat.html">
 													<i class="fas fa-comments"></i>
 													<span>Message</span>
-													<small class="unread-msg"></small>
+													<small class="unread-msg">23</small>
 												</a>
 											</li>
 											<li>
-												<a href="{{ route('profileSetting') }}">
+												<a href="profile-settings.html">
 													<i class="fas fa-user-cog"></i>
 													<span>Profile Settings</span>
 												</a>
 											</li>
 											<li>
-												<a href="{{ route('changePassword') }}">
+												<a href="change-password.html">
 													<i class="fas fa-lock"></i>
 													<span>Change Password</span>
 												</a>
 											</li>
 											<li>
-												<a href="{{ route('manual.logout') }}">
+												<a href="index-2.html">
 													<i class="fas fa-sign-out-alt"></i>
 													<span>Logout</span>
 												</a>
@@ -190,9 +190,7 @@
 							</div>
 						</div>
 						<!-- / Profile Sidebar -->
-	<body>
-	@yield('content')
-	</body>
+
 						
   </body>  
 
