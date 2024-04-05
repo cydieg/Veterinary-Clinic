@@ -18,12 +18,19 @@
 		
 		<!-- Main CSS -->
 		<link rel="stylesheet" href="assets/css/style.css">
+
+    <style>
+        .card-img-top {
+        width: 100%;
+        height: 200px; /* Adjust the height as needed */
+        object-fit: cover; /* This ensures the image fills the container */
+        }
+    </style>
 </head>
 
 <div class="card">
-	<div class="card-body">
 		<div class="row">
-			<div class="col-md-9 col-lg-6">
+			
 
     <div class="container mt-4">
         <h1 class="mb-4">Welcome to Our Shop</h1>
@@ -49,16 +56,16 @@
         
 
         <div class="content">
-				<div class="container-fluid">
-					<div class="row">
+    <div class="container-fluid">
+        <div class="row">
             @foreach($inventoryItems as $item)
-                <div class="col-md-6 mb-6">
+                <div class="col-lg-3 mb-4">
                     <div class="card">
                         <img src="{{ asset('images/' . $item->image) }}" class="card-img-top" alt="{{ $item->name }}">
                         <div class="card-body">
                             <h5 class="card-title">{{ $item->name }}</h5>
                             <p class="card-text">{{ $item->description }}</p>
-                            <p class="card-text">Price: ₱   {{ $item->price }}</p>
+                            <p class="card-text">Price: ₱ {{ $item->price }}</p>
                             <!-- Pass branchId as an argument to the showProductModal function -->
                             <button class="btn btn-primary" onclick="showProductModal('{{ $item->name }}', '{{ $item->description }}', {{ $item->price }}, {{ $item->quantity }}, '{{ $item->id }}', '{{ $branchId }}')">Add to Cart</button>
                         </div>
@@ -67,14 +74,14 @@
             @endforeach
         </div>
         <!-- Pagination links -->
-        <div class="content">
-				<div class="container-fluid">
-					<div class="row">
+        <div class="row">
+            <div class="col-12">
                 {{ $inventoryItems->links() }}
             </div>
         </div>
     </div>
-    </div>
+</div>
+
     </div>
     </div>
     </div>
