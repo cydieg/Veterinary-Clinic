@@ -17,6 +17,7 @@ use App\Http\Controllers\PageController;
 
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -52,13 +53,9 @@ Route::middleware(['auth.manual'])->group(function () {
 //super admin routes
 Route::get('/super-admin-dashboard', function () {
     return view('superadmin.dashboard');
-  })->name('super_admin.home');
-  Route::post('/super-admin-logout', [SuperAdminController::class, 'logout'])->name('super_admin.logout');
+})->name('super_admin.dashboard'); // Define a unique name for the route
 
-  Route::get('/super-admin-dashboard', function () {
-    return view('superadmin.dashboard');
-})->name('super-admin-dashboard'); // Define the route name here
-
+Route::post('/super-admin-logout', [SuperAdminController::class, 'logout'])->name('super_admin.logout');
 
 // Separate route without the auth.manual middleware for the customer route
 Route::get('/customer', [ClientController::class, 'customer'])->name('customer')->middleware('auth');
@@ -168,3 +165,7 @@ Route::delete('/admin/inventory/{id}', [InventoryController::class, 'destroy'])-
 // ecom routes
 Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
 Route::post('/shop/order', [ShopController::class, 'orderProduct'])->name('shop.order');
+// Cart routes
+Route::get('/cart', [ShopController::class, 'showCart'])->name('cart.show');
+Route::post('/cart/add', [ShopController::class, 'addToCart'])->name('cart.add');
+Route::post('/cart/remove', [ShopController::class, 'removeFromCart'])->name('cart.remove'); // Add this line

@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
 
@@ -53,65 +55,80 @@
 		<div class="main-wrapper">
 		
 			<!-- Header -->
-			<header class="header">
-				<nav class="navbar navbar-expand-lg header-nav">
-					<div class="navbar-header">
-						<a id="mobile_btn" href="javascript:void(0);">
-							<span class="bar-icon">
-								<span></span>
-								<span></span>
-								<span></span>
-							</span>
-						</a>
-						<a href="index-2.html" class="navbar-brand logo">
-							<img src="/back/images/Rems logo.png" class="img-fluid" alt="Logo">
+      <header class="header">
+        <nav class="navbar navbar-expand-lg header-nav">
+            <div class="navbar-header">
+                <a id="mobile_btn" href="javascript:void(0);">
+                    <span class="bar-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                </a>
+                <a href="index-2.html" class="navbar-brand logo">
+                    <img src="/back/images/OralEase.png" class="img-fluid" alt="Logo">
+                </a>
+            </div>
+            <div class="main-menu-wrapper">
+                <div class="menu-header">
+                    <a href="index-2.html" class="menu-logo">
+                        <img src="assets/img/logo.png" class="img-fluid" alt="Logo">
+                    </a>
+                    <a id="menu_close" class="menu-close" href="javascript:void(0);">
+                        <i class="fas fa-times"></i>
+                    </a>
+                </div>
+				<ul class="main-nav">
+					<li><a href="">Home</a></li>
+					<li><a href="">About</a></li>
+					<li><a href="">Clinics</a></li>
+					<li class="nav-item">
+					<a class="nav-link header-login" href="{{ route('customer') }}">
+						<i class="fas fa-calendar-plus"></i> Make Appointment
+					</a>
+					<li><a href="{{ route('shop.index', ['branch_id' => $branches->isNotEmpty() ? encrypt($branches->first()->id) : null]) }}">Shop</a></li>
+
+
+					<li class="nav-item">
+						<a class="nav-link" href="{{ route('cart.show') }}">Cart</a>
+					</li>
+					
+
+					
+
+					
+				</li>
+					
+					</ul>
+            </div>
+			<ul class="nav header-navbar-rht">
+				<li class="nav-item contact-item">
+					<div class="header-contact-img">
+						<i class="far fa-hospital"></i>
+					</div>
+				</li>
+				<li class="nav-item user-info-dropdown dropdown">
+					<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+						<span class="user-icon">
+							<i class="far fa-user"></i>
+						</span>
+						<span class="user-name">{{ auth()->user()->firstName }} {{ auth()->user()->lastName }}</span>
+					</a>
+					<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+						<a class="dropdown-item" href="{{ route('manual.logout') }}">
+							<i class="dw dw-logout"></i> Log Out
 						</a>
 					</div>
-					<div class="main-menu-wrapper">
-						<div class="menu-header">
-							<a href="index-2.html" class="menu-logo">
-								<img src="/back/images/Rems logo.png" class="img-fluid" alt="Logo">
-							</a>
-							<a id="menu_close" class="menu-close" href="javascript:void(0);">
-								<i class="fas fa-times"></i>
-							</a>
-						</div>
-						<ul class="main-nav">
-						</ul>
-									 
-					<ul class="nav header-navbar-rht">
-						<li class="nav-item contact-item">
-						</li>
-						
-
-						<!-- User Menu -->
-						<li class="nav-item dropdown has-arrow logged-item">
-							<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-								<span class="user-img">
-									<img class="rounded-circle" src="assets/img/patients/patient.jpg" width="31" alt="Ryan Taylor">
-								</span>
-								<span class="user-name">{{ auth()->user()->firstName }} {{ auth()->user()->lastName }}</span>
-							</a>
-							<div class="dropdown-menu dropdown-menu-right">
-								<div class="user-header">
-									<div class="avatar avatar-sm">
-										<img src="assets/img/patients/patient.jpg" alt="User Image" class="avatar-img rounded-circle">
-									</div>
-									<div class="user-text">
-										<h6>Richard Wilson</h6>
-										<p class="text-muted mb-0">Patient</p>
-									</div>
-								</div>
-								<a class="dropdown-item" href="patient-dashboard.html">Dashboard</a>
-								<a class="dropdown-item" href="profile-settings.html">Profile Settings</a>
-								<a class="dropdown-item" href="{{ route('manual.logout') }}">Logout</a>
-							</div>
-						</li>
-						<!-- /User Menu -->
-						
-					</ul>
-				</nav>
-			</header>
+				</li>
+			</ul>
+			
+			<!-- Bootstrap JavaScript -->
+			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+			
+			
+        </nav>
+    </header>
+    
 			<!-- /Header -->
 	
     		<!-- Page Content -->

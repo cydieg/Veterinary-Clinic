@@ -2,7 +2,6 @@
 
 // app/Models/User.php
 
-// app/Models/User.php
 
 namespace App\Models;
 
@@ -35,6 +34,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Appointment::class);
     }
+        public function cart()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
     
 }
 
