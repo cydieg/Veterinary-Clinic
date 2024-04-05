@@ -62,13 +62,17 @@
         </div>
 
         <div class="row mb-2">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="input-group custom">
                     <input type="email" class="form-control form-control-lg" placeholder="Email" name="email" required>
                 </div>
             </div>
             <div class="col-md-6">
-               
+                <div class="input-group custom">
+                    <select class="form-control form-control-lg" id="role" name="role" required>
+                        <option value="patient">Patient</option>
+                    </select>
+                </div>
             </div>
         </div>
 
@@ -79,6 +83,7 @@
                 </div>
             </div>
         </div>
+        
 
         <div class="text-center mt-2">
             <p>Already have an account? <a href="{{ route('login') }}" class="text-primary">Login</a></p>
