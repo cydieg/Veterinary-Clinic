@@ -12,11 +12,20 @@ class AdminController extends Controller
     // Display a listing of the users
     public function index()
     {
-        // Fetch users with "patient" role
-        $users = User::where('role', 'patient')->get();
-    
+        $branch = auth()->user()->branch;
+        $users = User::where(function($query) use ($branch) {
+                $query->where('branch_id', $branch->id) // Users of the current branch
+                      ->whereIn('role', ['staff', 'admin']);
+            })
+            ->orWhere(function($query) {
+                $query->whereNull('branch_id') // Users with null branch_id
+                      ->where('role', 'patient');
+            })
+            ->get();
+
         return view('admin.index', compact('users'));
-    }   // Show the form for creating a new user
+    }   
+    // Show the form for creating a new user
     public function create()
     {
         // Assuming you have authenticated user and you're fetching the branch
