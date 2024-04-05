@@ -102,8 +102,12 @@
 													<span>Shop</span>
 												</a>
 											</li>
-											<li class="nav-item">
-												<a class="nav-link" href="{{ route('cart.show') }}">Cart</a>
+
+											<li>
+												<a href="{{ route('cart.show') }}">
+													<i class="fas fa-shopping-cart"></i>
+													<span>Cart</span>
+												</a>
 											</li>
 											
 											<li>
