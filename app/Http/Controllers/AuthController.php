@@ -37,20 +37,22 @@ class AuthController extends Controller
             'email' => 'required|email|max:50',
             'role' => 'required|in:super_admin,admin,staff,patient',
             'password' => 'required|string|max:255',
-            'branch_id' => $request->role === 'patient' ? 'nullable' : 'required|exists:branches,id', // Update field name
+            'branch_id' => $request->role === 'patient' ? 'nullable' : 'required|exists:branches,id',
+            'contact_number' => 'nullable|string|max:20', // Define validation rules for contact number
         ]);
-
+    
         // Hash the password
         $validatedData['password'] = bcrypt($validatedData['password']);
-
+    
         // Create the user
         $user = User::create($validatedData);
-
+    
         // Send registration email
         Mail::to($user->email)->send(new UserRegistered($user));
-
+    
         return redirect()->route('login.form');
     }
+    
 
     public function showLoginForm()
     {

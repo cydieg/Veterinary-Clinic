@@ -4,19 +4,27 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddProfileImageToUsersTable extends Migration
+return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('profile_image')->nullable();
+            $table->string('contact_number')->nullable()->after('branch_id');
         });
     }
+    
 
+    /**
+     * Reverse the migrations.
+     */
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('profile_image');
+            $table->dropColumn('contact_number');
         });
     }
-}
+
+};

@@ -79,6 +79,14 @@
         <div class="row mb-2">
             <div class="col-12">
                 <div class="input-group custom">
+                    <input type="text" class="form-control form-control-lg" placeholder="Contact Number" name="contact_number">
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-12">
+                <div class="input-group custom">
                     <input type="password" class="form-control form-control-lg" placeholder="Password" name="password" required>
                 </div>
             </div>
