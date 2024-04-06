@@ -8,7 +8,7 @@
     </div>
     
     <form action="{{ route('register') }}" method="post">
-        @csrf <!-- Add CSRF token -->
+        @csrf
 
         <div class="row mb-2">
             <div class="col-12">
@@ -51,13 +51,48 @@
         <div class="row mb-2">
             <div class="col-md-6">
                 <div class="input-group custom">
-                    <input type="text" class="form-control form-control-lg" placeholder="Address" name="address" required>
+                    <select class="form-control form-control-lg" id="region" name="region" required>
+                        <!-- Options will be dynamically populated by JavaScript -->
+                    </select>
+                    <input type="hidden" name="region_text" id="region-text">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="input-group custom">
-                    <input type="number" class="form-control form-control-lg" placeholder="Age" name="age" required>
+                    <select class="form-control form-control-lg" id="province" name="province" required>
+                        <!-- Options will be dynamically populated by JavaScript -->
+                    </select>
+                    <input type="hidden" name="province_text" id="province-text">
                 </div>
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-md-6">
+                <div class="input-group custom">
+                    <select class="form-control form-control-lg" id="city" name="city" required>
+                        <!-- Options will be dynamically populated by JavaScript -->
+                    </select>
+                    <input type="hidden" name="city_text" id="city-text">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group custom">
+                    <select class="form-control form-control-lg" id="barangay" name="barangay" required>
+                        <!-- Options will be dynamically populated by JavaScript -->
+                    </select>
+                    <input type="hidden" name="barangay_text" id="barangay-text">
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-md-6">
+                <div class="input-group custom">
+                    <input type="number" class="form-control form-control-lg" placeholder="Age" name="age" required>
+                    
+                </div>
+                
             </div>
         </div>
 
@@ -106,6 +141,5 @@
         </div>
     </form>
 </div>
-
 
 @endsection
