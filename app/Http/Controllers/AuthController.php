@@ -12,6 +12,9 @@ use App\Models\Branch; // Update namespace
 use Illuminate\Support\Facades\Mail;
 use App\Mail\UserRegistered;
 
+
+
+
 class AuthController extends Controller
 {
     
@@ -31,27 +34,46 @@ class AuthController extends Controller
             'firstName' => 'required|string|max:50',
             'lastName' => 'required|string|max:50',
             'middleName' => 'nullable|string|max:50',
-            'address' => 'required|string|max:255',
             'gender' => 'required|in:male,female,other',
             'age' => 'required|integer',
             'email' => 'required|email|max:50',
             'role' => 'required|in:super_admin,admin,staff,patient',
             'password' => 'required|string|max:255',
             'branch_id' => $request->role === 'patient' ? 'nullable' : 'required|exists:branches,id',
-            'contact_number' => 'nullable|string|max:20', // Define validation rules for contact number
+            'contact_number' => 'nullable|string|max:20',
+            'region' => 'required|string|max:255',
+            'province' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'barangay' => 'required|string|max:255',
         ]);
-    
+
         // Hash the password
         $validatedData['password'] = bcrypt($validatedData['password']);
-    
+
+        // Construct the address from individual components
+        $addressComponents = [
+            'region' => $request->region_text,
+            'province' => $request->province_text,
+            'city' => $request->city_text,
+            'barangay' => $request->barangay_text,
+        ];
+
+        // Concatenate the address components into a single string
+        $address = implode(', ', $addressComponents);
+
+        // Add the concatenated address to validated data
+        $validatedData['address'] = $address;
+
         // Create the user
         $user = User::create($validatedData);
-    
+
         // Send registration email
         Mail::to($user->email)->send(new UserRegistered($user));
-    
+
         return redirect()->route('login.form');
     }
+
+
     
 
     public function showLoginForm()

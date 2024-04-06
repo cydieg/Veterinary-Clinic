@@ -11,7 +11,7 @@
         @csrf
 
         <div class="row mb-2">
-            <div class="col-12">
+            <div class="col-md-12">
                 <div class="input-group custom">
                     <input type="text" class="form-control form-control-lg" placeholder="Username" name="username" required>
                 </div>
@@ -90,16 +90,6 @@
             <div class="col-md-6">
                 <div class="input-group custom">
                     <input type="number" class="form-control form-control-lg" placeholder="Age" name="age" required>
-                    
-                </div>
-                
-            </div>
-        </div>
-
-        <div class="row mb-2">
-            <div class="col-md-6">
-                <div class="input-group custom">
-                    <input type="email" class="form-control form-control-lg" placeholder="Email" name="email" required>
                 </div>
             </div>
             <div class="col-md-6">
@@ -112,7 +102,12 @@
         </div>
 
         <div class="row mb-2">
-            <div class="col-12">
+            <div class="col-md-6">
+                <div class="input-group custom">
+                    <input type="email" class="form-control form-control-lg" placeholder="Email" name="email" required>
+                </div>
+            </div>
+            <div class="col-md-6">
                 <div class="input-group custom">
                     <input type="text" class="form-control form-control-lg" placeholder="Contact Number" name="contact_number">
                 </div>
@@ -126,7 +121,6 @@
                 </div>
             </div>
         </div>
-        
 
         <div class="text-center mt-2">
             <p>Already have an account? <a href="{{ route('login') }}" class="text-primary">Login</a></p>
