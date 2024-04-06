@@ -9,6 +9,8 @@ use App\Models\Cart;
 use App\Models\Sale; 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+use App\Mail\OrderProcessed;
+use Illuminate\Support\Facades\Mail;
 
 class ShopController extends Controller
 {
@@ -106,7 +108,15 @@ class ShopController extends Controller
     {
         $user = Auth::user();
         $cart = $user->cart()->with('product')->get();
-
+    
+        // Calculate total price
+        $totalPrice = $cart->sum(function ($item) {
+            return $item->product->price * $item->quantity;
+        });
+    
+        // Send email notification
+        Mail::to($user->email)->send(new OrderProcessed($cart, $totalPrice));
+    
         foreach ($cart as $item) {
             Sale::create([
                 'user_id' => $user->id,
@@ -114,11 +124,11 @@ class ShopController extends Controller
                 'quantity' => $item->quantity,
                 'branch_id' => $item->branch_id,
             ]);
-
+    
             // Optionally, you may want to remove the ordered items from the cart
             $item->delete();
         }
-
+    
         return redirect()->route('cart.show')->with('success', 'Order placed successfully.');
     }
 }
