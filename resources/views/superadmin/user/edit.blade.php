@@ -47,15 +47,15 @@
                         <label for="lastName">Last Name:</label>
                         <input type="text" class="form-control" id="lastName" name="lastName" value="{{ $user->lastName }}">
                     </div>
+                    <div class="form-group">
+                        <label for="contact_number">Contact Number:</label>
+                        <input type="text" class="form-control" id="contact_number" name="contact_number" value="{{ $user->contact_number }}">
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="middleName">Middle Name:</label>
                         <input type="text" class="form-control" id="middleName" name="middleName" value="{{ $user->middleName }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="address">Address:</label>
-                        <input type="text" class="form-control" id="address" name="address" value="{{ $user->address }}">
                     </div>
                     <div class="form-group">
                         <label for="gender">Gender:</label>
@@ -70,6 +70,55 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Address Selector -->
+            <div class="row mb-2">
+                <div class="col-md-6">
+                    <div class="input-group custom">
+                        <select class="form-control form-control-lg" id="region" name="region">
+                            @foreach($addresses['regions'] as $region)
+                                <option value="{{ $region }}" @if($user->region == $region) selected @endif>{{ $region }}</option>
+                            @endforeach
+                        </select>
+                        <input type="hidden" name="region_text" id="region-text" value="{{ $user->region }}">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group custom">
+                        <select class="form-control form-control-lg" id="province" name="province">
+                            @foreach($addresses['provinces'] as $province)
+                                <option value="{{ $province }}" @if($user->province == $province) selected @endif>{{ $province }}</option>
+                            @endforeach
+                        </select>
+                        <input type="hidden" name="province_text" id="province-text" value="{{ $user->province }}">
+                    </div>
+                </div>
+            </div>
+    
+            <div class="row mb-2">
+                <div class="col-md-6">
+                    <div class="input-group custom">
+                        <select class="form-control form-control-lg" id="city" name="city">
+                            @foreach($addresses['cities'] as $city)
+                                <option value="{{ $city }}" @if($user->city == $city) selected @endif>{{ $city }}</option>
+                            @endforeach
+                        </select>
+                        <input type="hidden" name="city_text" id="city-text" value="{{ $user->city }}">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group custom">
+                        <select class="form-control form-control-lg" id="barangay" name="barangay">
+                            @foreach($addresses['barangays'] as $barangay)
+                                <option value="{{ $barangay }}" @if($user->barangay == $barangay) selected @endif>{{ $barangay }}</option>
+                            @endforeach
+                        </select>
+                        <input type="hidden" name="barangay_text" id="barangay-text" value="{{ $user->barangay }}">
+                    </div>
+                </div>
+            </div>
+            <!-- End Address Selector -->
+
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">

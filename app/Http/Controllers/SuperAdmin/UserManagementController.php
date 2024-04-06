@@ -16,20 +16,47 @@ class UserManagementController extends Controller
         return view('superadmin.user.index', compact('users'));
     }
 
-    // Edit user for super admin
+    // Inside your controller method, where you are rendering the view
     public function edit($id)
     {
         $user = User::findOrFail($id); // Find user by ID
-        return view('superadmin.user.edit', compact('user'));
+        
+        // Fetch unique address components from existing users
+        $addresses = [
+            'regions' => User::distinct()->pluck('region')->filter()->toArray(),
+            'provinces' => User::distinct()->pluck('province')->filter()->toArray(),
+            'cities' => User::distinct()->pluck('city')->filter()->toArray(),
+            'barangays' => User::distinct()->pluck('barangay')->filter()->toArray(),
+        ];
+
+        return view('superadmin.user.edit', compact('user', 'addresses'));
     }
 
     // Update user for super admin
     public function update(Request $request, $id)
     {
+        
         // Validate if needed
-
+        $request->validate([
+            'username' => 'required|string|unique:users,username,' . $id,
+            'firstName' => 'nullable|string',
+            'lastName' => 'nullable|string',
+            'middleName' => 'nullable|string',
+            'gender' => 'nullable|in:male,female',
+            'age' => 'nullable|integer|min:0',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'role' => 'required|string|in:admin,patient,staff,super_admin',
+            'branch_id' => 'nullable|exists:branches,id',
+            'contact_number' => 'nullable|string|max:20', // Update field name to match form
+            'region' => 'nullable|string',
+            'province' => 'nullable|string',
+            'city' => 'nullable|string',
+            'barangay' => 'nullable|string',
+            'password' => 'nullable|string|min:6|confirmed',
+        ]);
+    
         $user = User::findOrFail($id);
-
+    
         // Define the fields you want to allow updating
         $userData = $request->only([
             'username',
@@ -47,17 +74,18 @@ class UserManagementController extends Controller
             'city',
             'barangay',
         ]);
-
+    
         // Check if password field is present and not empty, then update password
-        if ($request->has('password') && $request->filled('password')) {
+        if ($request->filled('password')) {
             $userData['password'] = bcrypt($request->password);
         }
-
+    
         // Update user data
         $user->update($userData);
-
+    
         return redirect()->route('superadmin.user.index')->with('success', 'User updated successfully');
     }
+    
 
     // Add user for super admin
     public function create()
