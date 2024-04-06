@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Inventory;
 use App\Models\Branch;
 use App\Models\Cart;
+use App\Models\Sale; 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 
@@ -99,5 +100,25 @@ class ShopController extends Controller
         }
 
         return redirect()->route('cart.show')->with('success', 'Product removed from cart successfully.');
+    }
+
+    public function order(Request $request)
+    {
+        $user = Auth::user();
+        $cart = $user->cart()->with('product')->get();
+
+        foreach ($cart as $item) {
+            Sale::create([
+                'user_id' => $user->id,
+                'product_id' => $item->product_id,
+                'quantity' => $item->quantity,
+                'branch_id' => $item->branch_id,
+            ]);
+
+            // Optionally, you may want to remove the ordered items from the cart
+            $item->delete();
+        }
+
+        return redirect()->route('cart.show')->with('success', 'Order placed successfully.');
     }
 }

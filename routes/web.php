@@ -180,3 +180,6 @@ Route::post('/shop/order', [ShopController::class, 'orderProduct'])->name('shop.
 Route::get('/cart', [ShopController::class, 'showCart'])->name('cart.show');
 Route::post('/cart/add', [ShopController::class, 'addToCart'])->name('cart.add');
 Route::post('/cart/remove', [ShopController::class, 'removeFromCart'])->name('cart.remove'); // Add this line
+
+//sales routes
+Route::post('/cart/order', [ShopController::class, 'order'])->name('cart.order');

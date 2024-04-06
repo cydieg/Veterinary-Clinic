@@ -35,6 +35,11 @@
                                         <input type="hidden" name="product_id" value="{{ $item->product->id }}">
                                         <button type="submit" class="btn btn-danger">Remove</button>
                                     </form>
+                                    <form method="POST" action="{{ route('cart.order') }}">
+                                        @csrf
+                                        <button type="submit" class="btn btn-primary">Order Now</button>
+                                    </form>
+                                    
                                 </td>
                             </tr>
                         @endforeach
