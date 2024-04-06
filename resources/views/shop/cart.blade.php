@@ -33,17 +33,18 @@
                                             <td>{{ $item->quantity }}</td>
                                             <td>${{ $item->product->price * $item->quantity }}</td>
                                             <td>
+                                                <form method="POST" action="{{ route('cart.order') }}">
+                                                    @csrf
+                                                    <input type="hidden" name="product_id" value="{{ $item->product_id }}">
+                                                    <button type="submit">Place Order</button>
+                                                </form>
                                                 <form method="POST" action="{{ route('cart.remove') }}">
                                                     @csrf
                                                     <input type="hidden" name="product_id"
                                                         value="{{ $item->product->id }}">
                                                     <button type="submit" class="btn btn-danger btn-sm">Remove</button>
                                                 </form>
-                                                <form method="POST" action="{{ route('cart.order') }}">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-primary btn-sm">Place order</button>
-                                                </form>
-                                                
+                                                                                            
                                             </td>
                                         </tr>
                                         @endforeach

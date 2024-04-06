@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use App\Mail\OrderProcessed;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
+
 
 class ShopController extends Controller
 {
@@ -107,28 +109,33 @@ class ShopController extends Controller
     public function order(Request $request)
     {
         $user = Auth::user();
-        $cart = $user->cart()->with('product')->get();
-    
-        // Calculate total price
-        $totalPrice = $cart->sum(function ($item) {
-            return $item->product->price * $item->quantity;
-        });
-    
-        // Send email notification
-        Mail::to($user->email)->send(new OrderProcessed($cart, $totalPrice));
-    
-        foreach ($cart as $item) {
-            Sale::create([
-                'user_id' => $user->id,
-                'product_id' => $item->product_id,
-                'quantity' => $item->quantity,
-                'branch_id' => $item->branch_id,
-            ]);
-    
-            // Optionally, you may want to remove the ordered items from the cart
-            $item->delete();
+        $productId = $request->input('product_id');
+
+        // Retrieve the selected product from the cart
+        $item = $user->cart()->where('product_id', $productId)->first();
+
+        if (!$item) {
+            return redirect()->route('cart.show')->with('error', 'Product not found in cart.');
         }
-    
+
+        // Calculate total price for the selected product
+        $totalPrice = $item->product->price * $item->quantity;
+
+        // Send email notification
+        Mail::to($user->email)->send(new OrderProcessed([$item], $totalPrice));
+
+        // Create a sale record for the selected product
+        Sale::create([
+            'user_id' => $user->id,
+            'product_id' => $item->product_id,
+            'quantity' => $item->quantity,
+            'branch_id' => $item->branch_id,
+        ]);
+
+        // Remove the ordered item from the cart
+        $item->delete();
+
         return redirect()->route('cart.show')->with('success', 'Order placed successfully.');
     }
+
 }
