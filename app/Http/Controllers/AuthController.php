@@ -26,7 +26,7 @@ class AuthController extends Controller
         return view('logins.register', compact('branches')); // Update the variable name
     }
 
-    public function register(Request $request)
+   public function register(Request $request)
     {
         // Validate the form data
         $validatedData = $request->validate([
@@ -49,6 +49,13 @@ class AuthController extends Controller
 
         // Hash the password
         $validatedData['password'] = bcrypt($validatedData['password']);
+
+
+         // Add the actual names of region, province, city, and barangay
+            $validatedData['region'] = $request->region_text;
+            $validatedData['province'] = $request->province_text;
+            $validatedData['city'] = $request->city_text;
+            $validatedData['barangay'] = $request->barangay_text;
 
         // Construct the address from individual components
         $addressComponents = [
