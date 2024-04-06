@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Make an Appointment</title>
+    <title>Make an Reservation</title>
     <style>
         form {
             max-width: 400px;
@@ -27,7 +27,7 @@
     <div>
         <form action="{{ route('appointments.store') }}" method="post" class="bg-light p-4 rounded">
             @csrf
-            <h2 class="text-center">Make an Appointment</h2>
+            <h2 class="text-center">Make an Reservation</h2>
 
             <!-- Display success or error message -->
             @if(session('success'))
@@ -44,12 +44,12 @@
             @endif
 
             <div class="form-group">
-                <label for="appointment_date">Appointment Date:</label>
-                <input type="date" name="appointment_date" class="form-control" required>
+                <label for="appointment_date">Reservation Date:</label>
+                <input type="date" name="appointment_date" class="form-control" value="{{ date('Y-m-d') }}" min="{{ date('Y-m-d') }}" required>
             </div>
 
             <div class="form-group">
-                <label for="appointment_time">Appointment Time:</label>
+                <label for="appointment_time">Reservation Time:</label>
                 <select name="appointment_time" class="form-control" required>
                     <option value="08:00">8:00 AM - 9:00 AM</option>
                     <option value="09:00">9:00 AM - 10:00 AM</option>
@@ -70,13 +70,10 @@
                 </select>
             </div>
 
-            <button type="submit" class="btn btn-info btn-block">Request Appointment</button> <!-- Changed button text -->
+            <button type="submit" class="btn btn-info btn-block">Request Reservation</button> <!-- Changed button text -->
         </form>
     </div>
-    </div>
-    </div>
-    </div>
-    </div>
+   
 </body>
 </html>
 @endsection

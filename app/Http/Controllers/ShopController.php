@@ -27,12 +27,15 @@ class ShopController extends Controller
 
         if (!$branchId && $branches->isNotEmpty()) {
             $branchId = $branches->first()->id;
+            // Redirect to the index route with the selected branch ID
+            return redirect()->route('shop.index', ['branch_id' => Crypt::encrypt($branchId)]);
         }
 
         $inventoryItems = Inventory::where('branch_id', $branchId)->paginate(9);
 
         return view('shop.shop', compact('inventoryItems', 'branches', 'branchId', 'encryptedBranchId'));
     }
+
 
     public function addToCart(Request $request)
     {
