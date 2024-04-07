@@ -2,15 +2,15 @@
 @section('pageTitle', isset($pageTitle) ? $pageTitle : 'Create New User')
 @section('content')
 <style>
-        /* Additional styling */
-        .form-group {
-            margin-bottom: 20px; /* Add some spacing between form groups */
-        }
-        .custom-bg-color {
+    /* Additional styling */
+    .form-group {
+        margin-bottom: 20px; /* Add some spacing between form groups */
+    }
+    .custom-bg-color {
         background-color: #BC7FCD;
         font-size: 20px;
-        }
-    </style>
+    }
+</style>
 
 <div class="container p-3 my-3 custom-bg-color text-white">Add User</div>
 <div class="container">
@@ -164,5 +164,23 @@
         </div>
     </form>
 </div>
+
+<script>
+    // JavaScript to handle branch selection based on role
+    document.getElementById('role').addEventListener('change', function() {
+        var role = this.value;
+        var branchSelect = document.getElementById('branch');
+
+        if (role === 'patient') {
+            // Set branch value to null and disable branch selection
+            branchSelect.value = '';
+            branchSelect.setAttribute('disabled', 'disabled');
+        } else {
+            // Enable branch selection
+            branchSelect.removeAttribute('disabled');
+        }
+    });
+</script>
+
 
 @endsection
