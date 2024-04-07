@@ -112,31 +112,37 @@ class StaffController extends Controller
         }
     }
     
+   // order product
     public function productOrder()
     {
         // Get the authenticated user's branch ID
         $branchId = auth()->user()->branch_id;
-    
+
         // Fetch sales related to the authenticated user's branch
         $sales = Sale::with('user', 'product', 'branch')
-                     ->whereHas('branch', function ($query) use ($branchId) {
-                         $query->where('id', $branchId);
-                     })
-                     ->get();
-        
+                    ->whereHas('branch', function ($query) use ($branchId) {
+                        $query->where('id', $branchId);
+                    })
+                    ->where('status', '!=', 'delivered') // Exclude 'delivered' sales
+                    ->get();
+
         // Pass sales to the view
         return view('staff.productorder', compact('sales'));
     }
+
     public function deliverSale(Sale $sale, Request $request)
     {
-        // Validate the request if needed
-    
-        // Update sale status to delivering
+        
         $sale->update(['status' => 'delivering']);
     
-        // Redirect back or to a specific page
+        
         return redirect()->back()->with('success', 'Sale is being delivered');
     }
+
+
+
+    //delivred product
+
     public function deliveringStatus()
     {
         // Get the authenticated user's branch ID
@@ -187,6 +193,30 @@ class StaffController extends Controller
 
         return redirect()->back()->with('success', 'Sale marked as delivered successfully.');
     }
+    public function dailySales()
+    {
+        try {
+            // Get the authenticated user's branch ID
+            $branchId = auth()->user()->branch_id;
+
+            // Fetch sales for the current date with status 'delivered' related to the authenticated user's branch
+            $dailySales = Sale::with('user', 'product', 'branch')
+                            ->where('branch_id', $branchId)
+                            ->whereDate('created_at', now()->toDateString()) // Filter by current date
+                            ->where('status', 'delivered')
+                            ->get();
+
+            // Pass daily sales to the view
+            return view('staff.dailysales', compact('dailySales'));
+        } catch (\Exception $e) {
+            // Log or handle the exception
+            return back()->with('error', 'An error occurred while retrieving daily sales.');
+        }
+    }
+
+
+
+
 
 
 

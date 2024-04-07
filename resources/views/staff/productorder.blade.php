@@ -28,7 +28,6 @@
             </thead>
             <tbody>
                 @foreach($sales as $sale)
-                    @if($sale->status !== 'delivering')
                     <tr>
                         <td>{{ $sale->user->firstName }} {{ $sale->user->lastName }}</td>
                         <td>{{ $sale->user->contact_number }}</td>
@@ -46,7 +45,6 @@
                         </td>
                         <!-- Add more table cells if needed -->
                     </tr>
-                    @endif
                 @endforeach
             </tbody>
         </table>

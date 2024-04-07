@@ -125,7 +125,7 @@ Route::get('/staff/product-order', [StaffController::class, 'productOrder'])->na
 Route::put('/sales/{sale}', [StaffController::class, 'deliverSale'])->name('deliver.sale');
 Route::get('/staff/delivering-status', [StaffController::class, 'deliveringStatus'])->name('staff.deliveringStatus');
 Route::post('/sales/{id}/mark-as-delivered', [StaffController::class, 'markAsDelivered'])->name('mark-as-delivered');
-
+Route::get('/daily-sales', [StaffController::class, 'dailySales'])->name('daily.sales');
 
 //Landing_Page
 Route::get('/', [LandingPageController::class, 'Home'])->name('home');
