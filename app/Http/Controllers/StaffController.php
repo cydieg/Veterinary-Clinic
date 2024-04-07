@@ -200,24 +200,38 @@ class StaffController extends Controller
     {
         // Get the authenticated user's branch ID
         $branchId = auth()->user()->branch_id;
-    
+
         // Fetch delivered sales related to the authenticated user's branch
         $deliveredSales = Sale::with('product')
-                              ->where('branch_id', $branchId) // Filter by branch_id directly
-                              ->where('status', 'delivered')
-                              ->get();
-    
-        // Group sales by product ID and compute total price for each product
-        $totalPrices = $deliveredSales->groupBy('product_id')->map(function ($sales) {
-            $product = $sales->first()->product; // Get the product associated with the sales
-            $totalPrice = $sales->sum('total_price'); // Compute total price for the product
-            return (object) ['product' => $product, 'totalPrice' => $totalPrice];
-        });
-    
+                            ->where('branch_id', $branchId)
+                            ->where('status', 'delivered')
+                            ->get();
+
+        // Initialize an empty array to store total prices and quantity sold for each product
+        $totalPrices = [];
+
+        // Calculate total price and quantity sold for each product
+        foreach ($deliveredSales as $sale) {
+            $productId = $sale->product_id;
+
+            // If the product is not yet added to the totalPrices array, initialize its values
+            if (!isset($totalPrices[$productId])) {
+                $totalPrices[$productId] = (object)[
+                    'product' => $sale->product,
+                    'totalPrice' => 0,
+                    'quantitySold' => 0
+                ];
+            }
+
+            // Accumulate total price and quantity sold
+            $totalPrices[$productId]->totalPrice += $sale->total_price;
+            $totalPrices[$productId]->quantitySold += $sale->quantity;
+        }
+
         // Pass total prices to the view
         return view('staff.dailysales', compact('totalPrices'));
     }
-    
+
 
 
 
