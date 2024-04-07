@@ -1,5 +1,3 @@
-edit user
-
 @extends('back.layout.superadmin-layout')
 @section('pageTitle', isset($pageTitle) ? $pageTitle : 'Edit User')
 @section('content')
@@ -8,7 +6,7 @@ edit user
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <div class="container p-3 my-3 custom-bg-color text-white">Edit User</div>
+    <title>Edit User</title>
     <!-- Link Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Add any necessary CSS stylesheets here -->
@@ -18,13 +16,14 @@ edit user
             margin-bottom: 20px; /* Add some spacing between form groups */
         }
         .custom-bg-color {
-        background-color: #BC7FCD;
-        font-size: 20px;
+            background-color: #BC7FCD;
+            font-size: 20px;
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="p-3 my-3 custom-bg-color text-white">Edit User</div>
         <form action="{{ route('superadmin.user.update', $user->id) }}" method="POST" class="needs-validation" novalidate>
             @csrf
             @method('PUT')
@@ -101,14 +100,13 @@ edit user
             </div>
 
             <div class="row">
-               
                 <!-- Region -->
                 <div class="col-md-4 mb-3">
                     <label for="region">Region:</label>
                     <select class="form-control" id="region" name="region" required>
                         <!-- Options will be dynamically populated by JavaScript -->
                     </select>
-                    <input type="hidden" name="region_text" id="region-text">
+                    <input type="hidden" name="region_text" id="region-text" value="{{ $user->region }}">
                     <div class="invalid-feedback">
                         Please select a valid region.
                     </div>
@@ -119,7 +117,7 @@ edit user
                     <select class="form-control" id="province" name="province" required>
                         <!-- Options will be dynamically populated by JavaScript -->
                     </select>
-                    <input type="hidden" name="province_text" id="province-text">
+                    <input type="hidden" name="province_text" id="province-text" value="{{ $user->province }}">
                     <div class="invalid-feedback">
                         Please select a valid province.
                     </div>
@@ -130,7 +128,7 @@ edit user
                     <select class="form-control" id="city" name="city" required>
                         <!-- Options will be dynamically populated by JavaScript -->
                     </select>
-                    <input type="hidden" name="city_text" id="city-text">
+                    <input type="hidden" name="city_text" id="city-text" value="{{ $user->city }}">
                     <div class="invalid-feedback">
                         Please select a valid city.
                     </div>
@@ -144,7 +142,7 @@ edit user
                     <select class="form-control" id="barangay" name="barangay" required>
                         <!-- Options will be dynamically populated by JavaScript -->
                     </select>
-                    <input type="hidden" name="barangay_text" id="barangay-text">
+                    <input type="hidden" name="barangay_text" id="barangay-text" value="{{ $user->barangay }}">
                     <div class="invalid-feedback">
                         Please select a valid barangay.
                     </div>

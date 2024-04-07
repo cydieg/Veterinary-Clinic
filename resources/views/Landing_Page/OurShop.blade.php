@@ -2,4 +2,5 @@
 @section('pageTitle', isset($pageTitle) ? $pageTitle : 'Vet')
 @section('content')
 
+
 @endsection

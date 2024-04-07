@@ -224,6 +224,7 @@
                 var branchId = $(this).data('branch-id');
                 $("#selectedBranchName").text($(this).text());
                 filterInventoryByBranch(branchId);
+                // Close the branch selection modal
                 $('#branchModal').modal('hide');
             });
 
@@ -247,9 +248,9 @@
                 $("#addQuantityForm").attr('action', formAction);
             });
 
-            // Handler for close button in modal
-            $(".modal .close").click(function() {
-                $(this).closest('.modal').modal('hide');
+            // Handler for when the branch modal is hidden
+            $('#branchModal').on('hidden.bs.modal', function () {
+                // Remove any remaining backdrop
                 $('.modal-backdrop').remove();
             });
         });

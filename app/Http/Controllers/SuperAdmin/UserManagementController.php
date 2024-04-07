@@ -35,7 +35,6 @@ class UserManagementController extends Controller
     // Update user for super admin
     public function update(Request $request, $id)
     {
-        
         // Validate if needed
         $request->validate([
             'username' => 'required|string|unique:users,username,' . $id,
@@ -69,11 +68,13 @@ class UserManagementController extends Controller
             'role',
             'branch_id',
             'contact_number',
-            'region',
-            'province',
-            'city',
-            'barangay',
         ]);
+    
+        // Update address fields with actual names
+        $userData['region'] = $request->input('region_text');
+        $userData['province'] = $request->input('province_text');
+        $userData['city'] = $request->input('city_text');
+        $userData['barangay'] = $request->input('barangay_text');
     
         // Check if password field is present and not empty, then update password
         if ($request->filled('password')) {
@@ -85,6 +86,7 @@ class UserManagementController extends Controller
     
         return redirect()->route('superadmin.user.index')->with('success', 'User updated successfully');
     }
+    
     
 
     // Add user for super admin
