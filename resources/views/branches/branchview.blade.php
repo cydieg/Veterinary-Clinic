@@ -9,12 +9,15 @@
     <title>View Branches</title>
 </head>
 <body>
+<div class="container">
     <div class="card-box mb-30">
         <div class="table-responsive">
-            <h2 class="h4 pd-20">View Branches</h2>
+            <h2 class="h1">View Branches</h2>
 
             <!-- Button to go back to /create-branch -->
-            <a href="{{ route('branch.create.form') }}" class="btn btn-primary mb-3">Add New Branch</a>
+            <div class="text-right mb-3">
+                <a href="{{ route('branch.create.form') }}" class="btn btn-primary">Add New Branch</a>
+            </div>
 
             @if(isset($branches) && count($branches) > 0)
                 <table class="table nowrap">
