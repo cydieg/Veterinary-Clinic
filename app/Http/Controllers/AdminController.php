@@ -38,45 +38,54 @@ class AdminController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'username' => 'required|string|max:255|unique:users',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|string|min:6',
-            'firstName' => 'required|string|max:255',
-            'lastName' => 'required|string|max:255',
-            'gender' => 'required|in:male,female',
-            'age' => 'required|integer|min:18',
+        $validatedData = $request->validate([
+            'username' => 'required|string|max:50',
+            'firstName' => 'required|string|max:50',
+            'lastName' => 'required|string|max:50',
+            'middleName' => 'nullable|string|max:50',
+            'gender' => 'required|in:male,female,other',
+            'age' => 'required|integer',
+            'email' => 'required|email|max:50',
+            'role' => 'required|in:super_admin,admin,staff,patient',
+            'password' => 'required|string|max:255',
+            'branch_id' => $request->role === 'patient' ? 'nullable' : 'required|exists:branches,id',
+            'contact_number' => 'nullable|string|max:20',
             'region' => 'required|string|max:255',
             'province' => 'required|string|max:255',
             'city' => 'required|string|max:255',
             'barangay' => 'required|string|max:255',
-            'contact_number' => 'required|string|max:255',
-            'role' => 'required|in:admin,patient,staff',
-            // Add other validation rules as needed
         ]);
-    
-        $user = new User();
-        $user->username = $request->username;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->firstName = $request->firstName;
-        $user->lastName = $request->lastName;
-        $user->middleName = $request->middleName ?? null;
-        $user->gender = $request->gender;
-        $user->age = $request->age;
-        $user->region = $request->region;
-        $user->province = $request->province;
-        $user->city = $request->city;
-        $user->barangay = $request->barangay;
-        $user->address = $request->region . ', ' . $request->province . ', ' . $request->city . ', ' . $request->barangay;
-        $user->contact_number = $request->contact_number;
-        $user->role = $request->role;
-        // You may set other attributes here if needed
-    
-        $user->save();
-    
+
+        // Hash the password
+        $validatedData['password'] = bcrypt($validatedData['password']);
+
+
+        // Add the actual names of region, province, city, and barangay
+            $validatedData['region'] = $request->region_text;
+            $validatedData['province'] = $request->province_text;
+            $validatedData['city'] = $request->city_text;
+            $validatedData['barangay'] = $request->barangay_text;
+
+        // Construct the address from individual components
+        $addressComponents = [
+            'region' => $request->region_text,
+            'province' => $request->province_text,
+            'city' => $request->city_text,
+            'barangay' => $request->barangay_text,
+        ];
+         // Concatenate the address components into a single string
+        $address = implode(', ', $addressComponents);
+
+         // Add the concatenated address to validated data
+        $validatedData['address'] = $address;
+ 
+
+        // Create the user
+        $user = User::create($validatedData);
+
         return redirect()->route('admin.users.index')->with('success', 'User created successfully');
     }
+
 
 
 
