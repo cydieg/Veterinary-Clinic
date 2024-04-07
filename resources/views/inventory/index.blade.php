@@ -7,14 +7,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Branches</title>
+    <div class="container p-3 my-3 custom-bg-color text-white">Pet Shop Inventory</div>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <!-- Custom CSS -->
     <style>
-        /* Add your custom CSS styles here */
+        .custom-bg-color {
+            background-color: #BC7FCD;
+            font-size: 20px;
+        }
     </style>
 </head>
 
@@ -43,48 +46,52 @@
             </div>
         </div>
 
-        <!-- Inventory table -->
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Quantity</th>
-                    <th>Image</th>
-                    <th>Category</th>
-                    <th>Price</th>
-                    <th>Created At</th>
-                    <th>Branch</th>
-                    <th>Action</th>
-                    <th>Expiration</th>
-                    <th>UPC</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Inventory items will be listed here -->
-                @foreach($inventoryItems as $item)
-                <tr data-branch-id="{{ $item->branch_id }}">
-                    <td>{{ $item->name }}</td>
-                    <td>{{ $item->description }}</td>
-                    <td>{{ $item->quantity }}</td>
-                    <td><img src="{{ asset('images/' . $item->image) }}" alt="{{ $item->name }}" style="max-width: 100px;"></td>
-                    <td>{{ $item->category }}</td>
-                    <td>&#8369;{{ number_format($item->price, 2) }}</td>
-                    <td>{{ $item->created_at }}</td>
-                    <td>{{ $item->branch->name }}</td>
-                    <td>
-                        <!-- Update action to redirect to audit page -->
-                        <a href="{{ route('inventory.audit.show', ['id' => $item->id]) }}" class="btn btn-primary">Audit</a>
-                        <!-- Button to trigger quantity modal -->
-                        <button type="button" class="btn btn-success add-quantity-btn" data-toggle="modal" data-target="#addQuantityModal" data-item-id="{{ $item->id }}">Add Quantity</button>
-                    </td>
-                    <td>{{ $item->expiration }}</td>
-                    <!-- Display UPC -->
-                    <td>{{ $item->upc }}</td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <!-- Inventory table -->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Quantity</th>
+                        <th>Image</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Created At</th>
+                        <th>Branch</th>
+                        <th>Action</th>
+                        <th>Expiration</th>
+                        <th>UPC</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Inventory items will be listed here -->
+                    @foreach($inventoryItems as $item)
+                    <tr data-branch-id="{{ $item->branch_id }}">
+                        <td>{{ $item->name }}</td>
+                        <td>{{ $item->description }}</td>
+                        <td>{{ $item->quantity }}</td>
+                        <td><img src="{{ asset('images/' . $item->image) }}" alt="{{ $item->name }}" style="max-width: 100px;"></td>
+                        <td>{{ $item->category }}</td>
+                        <td>&#8369;{{ number_format($item->price, 2) }}</td>
+                        <td>{{ $item->created_at }}</td>
+                        <td>{{ $item->branch->name }}</td>
+                        <td>
+                            <div class="d-flex">
+                                <!-- Update action to redirect to audit page -->
+                                <a href="{{ route('inventory.audit.show', ['id' => $item->id]) }}" class="btn btn-primary btn-sm mr-1">Audit</a>
+                                <!-- Button to trigger quantity modal -->
+                                <button type="button" class="btn btn-success btn-sm add-quantity-btn" data-toggle="modal" data-target="#addQuantityModal" data-item-id="{{ $item->id }}">Add Quantity</button>
+                            </div>
+                        </td>
+                        <td>{{ $item->expiration }}</td>
+                        <!-- Display UPC -->
+                        <td>{{ $item->upc }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
 
         <!-- Branch Selection Modal -->
         <div class="modal fade" id="branchModal" tabindex="-1" aria-labelledby="branchModalLabel" aria-hidden="true" data-backdrop="static">
