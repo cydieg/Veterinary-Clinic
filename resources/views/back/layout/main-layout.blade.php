@@ -251,6 +251,10 @@
 							<a class="dropdown-item" href="{{ route('manual.logout') }}">
 								<i class="dw dw-logout"></i> Log Out
 							</a>
+							
+							
+								
+							
 
 						</div>
 					</div>
@@ -452,7 +456,12 @@
 								><span class="mtext">Home</span>
 							</a>
 						</li>
-						
+						<li class="dropdown">
+							<a href="{{ route('admin.inventory.indexadmin') }}" class="dropdown-toggle no-arrow">
+								<span class="micon bi bi-bar-chart"></span>
+								<span class="mtext">Inventory</span>
+							</a>
+						</li>
 						<li class="dropdown">
 							<a href="javascript:;" class="dropdown-toggle no-arrow">
 								<span class="micon bi bi-bar-chart"></span>
@@ -467,7 +476,7 @@
 							<!-- Add the button to navigate to the route for managing users -->	
 							<ul class="submenu">
 								<li>				
-							<a href="{{ route('userTable') }}">Manage Users</a>
+							<a href="{{ route('admin.users.index') }}">Manage Users</a>
 						</li>
 						</ul>
 						 <li class="dropdown">

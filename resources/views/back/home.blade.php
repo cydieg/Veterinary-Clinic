@@ -238,7 +238,7 @@
 							<span class="user-icon">
 								<img src="/back/images/cydiepic.jpg" alt="" />
 							</span>
-							<span class="user-name"> Cydie S. Gargullos</span>
+							<span class="user-name"> Cydie S. Gargullo</span>
 						</a>
 						<div
 							class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list"
@@ -471,12 +471,6 @@
 							</ul>
 						</li>
                         -->
-						<li class="dropdown">
-							<a href="" class="dropdown-toggle no-arrow">
-								<span class="micon bi bi-arrow-up-right-square"></span>
-								<span class="mtext">Completed <br> Appointment</span>
-							</a>
-						</li>
 						<li class="dropdown">
 							<a href="{{ route('admin.inventory.indexadmin') }}" class="dropdown-toggle no-arrow">
 								<span class="micon bi bi-bar-chart"></span>
