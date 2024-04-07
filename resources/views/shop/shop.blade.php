@@ -52,6 +52,12 @@
 		<div class="row">
 			<div class="container mt-4">
 				<h1 class="mb-4">Welcome to Our Shop</h1>
+                    <!-- Add this section to display error message -->
+                    @if(session('error'))
+                    <div id="errorMessage" class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                    @endif
 
 				<!-- Dropdown selection for branches -->
 				<div class="dropdown mb-4">
@@ -150,25 +156,25 @@
             document.getElementById('totalPrice').innerText = totalPrice.toFixed(2);
         }
     </script>
+
+    <!-- Script to hide the error message after 2.5 seconds -->
     <script>
-        $(document).ready(function(){
-            // Check if the 'shopVisited' key is present in sessionStorage
-            var hasVisitedShop = sessionStorage.getItem('shopVisited');
-            
-            // If 'shopVisited' key is not present, it means it's the first visit
-            if (!hasVisitedShop) {
-                // Show the notification modal
-                $('#notificationModal').modal('show');
-                
-                // Set the 'shopVisited' key in sessionStorage to indicate that the shop has been visited
-                sessionStorage.setItem('shopVisited', true);
+        // Wait for the document to be fully loaded
+        document.addEventListener("DOMContentLoaded", function() {
+            // Get the error message element
+            var errorMessage = document.getElementById('errorMessage');
+
+            // Check if the error message exists
+            if (errorMessage) {
+                // Hide the error message after 2.5 seconds
+                setTimeout(function() {
+                    errorMessage.style.display = 'none';
+                }, 2500); // 2.5 seconds
             }
         });
     </script>
-    
 
-
-    <!-- Add this modal template to your existing HTML code -->
+    <!-- Product Modal -->
     <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -194,7 +200,7 @@
                                 <div class="input-group-prepend">
                                     <button class="btn btn-outline-secondary" type="button" onclick="decrementQuantity()">-</button>
                                 </div>
-                                <input type="text" class="form-control text-center" id="quantity" name="quantity" value="1" readonly>
+                                <input type="text" class="form-control text-center" id="quantity" name="quantity" value="1">
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" type="button" onclick="incrementQuantity()">+</button>
                                 </div>

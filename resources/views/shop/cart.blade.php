@@ -29,9 +29,9 @@
                                         @foreach($cart as $item)
                                         <tr>
                                             <td>{{ $item->product->name }}</td>
-                                            <td>₱{{ $item->product->price }}</td>
+                                            <td>${{ $item->product->price }}</td>
                                             <td>{{ $item->quantity }}</td>
-                                            <td>₱{{ $item->product->price * $item->quantity }}</td>
+                                            <td>${{ $item->product->price * $item->quantity }}</td>
                                             <td>
                                                 <form method="POST" action="{{ route('cart.order') }}">
                                                     @csrf
@@ -56,7 +56,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h5 class="card-title">Total Price</h5>
-                                    <p class="card-text">Total: ₱{{ $totalPrice }}</p>
+                                    <p class="card-text">Total: ${{ $totalPrice }}</p>
                                 </div>
                             </div>
                             <!-- Add back button here -->
