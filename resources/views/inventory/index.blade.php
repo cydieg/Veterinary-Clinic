@@ -1,3 +1,6 @@
+@extends('back.layout.superadmin-layout')
+@section('pageTitle', isset($pageTitle) ? $pageTitle : 'Vet')
+@section('content')
 <!DOCTYPE html>
 <html lang="en">
 
@@ -84,7 +87,7 @@
         </table>
 
         <!-- Branch Selection Modal -->
-        <div class="modal fade" id="branchModal" tabindex="-1" aria-labelledby="branchModalLabel" aria-hidden="true">
+        <div class="modal fade" id="branchModal" tabindex="-1" aria-labelledby="branchModalLabel" aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -109,7 +112,7 @@
         </div>
 
         <!-- Add Product Modal -->
-        <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+        <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -173,7 +176,7 @@
         </div>
 
         <!-- Add Quantity Modal -->
-        <div class="modal fade" id="addQuantityModal" tabindex="-1" aria-labelledby="addQuantityModalLabel" aria-hidden="true">
+        <div class="modal fade" id="addQuantityModal" tabindex="-1" aria-labelledby="addQuantityModalLabel" aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -236,8 +239,15 @@
                 formAction = formAction.replace(':id', itemId);
                 $("#addQuantityForm").attr('action', formAction);
             });
+
+            // Handler for close button in modal
+            $(".modal .close").click(function() {
+                $(this).closest('.modal').modal('hide');
+                $('.modal-backdrop').remove();
+            });
         });
     </script>
 </body>
 
 </html>
+@endsection

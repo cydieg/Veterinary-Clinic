@@ -427,9 +427,9 @@
 		<div class="left-side-bar">
 			<div class="brand-logo">
 				<a href="index.html">
-					<img src="/back/images/OralEase.png" alt="" class="dark-logo" />
+					<img src="/back/images/petlogo.png" alt="" class="dark-logo" />
 					<img
-						src="/back/images/OralEase.png"
+						src="/back/images/petlogo.png"
 						alt=""
 						class="light-logo"
 					/>
