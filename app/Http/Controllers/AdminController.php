@@ -24,7 +24,8 @@ class AdminController extends Controller
             ->get();
 
         return view('admin.index', compact('users'));
-    }   
+    } 
+      
     // Show the form for creating a new user
     public function create()
     {
@@ -35,23 +36,50 @@ class AdminController extends Controller
         return view('admin.create', compact('branch'));
     }
 
-    // Store a newly created user in storage
     public function store(Request $request)
     {
         $request->validate([
             'username' => 'required|string|max:255|unique:users',
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:6',
+            'firstName' => 'required|string|max:255',
+            'lastName' => 'required|string|max:255',
+            'gender' => 'required|in:male,female',
+            'age' => 'required|integer|min:18',
+            'region' => 'required|string|max:255',
+            'province' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'barangay' => 'required|string|max:255',
+            'contact_number' => 'required|string|max:255',
+            'role' => 'required|in:admin,patient,staff',
             // Add other validation rules as needed
         ]);
-
+    
         $user = new User();
-        $user->fill($request->all());
+        $user->username = $request->username;
+        $user->email = $request->email;
         $user->password = Hash::make($request->password);
+        $user->firstName = $request->firstName;
+        $user->lastName = $request->lastName;
+        $user->middleName = $request->middleName ?? null;
+        $user->gender = $request->gender;
+        $user->age = $request->age;
+        $user->region = $request->region;
+        $user->province = $request->province;
+        $user->city = $request->city;
+        $user->barangay = $request->barangay;
+        $user->address = $request->region . ', ' . $request->province . ', ' . $request->city . ', ' . $request->barangay;
+        $user->contact_number = $request->contact_number;
+        $user->role = $request->role;
+        // You may set other attributes here if needed
+    
         $user->save();
-
+    
         return redirect()->route('admin.users.index')->with('success', 'User created successfully');
     }
+
+
+
 
     // Display the specified user
     public function show($id)

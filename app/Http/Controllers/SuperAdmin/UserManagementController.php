@@ -87,7 +87,6 @@ class UserManagementController extends Controller
         return redirect()->route('superadmin.user.index')->with('success', 'User updated successfully');
     }
     
-    
 
     // Add user for super admin
     public function create()
