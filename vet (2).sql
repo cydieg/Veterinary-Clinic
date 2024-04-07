@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 06, 2024 at 08:17 AM
+-- Generation Time: Apr 07, 2024 at 01:25 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -235,7 +235,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (25, '2024_04_04_045217_modify_carts_table', 24),
 (26, '2024_04_04_050727_add_branch_id_to_carts_table', 25),
 (27, '2024_04_06_064202_add_contact_number_to_users_table', 26),
-(28, '2024_04_06_070439_add_status_to_sales_table', 27);
+(28, '2024_04_06_070439_add_status_to_sales_table', 27),
+(29, '2024_04_06_152708_add_address_components_to_users_table', 28),
+(30, '2024_04_06_154327_add_default_value_to_address_column_in_users_table', 29);
 
 -- --------------------------------------------------------
 
@@ -310,16 +312,7 @@ CREATE TABLE `sales` (
 --
 
 INSERT INTO `sales` (`id`, `user_id`, `product_id`, `quantity`, `branch_id`, `created_at`, `updated_at`, `status`) VALUES
-(2, 19, 5, 5, 16, '2024-04-05 23:06:15', '2024-04-05 23:06:15', 'pending'),
-(3, 19, 12, 4, 16, '2024-04-05 23:15:03', '2024-04-05 23:15:03', 'pending'),
-(4, 20, 5, 4, 16, '2024-04-05 23:19:18', '2024-04-05 23:19:18', 'pending'),
-(5, 20, 5, 1, 16, '2024-04-05 23:20:53', '2024-04-05 23:20:53', 'pending'),
-(6, 20, 5, 1, 16, '2024-04-05 23:21:46', '2024-04-05 23:21:46', 'pending'),
-(7, 20, 5, 1, 16, '2024-04-05 23:22:43', '2024-04-05 23:22:43', 'pending'),
-(8, 20, 5, 1, 16, '2024-04-05 23:23:33', '2024-04-05 23:23:33', 'pending'),
-(9, 20, 5, 4, 16, '2024-04-05 23:28:46', '2024-04-05 23:28:46', 'pending'),
-(10, 19, 12, 3, 16, '2024-04-05 23:30:38', '2024-04-05 23:30:38', 'pending'),
-(11, 19, 5, 3, 16, '2024-04-05 23:40:54', '2024-04-05 23:40:54', 'pending');
+(1, 47, 5, 1, 16, '2024-04-06 10:22:36', '2024-04-06 10:22:36', 'pending');
 
 -- --------------------------------------------------------
 
@@ -333,7 +326,11 @@ CREATE TABLE `users` (
   `firstName` varchar(50) NOT NULL,
   `lastName` varchar(50) NOT NULL,
   `middleName` varchar(50) DEFAULT NULL,
-  `address` varchar(255) NOT NULL,
+  `region` varchar(255) DEFAULT NULL,
+  `province` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `barangay` varchar(255) DEFAULT NULL,
+  `address` varchar(255) NOT NULL DEFAULT '',
   `gender` enum('male','female','other') NOT NULL,
   `age` int NOT NULL,
   `email` varchar(50) NOT NULL,
@@ -349,17 +346,16 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `firstName`, `lastName`, `middleName`, `address`, `gender`, `age`, `email`, `password`, `created_at`, `updated_at`, `branch_id`, `contact_number`, `role`) VALUES
-(1, 'Sett', 'Jon Wendell', 'Cabrera', 'Lontoc', 'Nacoco Santo Nino', 'male', 22, 'corvecc1@gmail.com', '$2y$12$2k8M1Dr4znqRowxeg/4LiePrDsTbOftt0NC43FwikNg0jk9IoQUCi', '2024-02-19 05:31:38', '2024-02-19 06:01:09', 16, NULL, 'super_admin'),
-(4, 'staffcal', 'staffcal', 'staffcal', 'staffcal', 'Test', 'female', 21, 'staffcal@gmail.com', '$2y$12$1xIoG7fECmJyaCvzk9hB7uMn6lh0Yt4k04a5LkaVMwlxe97cW98z6', '2024-02-19 06:13:07', '2024-02-19 06:13:07', 16, NULL, 'staff'),
-(6, 'staffvic', 'staffvic', 'staffvic', 'staffvic', 'Test', 'female', 21, 'staffvic@gmail.com', '$2y$12$PW0q/y1f8t7Lu61MSqdSeOcDvKU1t66xeoMDh3ImIFpKDKsI91av2', '2024-02-19 06:15:48', '2024-02-19 06:15:48', 18, NULL, 'staff'),
-(7, 'admincal', 'admincal', 'admincal', 'admincal', 'Test', 'female', 21, 'admincal@gmail.com', '$2y$12$xgLPf4n42RNZ4Ewog5sC8.uKW/go4WSFYehre9FExL4soV3iI/kFu', '2024-02-19 06:16:39', '2024-02-19 06:16:39', 16, NULL, 'admin'),
-(10, 'patienteses', 'patient', 'patient', 'patient', 'Test', 'male', 21, 'patient@gmail.com', '$2y$12$g1HHkQYSA9RngbJG4h5twukLX3qJf8sS2u0SDk.twPhMnZ1xH3JB2', '2024-02-19 06:50:01', '2024-04-04 20:57:11', NULL, NULL, 'patient'),
-(11, 'clientcal', 'clientcal', 'clientcal', 'clientcal', 'Test', 'female', 21, 'clientcal@gmail.com', '$2y$12$MXJHFcL5KU0JqA/aaLGVbuZ5L0i9tMzNvdjbc6kL1KONuSqkWfa52', '2024-02-19 06:56:07', '2024-02-19 06:56:07', NULL, NULL, 'patient'),
-(13, 'adminvic', 'adminvic', 'adminvic', 'adminvic', 'test', 'female', 32, 'adminvic@gmail.com', '$2y$12$ln9eWedJqdIjAMTWjHJeKeVa1kDyI.stctmp/7OAzJtSK0oXazt9e', '2024-03-13 06:38:37', '2024-03-13 06:38:37', 18, NULL, 'admin'),
-(19, 'Sett', 'Jon Wendell', 'Cabrera', 'Lontoc', 'Nacoco', 'male', 21, 'nopona21@gmail.com', '$2y$12$sSawLmyV.Sz2SN46EfxmAejhbaLf.8ekyGSqf9EtS15pegNTy7S1m', '2024-04-05 22:44:05', '2024-04-05 22:44:05', NULL, '09305115251', 'patient'),
-(20, 'Sett', 'Jon Wendell', 'Cabrera', 'Lontoc', 'Nacoco', 'male', 21, 'janzkiemalditz@gmail.com', '$2y$12$1GfA32gaPGfJTXFAcr9klehAOyBM/tynf8EsYXGwzBC84IBEfdQcG', '2024-04-05 23:18:27', '2024-04-05 23:18:27', NULL, '09817523253', 'patient'),
-(21, 'Sett', 'Jon Wendell', 'Cabrera', 'Lontoc', 'Nacoco Santo Nino', 'male', 21, 'corvecc1@gmail.com', '$2y$12$xta3i894bqxXP2Qs2n9pAOTWHtLgXjbv5Wjb5jfQwHYzBFZ7eTq6.', '2024-04-05 23:30:05', '2024-04-05 23:30:05', NULL, '09305115251', 'patient');
+INSERT INTO `users` (`id`, `username`, `firstName`, `lastName`, `middleName`, `region`, `province`, `city`, `barangay`, `address`, `gender`, `age`, `email`, `password`, `created_at`, `updated_at`, `branch_id`, `contact_number`, `role`) VALUES
+(1, 'Sett', 'Jon Wendell', 'Cabrera', 'Lontoc', NULL, NULL, NULL, NULL, 'Nacoco Santo Nino', 'male', 22, 'corvecc1@gmail.com', '$2y$12$2k8M1Dr4znqRowxeg/4LiePrDsTbOftt0NC43FwikNg0jk9IoQUCi', '2024-02-19 05:31:38', '2024-02-19 06:01:09', 16, NULL, 'super_admin'),
+(4, 'staffcal', 'staffcal', 'staffcal', 'staffcal', NULL, NULL, NULL, NULL, 'Test', 'female', 21, 'staffcal@gmail.com', '$2y$12$1xIoG7fECmJyaCvzk9hB7uMn6lh0Yt4k04a5LkaVMwlxe97cW98z6', '2024-02-19 06:13:07', '2024-02-19 06:13:07', 16, NULL, 'staff'),
+(6, 'staffvic', 'staffvic', 'staffvic', 'staffvic', NULL, NULL, NULL, NULL, 'Test', 'female', 21, 'staffvic@gmail.com', '$2y$12$PW0q/y1f8t7Lu61MSqdSeOcDvKU1t66xeoMDh3ImIFpKDKsI91av2', '2024-02-19 06:15:48', '2024-02-19 06:15:48', 18, NULL, 'staff'),
+(7, 'admincal', 'admincal', 'admincal', 'admincal', NULL, NULL, NULL, NULL, 'Test', 'female', 21, 'admincal@gmail.com', '$2y$12$xgLPf4n42RNZ4Ewog5sC8.uKW/go4WSFYehre9FExL4soV3iI/kFu', '2024-02-19 06:16:39', '2024-02-19 06:16:39', 16, NULL, 'admin'),
+(10, 'patienteses', 'patient', 'patient', 'patient', NULL, NULL, NULL, NULL, 'Test', 'male', 21, 'patient@gmail.com', '$2y$12$g1HHkQYSA9RngbJG4h5twukLX3qJf8sS2u0SDk.twPhMnZ1xH3JB2', '2024-02-19 06:50:01', '2024-04-04 20:57:11', NULL, NULL, 'patient'),
+(11, 'clientcal', 'clientcal', 'clientcal', 'clientcal', NULL, NULL, NULL, NULL, 'Test', 'female', 21, 'clientcal@gmail.com', '$2y$12$MXJHFcL5KU0JqA/aaLGVbuZ5L0i9tMzNvdjbc6kL1KONuSqkWfa52', '2024-02-19 06:56:07', '2024-02-19 06:56:07', NULL, NULL, 'patient'),
+(13, 'adminvic', 'adminvic', 'adminvic', 'adminvic', NULL, NULL, NULL, NULL, 'test', 'female', 32, 'adminvic@gmail.com', '$2y$12$ln9eWedJqdIjAMTWjHJeKeVa1kDyI.stctmp/7OAzJtSK0oXazt9e', '2024-03-13 06:38:37', '2024-03-13 06:38:37', 18, NULL, 'admin'),
+(47, 'Sett', 'Jon Wendell', 'Cabrera', 'Lontoc', 'MIMAROPA', 'Oriental Mindoro', 'City Of Calapan (Capital)', 'Balite', 'MIMAROPA, Oriental Mindoro, City Of Calapan (Capital), Balite', 'female', 21, 'nopona21@gmail.com', '$2y$12$1aOkHuZOEitZInVq9vBPEOs75ehoNFq3fV0XyqUP2pZcOpVMXJhHO', '2024-04-06 08:46:53', '2024-04-06 08:46:53', NULL, '09305115251', 'patient'),
+(50, 'kinginamo', 'TestClient', 'TestClient', 'TestClient', 'MIMAROPA', 'Occidental Mindoro', 'Paluan', 'Silahis Ng Pag-Asa Pob. (Bgy 3)', 'MIMAROPA, Occidental Mindoro, Paluan, Silahis Ng Pag-Asa Pob. (Bgy 3)', 'male', 21, 'TestClient@gmail.com', '$2y$12$fd9yvBlDo7.7Fg1bpIm3V.ZmX0/GogJdTy.CongljEOJc0J5bcGgG', '2024-04-06 09:02:44', '2024-04-06 10:01:54', 16, '3213123123123', 'patient');
 
 --
 -- Indexes for dumped tables
@@ -469,7 +465,7 @@ ALTER TABLE `branches`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -487,7 +483,7 @@ ALTER TABLE `inventories`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -499,13 +495,13 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- Constraints for dumped tables
