@@ -494,7 +494,7 @@
 							</a>
 						</li>
 						<li class="dropdown">
-							<a href="{{ route('daily.sales') }}" class="dropdown-toggle no-arrow">
+							<a href="{{ route('staff.dailySales') }}" class="dropdown-toggle no-arrow">
 								<i class="micon bi bi-calendar"></i>
 								<span class="mtext">Daily Sales</span>
 							</a>

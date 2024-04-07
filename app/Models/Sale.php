@@ -11,7 +11,8 @@ class Sale extends Model
         'product_id',
         'quantity',
         'branch_id',
-        'status', // Include the status field in the fillable array
+        'total_price',
+        'status' // Include total_price in fillable attributes
     ];
 
     public function user()

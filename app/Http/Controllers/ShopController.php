@@ -43,40 +43,46 @@ class ShopController extends Controller
 
 
     public function addToCart(Request $request)
-    {
-        $productId = $request->input('product_id');
-        $quantity = $request->input('quantity');
-        $branchId = $request->input('branch_id');
-    
-        $user = Auth::user();
-    
-        $product = Inventory::findOrFail($productId);
-    
-        // Check if the requested quantity exceeds the available quantity
-        if ($quantity > $product->quantity) {
-            return redirect()->back()->with('error', 'Failed to add product to cart. Requested quantity exceeds available quantity. Current available quantity: ' . $product->quantity);
-        }
-    
-        // Check if the product already exists in the user's cart
-        $cartItem = Cart::where('user_id', $user->id)
-                        ->where('product_id', $productId)
-                        ->first();
-    
-        if ($cartItem) {
-            // Increment the quantity if the product is already in the cart
-            $cartItem->quantity += $quantity;
-            $cartItem->save();
-        } else {
-            // Add the product to the user's cart
-            $user->cart()->create([
-                'product_id' => $productId,
-                'quantity' => $quantity,
-                'branch_id' => $branchId,
-            ]);
-        }
-    
-        return redirect()->back()->with('success', 'Product added to cart successfully.');
+{
+    $productId = $request->input('product_id');
+    $quantity = $request->input('quantity');
+    $branchId = $request->input('branch_id');
+
+    $user = Auth::user();
+
+    $product = Inventory::findOrFail($productId);
+
+    // Check if the requested quantity exceeds the available quantity
+    if ($quantity > $product->quantity) {
+        return redirect()->back()->with('error', 'Failed to add product to cart. Requested quantity exceeds available quantity. Current available quantity: ' . $product->quantity);
     }
+
+    // Calculate total price for the product
+    $totalPrice = $product->price * $quantity;
+
+    // Check if the product already exists in the user's cart
+    $cartItem = Cart::where('user_id', $user->id)
+                    ->where('product_id', $productId)
+                    ->first();
+
+    if ($cartItem) {
+        // Increment the quantity and update total price if the product is already in the cart
+        $cartItem->quantity += $quantity;
+        $cartItem->total_price += $totalPrice;
+        $cartItem->save();
+    } else {
+        // Add the product to the user's cart
+        $user->cart()->create([
+            'product_id' => $productId,
+            'quantity' => $quantity,
+            'total_price' => $totalPrice,
+            'branch_id' => $branchId,
+        ]);
+    }
+
+    return redirect()->back()->with('success', 'Product added to cart successfully.');
+}
+
     
 
     public function showCart()
@@ -116,31 +122,32 @@ class ShopController extends Controller
     {
         $user = Auth::user();
         $productId = $request->input('product_id');
-
+    
         // Retrieve the selected product from the cart
         $item = $user->cart()->where('product_id', $productId)->first();
-
+    
         if (!$item) {
             return redirect()->route('cart.show')->with('error', 'Product not found in cart.');
         }
-
+    
         // Calculate total price for the selected product
         $totalPrice = $item->product->price * $item->quantity;
-
+    
         // Send email notification
         Mail::to($user->email)->send(new OrderProcessed([$item], $totalPrice));
-
+    
         // Create a sale record for the selected product
         Sale::create([
             'user_id' => $user->id,
             'product_id' => $item->product_id,
             'quantity' => $item->quantity,
             'branch_id' => $item->branch_id,
+            'total_price' => $totalPrice, // Record the total price
         ]);
-
+    
         // Remove the ordered item from the cart
         $item->delete();
-
+    
         return redirect()->route('cart.show')->with('success', 'Order placed successfully.');
     }
 

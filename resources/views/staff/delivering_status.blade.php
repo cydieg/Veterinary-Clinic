@@ -17,6 +17,7 @@
                     <th>Address</th>
                     <th>Product Name</th>
                     <th>Quantity</th>
+                    <th>Total Price</th>
                     <th>Action</th>
                     <!-- Add more columns if needed -->
                 </tr>
@@ -29,6 +30,7 @@
                         <td>{{ $sale->user->address }}</td>
                         <td>{{ $sale->product->name }}</td>
                         <td>{{ $sale->quantity }}</td>
+                        <td>{{ $sale->total_price }}</td> <!-- Display total price -->
                         <td>
                             @if($sale->status == 'delivering')
                                 <form action="{{ route('mark-as-delivered', $sale->id) }}" method="POST">

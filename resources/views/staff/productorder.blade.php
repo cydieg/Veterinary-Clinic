@@ -22,6 +22,7 @@
                     <th>Product</th>
                     <th>Quantity</th>
                     <th>Branch</th>
+                    <th>Total Price</th> <!-- New column for total price -->
                     <th>Action</th> <!-- New column for action button -->
                     <!-- Add more table headers if needed -->
                 </tr>
@@ -35,6 +36,7 @@
                         <td>{{ $sale->product->name }}</td>
                         <td>{{ $sale->quantity }}</td>
                         <td>{{ $sale->branch->name }}</td>
+                        <td>{{ $sale->total_price }}</td> <!-- Display total price -->
                         <td>
                             <!-- Form to submit delivery action -->
                             <form action="{{ route('deliver.sale', $sale->id) }}" method="POST">

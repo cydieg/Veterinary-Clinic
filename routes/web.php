@@ -121,11 +121,13 @@ Route::post('/accept-appointment/{appointment}', [StaffController::class, 'pendi
 Route::get('/logout', [AuthController::class, 'logout'])->name('manual.logout');
 Route::post('/complete-appointment/{appointment}', [StaffController::class, 'completeAppointment'])->name('complete.appointment');
 Route::put('/staff/cancel/{appointment}', [StaffController::class, 'cancelAppointment'])->name('staff.cancel');
+//staff order product
 Route::get('/staff/product-order', [StaffController::class, 'productOrder'])->name('staff.productorder');
 Route::put('/sales/{sale}', [StaffController::class, 'deliverSale'])->name('deliver.sale');
+//delivered product
 Route::get('/staff/delivering-status', [StaffController::class, 'deliveringStatus'])->name('staff.deliveringStatus');
 Route::post('/sales/{id}/mark-as-delivered', [StaffController::class, 'markAsDelivered'])->name('mark-as-delivered');
-Route::get('/daily-sales', [StaffController::class, 'dailySales'])->name('daily.sales');
+Route::get('/staff/daily-sales', [StaffController::class, 'dailySales'])->name('staff.dailySales');
 
 //Landing_Page
 Route::get('/', [LandingPageController::class, 'Home'])->name('home');
