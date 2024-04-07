@@ -6,17 +6,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventory Audit Log</title>
+    <div class="container p-3 my-3 custom-bg-color text-white">Inventory Audit Log</div>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Include any necessary CSS or styling -->
     <style>
-        /* Add any additional custom CSS here */
+        .custom-bg-color {
+        background-color: #BC7FCD;
+        font-size: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Inventory Audit Log</h1>
 
         <table class="table table-striped">
             <thead>
