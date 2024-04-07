@@ -29,6 +29,11 @@ class LandingPageController extends Controller
     {
         return view('Landing_Page.ContactUs');
     }
+
+    public function ourGallery()
+    {
+        return view('Landing_Page.OurGallery');
+    }
 }
 
 

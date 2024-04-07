@@ -59,7 +59,7 @@
                   <a class="nav-link" href="{{ route('services') }}">Services</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="">Pet's gallery </a>
+                  <a class="nav-link" href="{{ route('ourGallery') }}">Pet's gallery </a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{{ route('ourClinic') }}">Clinic</a>
