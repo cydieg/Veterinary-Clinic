@@ -18,7 +18,7 @@
                 <h2 class="h2 p-3">List of Users</h2>
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <a href="{{ route('superadmin.user.create') }}" class="btn btn-primary ml-3">Create User</a>
-                    <a href="http://127.0.0.1:8000/super-admin-dashboard" class="btn btn-secondary mr-3">Back to Super Admin Dashboard</a>
+                    <a href="http://127.0.0.1:8000/super-admin-dashboard" class="btn btn-secondary mr-3">Back</a>
                 </div>
                 <table class="table">
                     <thead>
