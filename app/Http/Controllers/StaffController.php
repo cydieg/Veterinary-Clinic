@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Appointment;
 use App\Models\Sale;
 use App\Models\User;
+use App\Models\Audit;
+use App\Models\Inventory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -125,6 +127,75 @@ class StaffController extends Controller
         // Pass sales to the view
         return view('staff.productorder', compact('sales'));
     }
+    public function deliverSale(Sale $sale, Request $request)
+    {
+        // Validate the request if needed
+    
+        // Update sale status to delivering
+        $sale->update(['status' => 'delivering']);
+    
+        // Redirect back or to a specific page
+        return redirect()->back()->with('success', 'Sale is being delivered');
+    }
+    public function deliveringStatus()
+    {
+        // Get the authenticated user's branch ID
+        $branchId = auth()->user()->branch_id;
+    
+        // Fetch sales with delivering status related to the authenticated user's branch
+        $deliveringSales = Sale::with('user', 'product', 'branch')
+                            ->where('branch_id', $branchId) // Filter by branch_id directly
+                            ->where('status', 'delivering')
+                            ->get();
+    
+        // Pass delivering sales to the view
+        return view('staff.delivering_status', compact('deliveringSales'));
+    }
+   
+    public function markAsDelivered($saleId)
+    {
+        // Find the sale by ID
+        $sale = Sale::findOrFail($saleId);
+        
+        // Check if the sale status is already delivered
+        if ($sale->status === 'delivered') {
+            return redirect()->back()->with('error', 'Sale has already been marked as delivered.');
+        }
+        
+        // Update sale status to "delivered"
+        $sale->status = 'delivered';
+        $sale->save();
+
+        // Deduct the quantity from inventory
+        $inventory = Inventory::where('id', $sale->product_id)->where('branch_id', $sale->branch_id)->firstOrFail();
+        $inventory->quantity -= $sale->quantity;
+        $inventory->save();
+
+        // Record audit
+        $audit = new Audit();
+        $audit->inventory_id = $inventory->id;
+        $audit->upc = $inventory->upc; // Or whatever your UPC logic is
+        $audit->name = $inventory->name; // Or any other relevant information from inventory
+        $audit->old_quantity = $inventory->quantity + $sale->quantity; // Previous quantity before the sale
+        $audit->quantity = $inventory->quantity; // New quantity after the sale
+        $audit->type = 'sales';
+
+        // Assign the description from inventory
+        $audit->description = $inventory->description;
+
+        $audit->save();
+
+        return redirect()->back()->with('success', 'Sale marked as delivered successfully.');
+    }
+
+
+
+        
+    
+    
+    
+
+
     
 
 

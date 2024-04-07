@@ -122,9 +122,9 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('manual.logout');
 Route::post('/complete-appointment/{appointment}', [StaffController::class, 'completeAppointment'])->name('complete.appointment');
 Route::put('/staff/cancel/{appointment}', [StaffController::class, 'cancelAppointment'])->name('staff.cancel');
 Route::get('/staff/product-order', [StaffController::class, 'productOrder'])->name('staff.productorder');
-
-
-
+Route::put('/sales/{sale}', [StaffController::class, 'deliverSale'])->name('deliver.sale');
+Route::get('/staff/delivering-status', [StaffController::class, 'deliveringStatus'])->name('staff.deliveringStatus');
+Route::post('/sales/{id}/mark-as-delivered', [StaffController::class, 'markAsDelivered'])->name('mark-as-delivered');
 
 
 //Landing_Page

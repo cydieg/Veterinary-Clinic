@@ -22,20 +22,31 @@
                     <th>Product</th>
                     <th>Quantity</th>
                     <th>Branch</th>
+                    <th>Action</th> <!-- New column for action button -->
                     <!-- Add more table headers if needed -->
                 </tr>
             </thead>
             <tbody>
                 @foreach($sales as $sale)
-                <tr>
-                    <td>{{ $sale->user->firstName }} {{ $sale->user->lastName }}</td>
-                    <td>{{ $sale->user->contact_number }}</td>
-                    <td>{{ $sale->user->address }}</td>
-                    <td>{{ $sale->product->name }}</td>
-                    <td>{{ $sale->quantity }}</td>
-                    <td>{{ $sale->branch->name }}</td>
-                    <!-- Add more table cells if needed -->
-                </tr>
+                    @if($sale->status !== 'delivering')
+                    <tr>
+                        <td>{{ $sale->user->firstName }} {{ $sale->user->lastName }}</td>
+                        <td>{{ $sale->user->contact_number }}</td>
+                        <td>{{ $sale->user->address }}</td>
+                        <td>{{ $sale->product->name }}</td>
+                        <td>{{ $sale->quantity }}</td>
+                        <td>{{ $sale->branch->name }}</td>
+                        <td>
+                            <!-- Form to submit delivery action -->
+                            <form action="{{ route('deliver.sale', $sale->id) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <button type="submit">Deliver</button>
+                            </form>
+                        </td>
+                        <!-- Add more table cells if needed -->
+                    </tr>
+                    @endif
                 @endforeach
             </tbody>
         </table>

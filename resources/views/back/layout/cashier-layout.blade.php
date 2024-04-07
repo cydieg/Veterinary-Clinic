@@ -487,6 +487,13 @@
 								<span class="mtext">Customer's Order</span>
 							</a>
 						</li>
+						<li class="dropdown">
+							<a href="{{ route('staff.deliveringStatus') }}" class="dropdown-toggle no-arrow">
+								<i class="micon bi bi-calendar"></i>
+								<span class="mtext">Delivered Products</span>
+							</a>
+						</li>
+						
 						
 
 						

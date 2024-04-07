@@ -15,6 +15,7 @@ class Audit extends Model
 
     public function sale()
     {
-        return $this->hasOne(Sale::class, 'productID', 'inventory_id');
+        return $this->hasOne(Sale::class, 'product_id', 'inventory_id');
     }
+    
 }

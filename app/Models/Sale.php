@@ -11,6 +11,7 @@ class Sale extends Model
         'product_id',
         'quantity',
         'branch_id',
+        'status', // Include the status field in the fillable array
     ];
 
     public function user()
@@ -26,5 +27,10 @@ class Sale extends Model
     public function branch()
     {
         return $this->belongsTo(Branch::class, 'branch_id');
+    }
+
+    public function audit()
+    {
+        return $this->hasOne(Audit::class, 'sale_id');
     }
 }
