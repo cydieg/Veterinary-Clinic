@@ -481,6 +481,14 @@
 								<span class="mtext">Accepted Appointments</span>
 							</a>
 						</li>
+						<li class="dropdown">
+							<a href="{{ route('staff.productorder') }}" class="dropdown-toggle no-arrow">
+								<i class="micon bi bi-calendar"></i>
+								<span class="mtext">Customer's Order</span>
+							</a>
+						</li>
+						
+
 						
 					</ul>
 				</div>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointment;
+use App\Models\Sale;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -107,4 +109,23 @@ class StaffController extends Controller
             return back()->with('error', 'An error occurred while canceling the appointment.');
         }
     }
+    
+    public function productOrder()
+    {
+        // Get the authenticated user's branch ID
+        $branchId = auth()->user()->branch_id;
+    
+        // Fetch sales related to the authenticated user's branch
+        $sales = Sale::with('user', 'product', 'branch')
+                     ->whereHas('branch', function ($query) use ($branchId) {
+                         $query->where('id', $branchId);
+                     })
+                     ->get();
+        
+        // Pass sales to the view
+        return view('staff.productorder', compact('sales'));
+    }
+    
+
+
 }

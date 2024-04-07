@@ -19,6 +19,7 @@ use App\Http\Controllers\AdminController;
 
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -111,7 +112,7 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login.form
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 
-//Staff apointment routes
+//Staff  routes
 Route::get('/staff', [StaffController::class, 'index'])->name('staff');
 Route::get('/homeStaff', [StaffController::class, 'homeStaff'])->name('homeStaff');
 Route::post('/complete-appointment/{appointment}', [StaffController::class, 'completeAppointment'])->name('complete.appointment');
@@ -120,6 +121,9 @@ Route::post('/accept-appointment/{appointment}', [StaffController::class, 'pendi
 Route::get('/logout', [AuthController::class, 'logout'])->name('manual.logout');
 Route::post('/complete-appointment/{appointment}', [StaffController::class, 'completeAppointment'])->name('complete.appointment');
 Route::put('/staff/cancel/{appointment}', [StaffController::class, 'cancelAppointment'])->name('staff.cancel');
+Route::get('/staff/product-order', [StaffController::class, 'productOrder'])->name('staff.productorder');
+
+
 
 
 
@@ -184,3 +188,4 @@ Route::post('/cart/remove', [ShopController::class, 'removeFromCart'])->name('ca
 
 //sales routes
 Route::post('/cart/order', [ShopController::class, 'order'])->name('cart.order');
+
