@@ -18,9 +18,11 @@ class ShopController extends Controller
 {
     public function index(Request $request)
     {
+        // Retrieve the encrypted branch ID from the request
         $encryptedBranchId = $request->input('branch_id');
-        
+
         try {
+            // Decrypt the encrypted branch ID
             $branchId = $encryptedBranchId ? Crypt::decrypt($encryptedBranchId) : null;
         } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
             // Handle decryption error, log the error message, or fallback to a default value
@@ -28,60 +30,70 @@ class ShopController extends Controller
             \Log::error('Error decrypting branch ID: ' . $e->getMessage());
         }
 
+        // Retrieve all branches
         $branches = Branch::all();
 
+        // If branch ID is not provided and there are branches available, set the first branch ID and redirect
         if (!$branchId && $branches->isNotEmpty()) {
             $branchId = $branches->first()->id;
             // Redirect to the index route with the selected branch ID
             return redirect()->route('shop.index', ['branch_id' => Crypt::encrypt($branchId)]);
         }
 
+        // Retrieve inventory items for the selected branch
         $inventoryItems = Inventory::where('branch_id', $branchId)->paginate(9);
 
-        return view('shop.shop', compact('inventoryItems', 'branches', 'branchId', 'encryptedBranchId'));
+        // Fetch hot items based on sales data with status 'delivered' and quantity over 200 for the selected branch
+        $hotItems = Sale::where('status', 'delivered')
+                         ->where('quantity', '>=', 200)
+                         ->where('branch_id', $branchId)
+                         ->get();
+
+        // Pass the data to the view and render it
+        return view('shop.shop', compact('inventoryItems', 'branches', 'branchId', 'encryptedBranchId', 'hotItems'));
     }
 
 
     public function addToCart(Request $request)
-{
-    $productId = $request->input('product_id');
-    $quantity = $request->input('quantity');
-    $branchId = $request->input('branch_id');
+    {
+        $productId = $request->input('product_id');
+        $quantity = $request->input('quantity');
+        $branchId = $request->input('branch_id');
 
-    $user = Auth::user();
+        $user = Auth::user();
 
-    $product = Inventory::findOrFail($productId);
+        $product = Inventory::findOrFail($productId);
 
-    // Check if the requested quantity exceeds the available quantity
-    if ($quantity > $product->quantity) {
-        return redirect()->back()->with('error', 'Failed to add product to cart. Requested quantity exceeds available quantity. Current available quantity: ' . $product->quantity);
+        // Check if the requested quantity exceeds the available quantity
+        if ($quantity > $product->quantity) {
+            return redirect()->back()->with('error', 'Failed to add product to cart. Requested quantity exceeds available quantity. Current available quantity: ' . $product->quantity);
+        }
+
+        // Calculate total price for the product
+        $totalPrice = $product->price * $quantity;
+
+        // Check if the product already exists in the user's cart
+        $cartItem = Cart::where('user_id', $user->id)
+                        ->where('product_id', $productId)
+                        ->first();
+
+        if ($cartItem) {
+            // Increment the quantity and update total price if the product is already in the cart
+            $cartItem->quantity += $quantity;
+            $cartItem->total_price += $totalPrice;
+            $cartItem->save();
+        } else {
+            // Add the product to the user's cart
+            $user->cart()->create([
+                'product_id' => $productId,
+                'quantity' => $quantity,
+                'total_price' => $totalPrice,
+                'branch_id' => $branchId,
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Product added to cart successfully.');
     }
-
-    // Calculate total price for the product
-    $totalPrice = $product->price * $quantity;
-
-    // Check if the product already exists in the user's cart
-    $cartItem = Cart::where('user_id', $user->id)
-                    ->where('product_id', $productId)
-                    ->first();
-
-    if ($cartItem) {
-        // Increment the quantity and update total price if the product is already in the cart
-        $cartItem->quantity += $quantity;
-        $cartItem->total_price += $totalPrice;
-        $cartItem->save();
-    } else {
-        // Add the product to the user's cart
-        $user->cart()->create([
-            'product_id' => $productId,
-            'quantity' => $quantity,
-            'total_price' => $totalPrice,
-            'branch_id' => $branchId,
-        ]);
-    }
-
-    return redirect()->back()->with('success', 'Product added to cart successfully.');
-}
 
     
 

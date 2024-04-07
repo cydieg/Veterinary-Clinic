@@ -5,110 +5,111 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shop</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
     <link href="assets/img/favicon.png" rel="icon">
-		
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
-		
-	<!-- Fontawesome CSS -->
-	<link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
-	<link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
-		
-	<!-- Main CSS -->
-	<link rel="stylesheet" href="assets/css/style.css">
-
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
     <style>
         .card-img-top {
             width: 100%;
             height: 200px; /* Adjust the height as needed */
             object-fit: cover; /* This ensures the image fills the container */
         }
+        .hot-item-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: red;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
-    <!-- Notification Modal -->
-    <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="notificationModalLabel">Welcome to Our Shop</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+    <div class="card">
+        <div class="row">
+            <div class="container mt-4">
+                <h1 class="mb-4">Welcome to Our Shop</h1>
+
+                <!-- Dropdown selection for branches -->
+                <div class="dropdown mb-4">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="branchDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @if($branchId)
+                            {{ $branches->where('id', $branchId)->first()->name }}
+                        @else
+                            Select branch
+                        @endif
                     </button>
+                    <div class="dropdown-menu" aria-labelledby="branchDropdown">
+                        @foreach($branches as $branch)
+                            @php
+                                $encryptedId = Crypt::encrypt($branch->id);
+                            @endphp
+                            <a class="dropdown-item" href="{{ route('shop.index', ['branch_id' => $encryptedId]) }}">{{ $branch->name }}</a>
+                        @endforeach
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <p>Please select a branch to start ordering.</p>
+                
+                <!-- HOT ITEMS section -->
+                <h2>HOT ITEMS</h2>
+                <div class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            @foreach($hotItems as $hotItem)
+                                <div class="col-lg-3 mb-4">
+                                    <div class="card">
+                                        <img src="{{ asset('images/' . $hotItem->product->image) }}" class="card-img-top" alt="{{ $hotItem->product->name }}">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ $hotItem->product->name }}</h5>
+                                            <p class="card-text">{{ $hotItem->product->description }}</p>
+                                            <p class="card-text">Price: ₱ {{ $hotItem->product->price }}</p>
+                                            <button class="btn btn-primary" onclick="showProductModal('{{ $hotItem->product->name }}', '{{ $hotItem->product->description }}', {{ $hotItem->product->price }}, {{ $hotItem->product->quantity }}, '{{ $hotItem->product->id }}', '{{ $branchId }}')">Add to Cart</button>
+                                            <div class="hot-item-indicator">Hot Item!</div>
+                                        </div>
+                                    </div>
+                                </div>
+                             @endforeach
+                        
+                        </div>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+
+                <!-- Other items section -->
+                <h2>Other Items</h2>
+                <div class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            @foreach($inventoryItems as $item)
+                                <div class="col-lg-3 mb-4">
+                                    <div class="card">
+                                        <img src="{{ asset('images/' . $item->image) }}" class="card-img-top" alt="{{ $item->name }}">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ $item->name }}</h5>
+                                            <p class="card-text">{{ $item->description }}</p>
+                                            <p class="card-text">Price: ₱ {{ $item->price }}</p>
+                                            <button class="btn btn-primary" onclick="showProductModal('{{ $item->name }}', '{{ $item->description }}', {{ $item->price }}, {{ $item->quantity }}, '{{ $item->id }}', '{{ $branchId }}')">Add to Cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        <!-- Pagination links -->
+                        <div class="row">
+                            <div class="col-12">
+                                {{ $inventoryItems->links() }}
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <a href="/showDashboard" class="btn btn-secondary mt-3">Back</a>
             </div>
         </div>
     </div>
-
-    <!-- Your existing container and content -->
-    <div class="card">
-		<div class="row">
-			<div class="container mt-4">
-				<h1 class="mb-4">Welcome to Our Shop</h1>
-                    <!-- Add this section to display error message -->
-                    @if(session('error'))
-                    <div id="errorMessage" class="alert alert-danger">
-                        {{ session('error') }}
-                    </div>
-                    @endif
-
-				<!-- Dropdown selection for branches -->
-				<div class="dropdown mb-4">
-					<button class="btn btn-secondary dropdown-toggle" type="button" id="branchDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						@if($branchId)
-							{{ $branches->where('id', $branchId)->first()->name }}
-						@else
-							Select branch
-						@endif
-					</button>
-					<div class="dropdown-menu" aria-labelledby="branchDropdown">
-						@foreach($branches as $branch)
-							@php
-								$encryptedId = Crypt::encrypt($branch->id);
-							@endphp
-							<a class="dropdown-item" href="{{ route('shop.index', ['branch_id' => $encryptedId]) }}">{{ $branch->name }}</a>
-						@endforeach
-					</div>
-				</div>
-				
-
-				<div class="content">
-					<div class="container-fluid">
-						<div class="row">
-							@foreach($inventoryItems as $item)
-								<div class="col-lg-3 mb-4">
-									<div class="card">
-										<img src="{{ asset('images/' . $item->image) }}" class="card-img-top" alt="{{ $item->name }}">
-										<div class="card-body">
-											<h5 class="card-title">{{ $item->name }}</h5>
-											<p class="card-text">{{ $item->description }}</p>
-											<p class="card-text">Price: ₱ {{ $item->price }}</p>
-											<!-- Pass branchId as an argument to the showProductModal function -->
-											<button class="btn btn-primary" onclick="showProductModal('{{ $item->name }}', '{{ $item->description }}', {{ $item->price }}, {{ $item->quantity }}, '{{ $item->id }}', '{{ $branchId }}')">Add to Cart</button>
-										</div>
-									</div>
-								</div>
-							@endforeach
-						</div>
-						<!-- Pagination links -->
-						<div class="row">
-							<div class="col-12">
-								{{ $inventoryItems->links() }}
-							</div>
-						</div>
-					</div>
-				</div>
-                <a href="/showDashboard" class="btn btn-secondary mt-3">Back</a>
-			</div>
-		</div>
-	</div>
 
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
