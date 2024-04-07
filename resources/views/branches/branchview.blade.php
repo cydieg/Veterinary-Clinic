@@ -6,16 +6,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Branches</title>
+    <div class="container p-3 my-3 custom-bg-color text-white">View Pet Shop Branch</div>
 </head>
+<style>
+        .custom-bg-color {
+        background-color: #BC7FCD;
+        font-size: 20px;
+        }
+    </style>
 <body>
-<div class="container">
-    <div class="card-box mb-30">
         <div class="table-responsive">
-            <h2 class="h1">View Branches</h2>
 
             <!-- Button to go back to /create-branch -->
-            <div class="text-right mb-3">
+            <div class="col-md-12 mb-3 text-right">
                 <a href="{{ route('branch.create.form') }}" class="btn btn-primary">Add New Branch</a>
             </div>
 

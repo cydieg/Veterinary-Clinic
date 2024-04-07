@@ -1,9 +1,19 @@
 @extends('back.layout.superadmin-layout')
 @section('pageTitle', isset($pageTitle) ? $pageTitle : 'Create New User')
 @section('content')
+<style>
+        /* Additional styling */
+        .form-group {
+            margin-bottom: 20px; /* Add some spacing between form groups */
+        }
+        .custom-bg-color {
+        background-color: #BC7FCD;
+        font-size: 20px;
+        }
+    </style>
 
+<div class="container p-3 my-3 custom-bg-color text-white">Add User</div>
 <div class="container">
-    <br><h1>Create New User</h1><br>
 
     <form action="{{ route('superadmin.user.store') }}" method="POST" class="needs-validation" novalidate>
         @csrf

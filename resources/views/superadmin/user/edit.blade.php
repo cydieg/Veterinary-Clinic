@@ -8,7 +8,7 @@ edit user
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <br><title>Edit User</title>
+    <div class="container p-3 my-3 custom-bg-color text-white">Edit User</div>
     <!-- Link Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Add any necessary CSS stylesheets here -->
@@ -17,11 +17,14 @@ edit user
         .form-group {
             margin-bottom: 20px; /* Add some spacing between form groups */
         }
+        .custom-bg-color {
+        background-color: #BC7FCD;
+        font-size: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Edit User</h1>
         <form action="{{ route('superadmin.user.update', $user->id) }}" method="POST" class="needs-validation" novalidate>
             @csrf
             @method('PUT')

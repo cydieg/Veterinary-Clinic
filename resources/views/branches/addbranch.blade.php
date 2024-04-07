@@ -6,14 +6,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Branch</title>
     <!-- Link Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .custom-bg-color {
+        background-color: #BC7FCD;
+        font-size: 20px;
+        }
+    </style>
 </head>
 <body>
-    <br>
+    <div class="container p-3 my-3 custom-bg-color text-white">Add Branch</div>
     <div class="container">
-        <h1>Add Branch</h1>
         <form action="{{ route('branch.create') }}" method="post">
             @csrf
             <div class="row">
@@ -51,7 +55,11 @@
                    
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button><br>
+            <div class="row">
+                <div class="col-md-12 mb-3 text-right">
+                    <button type="submit" class="btn btn-primary ">Submit</button><br>
+                </div>
+            </div>
         </form>
         <br>
     </div>
