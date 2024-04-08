@@ -2,8 +2,7 @@
 @section('pageTitle', isset($pageTitle) ? $pageTitle : 'Page Title here')
 @section('content')
 
-<div class="main-container">
-    <div class="pd-ltr-20">
+
         <div class="card-box pd-20 height-100-p mb-30">
             <div class="row align-items-center">
                 <div class="col-md-4">
@@ -19,7 +18,5 @@
                         Our experienced denstists are dedicated to ensuring you receive the best possible care for your health needs.
                     </p>
                 </div>
-            </div>
-        </div>
 
 @endsection
