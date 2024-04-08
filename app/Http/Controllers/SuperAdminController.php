@@ -87,20 +87,34 @@ class SuperAdminController extends Controller
         return view('superadmin.visualization.visualization', compact('branchesWithSalesCount', 'usersPerBranch', 'salesWithUserAddress', 'appointmentsByDay', 'appointmentsByMonth', 'appointmentsByYear','salesByDay', 'salesByWeek', 'salesByMonth', 'salesByYear'));
     } 
     
-    public function report()
+    public function report(Request $request)
     {
-        // Fetch delivered sales with associated user and product information for the current date
+        // Get branch ID from the request, or use null if "All Branches" is selected
+        $branchId = $request->input('branch_id');
+
+        // Fetch delivered sales with associated user and product information for the current date and selected branch
         $currentDate = Carbon::today();
-        $deliveredSales = Sale::with(['product'])
+        $query = Sale::with(['product'])
             ->where('status', 'delivered')
-            ->whereDate('created_at', $currentDate)
-            ->get();
-    
-        // Compute total sales for the current date
+            ->whereDate('created_at', $currentDate);
+
+        // If a specific branch is selected, filter by that branch
+        if ($branchId !== null) {
+            $query->where('branch_id', $branchId);
+        }
+
+        // Retrieve sales data
+        $deliveredSales = $query->get();
+
+        // Compute total sales for the current date and selected branch
         $totalSales = $deliveredSales->sum('total_price');
-    
-        return view('superadmin.report', compact('deliveredSales', 'totalSales', 'currentDate'));
+
+        // Fetch branches to populate branch selection dropdown
+        $branches = Branch::all();
+
+        return view('superadmin.report', compact('deliveredSales', 'totalSales', 'currentDate', 'branches'));
     }
+
 
     public function weekly()
     {

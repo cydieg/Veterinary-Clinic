@@ -199,3 +199,4 @@ Route::get('/fetch-sales', [SuperAdminController::class, 'fetchSales'])->name('f
 Route::get('/superadmin/report', [SuperAdminController::class, 'report'])->name('superadmin.report');
 Route::get('/generate_report', [SuperAdminController::class, 'report'])->name('generate_report');
 Route::get('weekly', [SuperAdminController::class, 'weekly'])->name('weekly');
+Route::get('/report', [SuperAdminController::class, 'report'])->name('report');

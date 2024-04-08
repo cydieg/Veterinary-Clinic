@@ -31,6 +31,17 @@
 </head>
 <body>
     <div class="container">
+        <!-- Branch selection dropdown -->
+        <form action="{{ route('report') }}" method="GET">
+            <select name="branch_id">
+                <option value="">All Branches</option>
+                @foreach ($branches as $branch)
+                    <option value="{{ $branch->id }}" @if(request('branch_id') == $branch->id) selected @endif>{{ $branch->name }}</option>
+                @endforeach
+            </select>
+            <button type="submit">Filter</button>
+        </form>
+        
         <table>
             <thead>
             <p>Daily Total Sales ${{ $totalSales }}</p>
