@@ -28,7 +28,8 @@ class SuperAdminController extends Controller
     
         // Get all delivered sales with the associated user's address
         $salesWithUserAddress = Sale::with(['user' => function ($query) {
-                                        $query->select('id','address');
+                                        // Include necessary address-related fields
+                                        $query->select('id', 'region', 'province', 'city', 'barangay', 'address');
                                     }])
                                     ->where('status', 'delivered')
                                     ->get();
