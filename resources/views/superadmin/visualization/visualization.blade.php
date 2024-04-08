@@ -19,6 +19,7 @@
             width: 100%;
             height: 400px;
         }
+        
     </style>
 </head>
 <body>
@@ -57,7 +58,24 @@
             <canvas id="appointmentsChart" width="400" height="400"></canvas>
         </div>
     </div>
+    <div>
+        <label for="dataOption">Select Data Option:</label>
+        <select id="dataOption">
+            <option value="day">Daily</option>
+            <option value="week">Weekly</option>
+            <option value="month">Monthly</option>
+            <option value="year">Yearly</option>
+        </select>
+    </div>
+    <div class="container">
+        <div class="chart-container">
+            <h1>Total Sales</h1>
+            <canvas id="salesChart" width="400" height="400"></canvas>
+        </div>
+    </div>
+    
     <script>
+        
         // Parse the data from PHP to JavaScript for sales distribution by selected data
         var salesData = {!! json_encode($salesWithUserAddress) !!};
 
@@ -264,6 +282,84 @@
 
         // Initialize the chart with default value
         updateAppointmentsChart('day');
+    </script>
+     <script>
+        var salesData = {
+            day: {!! json_encode($salesByDay) !!},
+            week: {!! json_encode($salesByWeek) !!},
+            month: {!! json_encode($salesByMonth) !!},
+            year: {!! json_encode($salesByYear) !!}
+        };
+
+        var ctx = document.getElementById('salesChart').getContext('2d');
+        var salesChart;
+
+        function createChart(data, label, bgColor, borderColor) {
+            return new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(data),
+                    datasets: [{
+                        label: label,
+                        data: Object.values(data),
+                        backgroundColor: bgColor,
+                        borderColor: borderColor,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: false,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+
+        function updateChart(option) {
+            if (salesChart) {
+                salesChart.destroy();
+            }
+            var selectedData = salesData[option];
+            var label, bgColor, borderColor;
+            switch (option) {
+                case 'day':
+                    label = 'Total Sales by Day';
+                    bgColor = 'rgba(255, 99, 132, 0.5)';
+                    borderColor = 'rgba(255, 99, 132, 1)';
+                    break;
+                case 'week':
+                    label = 'Total Sales by Week';
+                    bgColor = 'rgba(255, 159, 64, 0.5)';
+                    borderColor = 'rgba(255, 159, 64, 1)';
+                    break;
+                case 'month':
+                    label = 'Total Sales by Month';
+                    bgColor = 'rgba(54, 162, 235, 0.5)';
+                    borderColor = 'rgba(54, 162, 235, 1)';
+                    break;
+                case 'year':
+                    label = 'Total Sales by Year';
+                    bgColor = 'rgba(75, 192, 192, 0.5)';
+                    borderColor = 'rgba(75, 192, 192, 1)';
+                    break;
+            }
+            salesChart = createChart(selectedData, label, bgColor, borderColor);
+        }
+
+        // Initial chart display
+        var initialOption = document.getElementById('dataOption').value;
+        updateChart(initialOption);
+
+        // Update chart when dropdown option changes
+        document.getElementById('dataOption').addEventListener('change', function() {
+            var selectedOption = this.value;
+            updateChart(selectedOption);
+        });
     </script>
 </body>
 </html>

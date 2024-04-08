@@ -26,6 +26,25 @@ class SuperAdminController extends Controller
 
     public function visualization()
     {
+
+        $completedSales = Sale::where('status', 'delivered')->get();
+
+        // Group sales by day, month, year, and week and calculate total price
+        $salesByDay = $completedSales->groupBy(function ($sale) {
+            return Carbon::parse($sale->created_at)->format('Y-m-d');
+        })->map->sum('total_price');
+    
+        $salesByWeek = $completedSales->groupBy(function ($sale) {
+            return Carbon::parse($sale->created_at)->format('Y-W');
+        })->map->sum('total_price');
+    
+        $salesByMonth = $completedSales->groupBy(function ($sale) {
+            return Carbon::parse($sale->created_at)->format('Y-m');
+        })->map->sum('total_price');
+    
+        $salesByYear = $completedSales->groupBy(function ($sale) {
+            return Carbon::parse($sale->created_at)->format('Y');
+        })->map->sum('total_price');
         // Retrieve completed appointments
         $completedAppointments = Appointment::where('status', 'completed')->get();
 
@@ -65,7 +84,7 @@ class SuperAdminController extends Controller
                                         }])
                                         ->get();
 
-        return view('superadmin.visualization.visualization', compact('branchesWithSalesCount', 'usersPerBranch', 'salesWithUserAddress', 'appointmentsByDay', 'appointmentsByMonth', 'appointmentsByYear'));
+        return view('superadmin.visualization.visualization', compact('branchesWithSalesCount', 'usersPerBranch', 'salesWithUserAddress', 'appointmentsByDay', 'appointmentsByMonth', 'appointmentsByYear','salesByDay', 'salesByWeek', 'salesByMonth', 'salesByYear'));
     }
 
 }
