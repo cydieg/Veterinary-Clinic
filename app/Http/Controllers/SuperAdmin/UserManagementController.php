@@ -55,6 +55,7 @@ class UserManagementController extends Controller
         ]);
     
         $user = User::findOrFail($id);
+        
     
         // Define the fields you want to allow updating
         $userData = $request->only([

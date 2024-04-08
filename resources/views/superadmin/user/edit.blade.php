@@ -97,7 +97,9 @@
                         <option value="super_admin" @if($user->role == 'super_admin') selected @endif>Super Admin</option>
                     </select>
                 </div>
+                
             </div>
+            
 
             <div class="row">
                 <!-- Region -->
@@ -170,6 +172,22 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // JavaScript to handle branch selection based on role
+        document.getElementById('role').addEventListener('change', function() {
+            var role = this.value;
+            var branchSelect = document.getElementById('branch');
+
+            if (role === 'patient') {
+                // Set branch value to null and disable branch selection
+                branchSelect.value = '';
+                branchSelect.setAttribute('disabled', 'disabled');
+            } else {
+                // Enable branch selection
+                branchSelect.removeAttribute('disabled');
+            }
+        });
+    </script>
 </body>
 </html>
 @endsection
