@@ -2,14 +2,12 @@
 
 namespace App\Mail;
 
-namespace App\Mail;
-
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use App\Models\Appointment;
 
-class AppointmentCompleted extends Mailable
+class AppointmentAccepted extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -22,6 +20,6 @@ class AppointmentCompleted extends Mailable
 
     public function build()
     {
-        return $this->markdown('mails.appointment_completed');
+        return $this->subject('Appointment Accepted')->view('mails.accepted_appointment');
     }
 }

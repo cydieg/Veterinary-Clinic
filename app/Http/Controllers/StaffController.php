@@ -10,7 +10,7 @@ use App\Models\Inventory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\AppointmentCompleted;
+use App\Mail\AppointmentAccepted;
 use App\Mail\AppointmentCancelled; 
 
 class StaffController extends Controller
@@ -41,21 +41,21 @@ class StaffController extends Controller
     }
 
     public function pendingAppointment(Appointment $appointment)
-    {
-        try {
-            // Send email notification
-            Mail::to($appointment->user->email)->send(new AppointmentCompleted($appointment));
+{
+    try {
+        // Send email notification
+        Mail::to($appointment->user->email)->send(new AppointmentAccepted($appointment));
 
-            // Update appointment status to 'accepted' for pending appointments
-            $appointment->update(['status' => 'accepted']);
+        // Update appointment status to 'accepted' for pending appointments
+        $appointment->update(['status' => 'accepted']);
 
-            // Redirect with success message
-            return redirect()->route('staff')->with('success', 'Appointment accepted successfully');
-        } catch (\Exception $e) {
-            // Log or handle the exception
-            return back()->with('error', 'An error occurred while accepting the appointment.');
-        }
+        // Redirect with success message
+        return redirect()->route('staff')->with('success', 'Appointment accepted successfully');
+    } catch (\Exception $e) {
+        // Log or handle the exception
+        return back()->with('error', 'An error occurred while accepting the appointment.');
     }
+}
 
     public function acceptedAppointments()
     {

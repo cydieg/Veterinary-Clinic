@@ -115,11 +115,10 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 //Staff  routes
 Route::get('/staff', [StaffController::class, 'index'])->name('staff');
 Route::get('/homeStaff', [StaffController::class, 'homeStaff'])->name('homeStaff');
-Route::post('/complete-appointment/{appointment}', [StaffController::class, 'completeAppointment'])->name('complete.appointment');
 Route::get('/staff/acceptedappoint', [StaffController::class, 'acceptedAppointments'])->name('staff.acceptedappoint');
 Route::post('/accept-appointment/{appointment}', [StaffController::class, 'pendingAppointment'])->name('accept.appointment');
 Route::get('/logout', [AuthController::class, 'logout'])->name('manual.logout');
-Route::post('/complete-appointment/{appointment}', [StaffController::class, 'completeAppointment'])->name('complete.appointment');
+Route::put('/complete-appointment/{appointment}', [StaffController::class, 'completeAppointment'])->name('complete.appointment');
 Route::put('/staff/cancel/{appointment}', [StaffController::class, 'cancelAppointment'])->name('staff.cancel');
 //staff order product
 Route::get('/staff/product-order', [StaffController::class, 'productOrder'])->name('staff.productorder');
