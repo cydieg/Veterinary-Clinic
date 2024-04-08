@@ -11,7 +11,7 @@
     <title>Make an Reservation</title>
     <style>
         form {
-            max-width: 400px;
+            max-width: 650px;
             margin: auto;
         }
         button {
@@ -20,11 +20,11 @@
     </style>
 </head>
 
-<div class="card">
-	<div class="card-body">
-			<div class="col-md-12 col-lg-12">
-<body>
-    <div>
+<div class="col-md-7 col-lg-8 col-xl-9">
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-12 col-lg-6">
         <form action="{{ route('appointments.store') }}" method="post" class="bg-light p-4 rounded">
             @csrf
             <h2 class="text-center">Make an Reservation</h2>
@@ -72,6 +72,10 @@
 
             <button type="submit" class="btn btn-info btn-block">Request Reservation</button> <!-- Changed button text -->
         </form>
+    </div>
+    </div>
+    </div>
+    </div>
     </div>
    
 </body>
