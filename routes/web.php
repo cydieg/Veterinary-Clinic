@@ -59,6 +59,8 @@ Route::get('/super-admin-dashboard', function () {
 
 Route::post('/super-admin-logout', [SuperAdminController::class, 'logout'])->name('super_admin.logout');
 
+//super admin visual
+Route::get('/visualization', [SuperAdminController::class, 'visualization'])->name('visualization');
 // Separate route without the auth.manual middleware for the customer route
 Route::get('/customer', [ClientController::class, 'customer'])->name('customer')->middleware('auth');
 
@@ -189,4 +191,6 @@ Route::post('/cart/remove', [ShopController::class, 'removeFromCart'])->name('ca
 
 //sales routes
 Route::post('/cart/order', [ShopController::class, 'order'])->name('cart.order');
-
+//visual routes
+Route::get('/fetch-addresses', [SuperAdminController::class, 'fetchAddresses'])->name('fetch.addresses');
+Route::get('/fetch-sales', [SuperAdminController::class, 'fetchSales'])->name('fetch.sales');

@@ -491,13 +491,15 @@
 						</li>
 								
                        
-					
-                        <li class="dropdown">
-							<a href="javascript:;" class="dropdown-toggle no-arrow">
-								<span class="micon bi bi-arrow-up-right-square"></span
-								><span class="mtext">Visualization</span>
+						<li class="dropdown">
+							<a href="{{ route('visualization') }}" class="dropdown-toggle no-arrow">
+								<span class="micon bi bi-arrow-up-right-square"></span>
+								<span class="mtext">Visualization</span>
 							</a>
 						</li>
+						
+						
+						
 				</div>
 			</div>
 		</div>

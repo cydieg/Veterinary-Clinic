@@ -35,4 +35,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Cart::class);
     }
+
+    // Define the relationship to sales
+    public function sales()
+    {
+        return $this->hasMany(Sale::class);
+    }
 }

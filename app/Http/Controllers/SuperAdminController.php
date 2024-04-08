@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Models\Sale;
 
 class SuperAdminController extends Controller
 {
@@ -17,4 +19,26 @@ class SuperAdminController extends Controller
 
         return redirect()->route('login');
     }
+    public function visualization()
+    {
+        // Get the number of users registered to each branch
+        $usersPerBranch = User::select('branch_id', \DB::raw('count(*) as total'))
+                              ->groupBy('branch_id')
+                              ->get();
+    
+        // Get all delivered sales with the associated user's address
+        $salesWithUserAddress = Sale::with(['user' => function ($query) {
+                                        $query->select('id','address');
+                                    }])
+                                    ->where('status', 'delivered')
+                                    ->get();
+    
+        return view('superadmin.visualization.visualization', compact('usersPerBranch', 'salesWithUserAddress'));
+    }
+    
+    
+
+
+        
+    
 }
