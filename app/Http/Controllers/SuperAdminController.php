@@ -8,6 +8,8 @@ use App\Models\Sale;
 use App\Models\Appointment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class SuperAdminController extends Controller
 {
@@ -21,12 +23,24 @@ class SuperAdminController extends Controller
 
         return redirect()->route('login');
     }
+
     public function visualization()
     {
-        // Get all branches with their respective sales count
-        $branchesWithSalesCount = Branch::select('id', 'name')
-                                        ->withCount('sales') // Count of sales associated with each branch
-                                        ->get();
+        // Retrieve completed appointments
+        $completedAppointments = Appointment::where('status', 'completed')->get();
+
+        // Group appointments by day, month, and year and count them
+        $appointmentsByDay = $completedAppointments->groupBy(function ($appointment) {
+            return Carbon::parse($appointment->appointment_date)->format('Y-m-d');
+        })->map->count();
+
+        $appointmentsByMonth = $completedAppointments->groupBy(function ($appointment) {
+            return Carbon::parse($appointment->appointment_date)->format('Y-m');
+        })->map->count();
+
+        $appointmentsByYear = $completedAppointments->groupBy(function ($appointment) {
+            return Carbon::parse($appointment->appointment_date)->format('Y');
+        })->map->count();
 
         // Get the number of users registered to each branch
         $usersPerBranch = User::select('branch_id', \DB::raw('count(*) as total'))
@@ -41,12 +55,9 @@ class SuperAdminController extends Controller
                                     ->where('status', 'delivered')
                                     ->get();
     
-        return view('superadmin.visualization.visualization', compact('branchesWithSalesCount', 'usersPerBranch', 'salesWithUserAddress'));
-    }
-    
-    
+        // Get all branches with their respective sales count
+        $branchesWithSalesCount = Branch::withCount('sales')->get();
 
-
-        
-    
+        return view('superadmin.visualization.visualization', compact('branchesWithSalesCount', 'usersPerBranch', 'salesWithUserAddress', 'appointmentsByDay', 'appointmentsByMonth', 'appointmentsByYear'));
+    }  
 }

@@ -40,8 +40,20 @@
     </select>
     <canvas id="chartCanvas" width="400" height="400"></canvas>
 
+    <div class="container">
+        <div>
+            <h1>Appointments</h1>
+            <select id="appointmentType">
+                <option value="day">Appointments Completed by Day</option>
+                <option value="month">Appointments Completed by Month</option>
+                <option value="year">Appointments Completed by Year</option>
+            </select>
+            <canvas id="appointmentsChart" width="400" height="400"></canvas>
+        </div>
+    </div>
+
     <script>
-        // Parse the data from PHP to JavaScript
+        // Parse the data from PHP to JavaScript for sales distribution by selected data
         var salesData = {!! json_encode($salesWithUserAddress) !!};
 
         // Function to count occurrences of selected data field
@@ -183,6 +195,70 @@
                 }
             }
         });
+
+        // Initialize the appointments chart
+        var appointmentTypeSelect = document.getElementById('appointmentType');
+        var appointmentsChartCanvas = document.getElementById('appointmentsChart');
+        var appointmentsChart;
+
+        appointmentTypeSelect.addEventListener('change', function() {
+            var selectedType = this.value;
+            updateAppointmentsChart(selectedType);
+        });
+
+        function updateAppointmentsChart(selectedType) {
+            if (appointmentsChart) {
+                appointmentsChart.destroy();
+            }
+
+            var chartData;
+            var chartLabel;
+
+            switch (selectedType) {
+                case 'day':
+                    chartData = {!! json_encode($appointmentsByDay) !!};
+                    chartLabel = 'Appointments Completed by Day';
+                    break;
+                case 'month':
+                    chartData = {!! json_encode($appointmentsByMonth) !!};
+                    chartLabel = 'Appointments Completed by Month';
+                    break;
+                case 'year':
+                    chartData = {!! json_encode($appointmentsByYear) !!};
+                    chartLabel = 'Appointments Completed by Year';
+                    break;
+                default:
+                    chartData = {};
+                    chartLabel = 'No Data';
+            }
+
+            appointmentsChart = new Chart(appointmentsChartCanvas, {
+                type: 'line',
+                data: {
+                    labels: Object.keys(chartData),
+                    datasets: [{
+                        label: chartLabel,
+                        data: Object.values(chartData),
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: false,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+
+        // Initialize the chart with default value
+        updateAppointmentsChart('day');
     </script>
 </body>
 </html>
