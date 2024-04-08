@@ -6,29 +6,39 @@
     <title>Visualization</title>
     <!-- Include Chart.js library -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+        canvas {
+            width: 45%;
+            height: 400px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Visualization</h1>
+        <div>
+            <h1>Number of Sales for Each Branch</h1>
+            <canvas id="salesPerBranchChart" width="400" height="400"></canvas>
+        </div>
 
-        <h2>Number of Users Registered to Each Branch</h2>
-        <ul>
-            @foreach($usersPerBranch as $userCount)
-                <li>Branch ID: {{ $userCount->branch_id }}, Total Users: {{ $userCount->total }}</li>
-            @endforeach
-        </ul>
-
-        <h2>Select Data to Visualize:</h2>
-        <select id="dataSelect">
-            <option value="region">Region</option>
-            <option value="province">Province</option>
-            <option value="city">City</option>
-            <option value="barangay">Barangay</option>
-            <option value="address">Address</option>
-        </select>
-
-        <canvas id="chartCanvas" width="400" height="400"></canvas>
+        <div>
+            <h1>Number of Users for Each Branch</h1>
+            <canvas id="usersPerBranchChart" width="400" height="400"></canvas>
+        </div>
     </div>
+
+    <h1>Sales Distribution by Selected Data</h1>
+    <select id="dataSelect">
+        <option value="region">Region</option>
+        <option value="province">Province</option>
+        <option value="city">City</option>
+        <option value="barangay">Barangay</option>
+        <option value="address">Address</option>
+    </select>
+    <canvas id="chartCanvas" width="400" height="400"></canvas>
 
     <script>
         // Parse the data from PHP to JavaScript
@@ -91,6 +101,87 @@
         document.getElementById('dataSelect').addEventListener('change', function() {
             var selectedData = this.value;
             updateChart(selectedData);
+        });
+
+        // Parse the data from PHP to JavaScript for sales per branch
+        var salesPerBranchData = {!! json_encode($branchesWithSalesCount) !!};
+
+        // Extract branch names and total sales
+        var branchNames = salesPerBranchData.map(function(item) {
+            return item.name;
+        });
+        var totalSales = salesPerBranchData.map(function(item) {
+            return item.sales_count;
+        });
+
+        // Create a bar chart for sales per branch
+        var ctx1 = document.getElementById('salesPerBranchChart').getContext('2d');
+        var salesPerBranchChart = new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: branchNames,
+                datasets: [{
+                    label: 'Total Sales',
+                    data: totalSales,
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+        // Parse the data from PHP to JavaScript for users per branch
+        var usersPerBranchData = {!! json_encode($usersPerBranch) !!};
+
+        // Extract branch names and total users
+        var usersBranchIds = usersPerBranchData.map(function(item) {
+            return item.branch_id;
+        });
+        var totalUsers = usersPerBranchData.map(function(item) {
+            return item.total;
+        });
+
+        // Generate random colors for each dataset
+        var backgroundColors = [];
+        for (var i = 0; i < branchNames.length; i++) {
+            var randomColor = 'rgba(' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ', 0.5)';
+            backgroundColors.push(randomColor);
+        }
+
+        // Create a bar chart for users per branch with random colors
+        var ctx2 = document.getElementById('usersPerBranchChart').getContext('2d');
+        var usersPerBranchChart = new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: branchNames,
+                datasets: [{
+                    label: 'Total Users',
+                    data: totalUsers,
+                    backgroundColor: backgroundColors,
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
         });
     </script>
 </body>

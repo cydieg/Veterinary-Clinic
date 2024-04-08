@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Branch;
 use App\Models\User;
 use App\Models\Sale;
+use App\Models\Appointment;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SuperAdminController extends Controller
 {
@@ -21,6 +23,11 @@ class SuperAdminController extends Controller
     }
     public function visualization()
     {
+        // Get all branches with their respective sales count
+        $branchesWithSalesCount = Branch::select('id', 'name')
+                                        ->withCount('sales') // Count of sales associated with each branch
+                                        ->get();
+
         // Get the number of users registered to each branch
         $usersPerBranch = User::select('branch_id', \DB::raw('count(*) as total'))
                               ->groupBy('branch_id')
@@ -34,7 +41,7 @@ class SuperAdminController extends Controller
                                     ->where('status', 'delivered')
                                     ->get();
     
-        return view('superadmin.visualization.visualization', compact('usersPerBranch', 'salesWithUserAddress'));
+        return view('superadmin.visualization.visualization', compact('branchesWithSalesCount', 'usersPerBranch', 'salesWithUserAddress'));
     }
     
     
