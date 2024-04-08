@@ -85,6 +85,42 @@ class SuperAdminController extends Controller
                                         ->get();
 
         return view('superadmin.visualization.visualization', compact('branchesWithSalesCount', 'usersPerBranch', 'salesWithUserAddress', 'appointmentsByDay', 'appointmentsByMonth', 'appointmentsByYear','salesByDay', 'salesByWeek', 'salesByMonth', 'salesByYear'));
+    } 
+    
+    public function report()
+    {
+        // Fetch delivered sales with associated user and product information for the current date
+        $currentDate = Carbon::today();
+        $deliveredSales = Sale::with(['product'])
+            ->where('status', 'delivered')
+            ->whereDate('created_at', $currentDate)
+            ->get();
+    
+        // Compute total sales for the current date
+        $totalSales = $deliveredSales->sum('total_price');
+    
+        return view('superadmin.report', compact('deliveredSales', 'totalSales', 'currentDate'));
     }
+
+    public function weekly()
+    {
+        // Get the start and end of the current week
+        $startOfWeek = Carbon::now()->startOfWeek()->toDateString();
+        $endOfWeek = Carbon::now()->endOfWeek()->toDateString();
+    
+        // Fetch delivered sales for the current week with associated user and product information
+        $deliveredSales = Sale::with(['user', 'product'])
+            ->where('status', 'delivered')
+            ->whereBetween('created_at', [$startOfWeek, $endOfWeek])
+            ->get();
+    
+        // Compute total sales for the week
+        $totalSales = $deliveredSales->sum('total_price');
+    
+        return view('superadmin.report', compact('deliveredSales', 'totalSales'));
+    }
+  
+    
+        
 
 }

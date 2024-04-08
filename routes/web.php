@@ -194,3 +194,8 @@ Route::post('/cart/order', [ShopController::class, 'order'])->name('cart.order')
 //visual routes
 Route::get('/fetch-addresses', [SuperAdminController::class, 'fetchAddresses'])->name('fetch.addresses');
 Route::get('/fetch-sales', [SuperAdminController::class, 'fetchSales'])->name('fetch.sales');
+
+//super admin report
+Route::get('/superadmin/report', [SuperAdminController::class, 'report'])->name('superadmin.report');
+Route::get('/generate_report', [SuperAdminController::class, 'report'])->name('generate_report');
+Route::get('weekly', [SuperAdminController::class, 'weekly'])->name('weekly');

@@ -35,5 +35,5 @@ class Sale extends Model
     {
         return $this->hasOne(Audit::class, 'sale_id');
     }
-    
+  
 }
