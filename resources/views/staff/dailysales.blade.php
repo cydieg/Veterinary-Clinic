@@ -1,3 +1,6 @@
+@extends('back.layout.cashier-layout')
+@section('pageTitle', isset($pageTitle) ? $pageTitle : 'Page Title here')
+@section('content')
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,52 +10,37 @@
     <title>Daily Sales</title>
     <!-- Include any CSS or meta tags here -->
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
+        /* Additional styling */
+        .table {
+            margin-top: 20px; /* Add margin to the top of the table */
         }
-
-        .container {
-            width: 80%;
-            margin: auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        .table th,
+        .table td {
+            vertical-align: middle; /* Align content vertically in cells */
         }
-
-        h1 {
-            text-align: center;
+        .action-buttons button {
+            margin-right: 5px; /* Add some spacing between buttons */
+            font-size: 12px; /* Adjust button font size */
         }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+        <style>
+        /* Additional styling */
+        .form-group {
+            margin-bottom: 20px; /* Add some spacing between form groups */
         }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
+        .custom-bg-color {
+            background-color: #BC7FCD;
+            font-size: 20px;
         }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        .total-row td {
-            background-color: #e9e9e9;
-            font-weight: bold;
+        .action-buttons button {
+            margin-right: 5px; /* Add some spacing between buttons */
+            font-size: 12px; /* Adjust button font size */
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <h1>Daily Sales - {{ now()->format('F j, Y') }}</h1>
-        <table>
+    <div  class="container p-3 my-3 custom-bg-color text-white">Daily Sales - {{ now()->format('F j, Y') }}</div>
+        <table class="table">
             <thead>
                 <tr>
                     <th>Product</th>
@@ -84,4 +72,6 @@
     <!-- Include any scripts here -->
 </body>
 
+
 </html>
+@endsection

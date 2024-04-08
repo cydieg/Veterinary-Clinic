@@ -101,10 +101,11 @@
 		<div class="right-sidebar">
 			<!-- ... Right sidebar ... -->
 		</div>
-	
-		<div class="content-wrap">
-			@yield('content')
-		</div>
+		
+		<div class="main-container">
+				<div class="card-box mb-30">
+					@yield('content')
+				</div>
 		<div class="header">
 			<div class="header-left">
 				<div class="menu-icon bi bi-list"></div>
@@ -471,31 +472,31 @@
 						</li>
 						<li class="dropdown">
 							<a href="{{ route('staff') }}" class="dropdown-toggle no-arrow">
-								<i class="micon bi bi-calendar"></i>
+								<i class="micon bi bi-clock"></i>
 								<span class="mtext">Pending Appointment</span>
 							</a>
 						</li>
 						<li class="dropdown">
 							<a href="{{ route('staff.acceptedappoint') }}" class="dropdown-toggle no-arrow">
-								<i class="micon bi bi-calendar"></i>
-								<span class="mtext">Accepted Appointments</span>
+								<i class="micon bi bi-check-circle"></i>
+								<span class="mtext">Accepted Appointment</span>
 							</a>
 						</li>
 						<li class="dropdown">
 							<a href="{{ route('staff.productorder') }}" class="dropdown-toggle no-arrow">
-								<i class="micon bi bi-calendar"></i>
+								<i class="micon bi bi-basket"></i>
 								<span class="mtext">Customer's Order</span>
 							</a>
 						</li>
 						<li class="dropdown">
 							<a href="{{ route('staff.deliveringStatus') }}" class="dropdown-toggle no-arrow">
-								<i class="micon bi bi-calendar"></i>
+								<i class="micon bi bi-truck"></i>
 								<span class="mtext">Delivered Products</span>
 							</a>
 						</li>
 						<li class="dropdown">
 							<a href="{{ route('staff.dailySales') }}" class="dropdown-toggle no-arrow">
-								<i class="micon bi bi-calendar"></i>
+								<i class="micon bi bi-graph-up"></i>
 								<span class="mtext">Daily Sales</span>
 							</a>
 						</li>

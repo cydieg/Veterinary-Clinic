@@ -2,19 +2,19 @@
 @section('pageTitle', isset($pageTitle) ? $pageTitle : 'Page Title here')
 
 @section('content')
-
-<div>
-    <h2> Staff Dashboard </h2>
-</div>
-<div class="main-container">
-    <div class="pd-ltr-20">
-        <div class="card-box pd-20 height-100-p mb-30">
+<style>
+        /* Additional styling */
+        .form-group {
+            margin-bottom: 20px; /* Add some spacing between form groups */
+        }
+        .custom-bg-color {
+        background-color: #BC7FCD;
+        font-size: 20px;
+        }
+    </style>
+    <div class="container p-3 my-3 custom-bg-color text-white">Pending Appointments</div>
             <div class="row align-items-center">
                 <div class="card-body">
-                    <p>Welcome, {{ auth()->user()->name }}!</p>
-                    <!-- Add more content as needed -->
-
-                    <h2>Pending Appointments</h2>
                     @if(count($pendingAppointments) > 0)
                     <table class="table table-bordered table-striped">
                         <thead>
@@ -47,8 +47,6 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
 <!-- Add any additional scripts or footer content here -->
 @endsection

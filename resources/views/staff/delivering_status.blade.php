@@ -1,3 +1,6 @@
+@extends('back.layout.cashier-layout')
+@section('pageTitle', isset($pageTitle) ? $pageTitle : 'Page Title here')
+@section('content')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,11 +8,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delivering Status of Products</title>
     <!-- Include your CSS stylesheets, meta tags, or other head elements here -->
+    <style>
+        /* Additional styling */
+        .table {
+            margin-top: 20px; /* Add margin to the top of the table */
+        }
+        .table th,
+        .table td {
+            vertical-align: middle; /* Align content vertically in cells */
+        }
+        .action-buttons button {
+            margin-right: 5px; /* Add some spacing between buttons */
+            font-size: 12px; /* Adjust button font size */
+        }
+        <style>
+        /* Additional styling */
+        .form-group {
+            margin-bottom: 20px; /* Add some spacing between form groups */
+        }
+        .custom-bg-color {
+            background-color: #BC7FCD;
+            font-size: 20px;
+        }
+        .action-buttons button {
+            margin-right: 5px; /* Add some spacing between buttons */
+            font-size: 12px; /* Adjust button font size */
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Delivering Status of Products</h1>
-        <table class="table">
+    <div class="container p-3 my-3 custom-bg-color text-white">Accepted Appointments</div>
+        <table class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>Customer Name</th>
@@ -30,12 +59,12 @@
                         <td>{{ $sale->user->address }}</td>
                         <td>{{ $sale->product->name }}</td>
                         <td>{{ $sale->quantity }}</td>
-                        <td>{{ $sale->total_price }}</td> <!-- Display total price -->
-                        <td>
+                        <td>{{ $sale->total_price }}</td>
+                        <td class="action-buttons">
                             @if($sale->status == 'delivering')
                                 <form action="{{ route('mark-as-delivered', $sale->id) }}" method="POST">
                                     @csrf
-                                    <button type="submit">Mark as Delivered</button>
+                                    <button type="submit" class="btn btn-primary btn-sm">Mark as Delivered</button>
                                 </form>
                             @else
                                 Delivered
@@ -50,3 +79,4 @@
     <!-- Include your JavaScript scripts or other body elements here -->
 </body>
 </html>
+@endsection
