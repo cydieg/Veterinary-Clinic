@@ -35,6 +35,25 @@
         <div class="row">
             <div class="container mt-4">
                 <h1 class="mb-4">Welcome to Our Shop</h1>
+                  <!-- Branch Selection Modal -->
+                <div class="modal fade" id="branchSelectionModal" tabindex="-1" aria-labelledby="branchSelectionModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="branchSelectionModalLabel">Notification</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>You can choose other different branch here thank you for shopping</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Dropdown selection for branches -->
                 <div class="dropdown mb-4">
@@ -116,6 +135,12 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+    <script>
+        $(document).ready(function() {
+            $('#branchSelectionModal').modal('show');
+        });
+    </script>
+
     <!-- JavaScript to update dropdown text -->
     <script>
         // Function to show the modal with product details
@@ -174,7 +199,7 @@
             }
         });
     </script>
-
+    
     <!-- Product Modal -->
     <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
         <div class="modal-dialog">
