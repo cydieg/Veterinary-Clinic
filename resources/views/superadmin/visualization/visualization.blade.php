@@ -10,38 +10,44 @@
         .container {
             display: flex;
             justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .chart-container {
+            width: 45%;
         }
         canvas {
-            width: 45%;
+            width: 100%;
             height: 400px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div>
+        <div class="chart-container">
             <h1>Number of Sales for Each Branch</h1>
             <canvas id="salesPerBranchChart" width="400" height="400"></canvas>
         </div>
 
-        <div>
+        <div class="chart-container">
             <h1>Number of Users for Each Branch</h1>
             <canvas id="usersPerBranchChart" width="400" height="400"></canvas>
         </div>
     </div>
 
-    <h1>Sales Distribution by Selected Data</h1>
-    <select id="dataSelect">
-        <option value="region">Region</option>
-        <option value="province">Province</option>
-        <option value="city">City</option>
-        <option value="barangay">Barangay</option>
-        <option value="address">Address</option>
-    </select>
-    <canvas id="chartCanvas" width="400" height="400"></canvas>
-
     <div class="container">
-        <div>
+        <div class="chart-container">
+            <h1>Sales Distribution by Selected Data</h1>
+            <select id="dataSelect">
+                <option value="region">Region</option>
+                <option value="province">Province</option>
+                <option value="city">City</option>
+                <option value="barangay">Barangay</option>
+                <option value="address">Address</option>
+            </select>
+            <canvas id="chartCanvas" width="400" height="400"></canvas>
+        </div>
+
+        <div class="chart-container">
             <h1>Appointments</h1>
             <select id="appointmentType">
                 <option value="day">Appointments Completed by Day</option>
@@ -51,7 +57,6 @@
             <canvas id="appointmentsChart" width="400" height="400"></canvas>
         </div>
     </div>
-
     <script>
         // Parse the data from PHP to JavaScript for sales distribution by selected data
         var salesData = {!! json_encode($salesWithUserAddress) !!};

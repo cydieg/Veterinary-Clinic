@@ -44,20 +44,28 @@ class SuperAdminController extends Controller
 
         // Get the number of users registered to each branch
         $usersPerBranch = User::select('branch_id', \DB::raw('count(*) as total'))
-                              ->groupBy('branch_id')
-                              ->get();
-    
+                            ->groupBy('branch_id')
+                            ->get();
+
         // Get all delivered sales with the associated user's address
         $salesWithUserAddress = Sale::with(['user' => function ($query) {
                                         // Include necessary address-related fields
                                         $query->select('id', 'region', 'province', 'city', 'barangay', 'address');
                                     }])
-                                    ->where('status', 'delivered')
+                                    ->whereHas('user', function ($query) {
+                                        // Filter by users whose sales have been delivered
+                                        $query->where('status', 'delivered');
+                                    })
                                     ->get();
-    
+
         // Get all branches with their respective sales count
-        $branchesWithSalesCount = Branch::withCount('sales')->get();
+        $branchesWithSalesCount = Branch::withCount(['sales' => function ($query) {
+                                            // Filter by sales that have been delivered
+                                            $query->where('status', 'delivered');
+                                        }])
+                                        ->get();
 
         return view('superadmin.visualization.visualization', compact('branchesWithSalesCount', 'usersPerBranch', 'salesWithUserAddress', 'appointmentsByDay', 'appointmentsByMonth', 'appointmentsByYear'));
-    }  
+    }
+
 }
