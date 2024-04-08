@@ -8,8 +8,6 @@
     }
 </style>
 
-<div class="container">
-    <div class="card-box mb-4">
         <h2 class="h2 p-3">List of Users</h2>
         <div class="d-flex justify-content-between align-items-center mb-3">
             <a href="{{ route('superadmin.user.create') }}" class="btn btn-info ml-3">Create User</a>
@@ -55,6 +53,5 @@
                 </tbody>
             </table>
         </div>
-    </div>
-</div>
+
 @endsection
