@@ -35,25 +35,7 @@
         <div class="row">
             <div class="container mt-4">
                 <h1 class="mb-4">Welcome to Our Shop</h1>
-                  <!-- Branch Selection Modal -->
-                <div class="modal fade" id="branchSelectionModal" tabindex="-1" aria-labelledby="branchSelectionModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="branchSelectionModalLabel">Notification</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p>You can choose other different branch here thank you for shopping</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 
                 <!-- Dropdown selection for branches -->
                 <div class="dropdown mb-4">
@@ -135,11 +117,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <script>
-        $(document).ready(function() {
-            $('#branchSelectionModal').modal('show');
-        });
-    </script>
+    
 
     <!-- JavaScript to update dropdown text -->
     <script>
@@ -155,7 +133,22 @@
             document.getElementById('branchId').value = branchId; // Set the branch ID
             $('#productModal').modal('show');
         }
-
+    
+        // Function to add product to cart
+        function addToCart() {
+            var quantity = parseInt(document.getElementById('quantity').value);
+            var availableQuantity = parseInt(document.getElementById('productQuantity').innerText);
+    
+            if (quantity > availableQuantity) {
+                // If quantity exceeds available quantity, show notification and return
+                alert("Failed to add to cart. Exceeds available quantity.");
+                return;
+            }
+    
+            // If quantity is valid, submit the form
+            document.getElementById('addToCartForm').submit();
+        }
+    
         // Function to increment quantity
         function incrementQuantity() {
             var quantityElement = document.getElementById('quantity');
@@ -163,7 +156,7 @@
             quantityElement.value = currentQuantity + 1;
             calculateTotal();
         }
-
+    
         // Function to decrement quantity
         function decrementQuantity() {
             var quantityElement = document.getElementById('quantity');
@@ -173,7 +166,7 @@
                 calculateTotal();
             }
         }
-
+    
         // Function to calculate total price based on quantity input
         function calculateTotal() {
             var quantity = parseInt(document.getElementById('quantity').value);
@@ -182,6 +175,7 @@
             document.getElementById('totalPrice').innerText = totalPrice.toFixed(2);
         }
     </script>
+    
 
     <!-- Script to hide the error message after 2.5 seconds -->
     <script>
@@ -233,7 +227,7 @@
                             </div>
                         </div>
                         <p>Total Price: ₱<span id="totalPrice"></span></p>
-                        <button type="submit" class="btn btn-primary">Add to Cart</button>
+                        <button type="button" class="btn btn-primary" onclick="addToCart()">Add to Cart</button>
                     </form>
                 </div>
                 <div class="modal-footer">
