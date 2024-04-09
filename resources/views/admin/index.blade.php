@@ -6,16 +6,25 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>User Management</title>
+        <div class="container p-3 my-3 custom-bg-color text-white">User Management</div>
         <!-- Include Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <style>
+    /* Additional styling */
+    .form-group {
+        margin-bottom: 20px; /* Add some spacing between form groups */
+    }
+    .custom-bg-color {
+        background-color: #BC7FCD;
+        font-size: 20px;
+    }
+</style>
     </head>
     <body>
         <div class="container">
-            <h1>User Management</h1>
-
-            <a href="{{ route('admin.users.create') }}" class="btn btn-primary">Add User</a>
-
+            <div class="col-md-12 mb-3 text-right">
+                <a href="{{ route('admin.users.create') }}" class="btn btn-primary">Add User</a>
+            </div>
             <table class="table">
                 <thead>
                     <tr>
