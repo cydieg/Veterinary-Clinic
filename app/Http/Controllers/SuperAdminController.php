@@ -116,28 +116,79 @@ class SuperAdminController extends Controller
     }
 
 
-    public function weekly()
-    {
-        // Get the start and end of the current week
-        $startOfWeek = Carbon::now()->startOfWeek()->toDateString();
-        $endOfWeek = Carbon::now()->endOfWeek()->toDateString();
-    
-        // Fetch delivered sales for the current week with associated user and product information
-        $deliveredSales = Sale::with(['user', 'product'])
-            ->where('status', 'delivered')
-            ->whereBetween('created_at', [$startOfWeek, $endOfWeek])
-            ->get();
-    
-        // Compute total sales for the week
-        $totalSales = $deliveredSales->sum('total_price');
-    
-        return view('superadmin.report', compact('deliveredSales', 'totalSales'));
-    }
   
     public function dashboard()
     {
         return view('superadmin.dashboard');
     }
+    public function weeklyReport()
+    {
+        // Calculate the start and end dates for the current week (Monday to Sunday)
+        $startDate = Carbon::now()->startOfWeek();
+        $endDate = Carbon::now()->endOfWeek();
+
+        // Fetch delivered sales within the current week
+        $salesWithinWeek = Sale::where('status', 'delivered')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->get();
+
+        // Calculate total sales within the week
+        $totalSalesWithinWeek = $salesWithinWeek->sum('total_price');
+
+        // Pass the data to the view
+        return view('superadmin.weeklyreport', [
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+            'salesWithinWeek' => $salesWithinWeek,
+            'totalSalesWithinWeek' => $totalSalesWithinWeek
+        ]);
+    }
+    public function monthlyReport()
+    {
+        // Initialize an array to store monthly sales data
+        $monthlySales = [];
+
+        // Loop through each month of the year
+        for ($month = 1; $month <= 12; $month++) {
+            // Calculate the start and end dates of the current month
+            $startDate = Carbon::create(null, $month, 1)->startOfMonth();
+            $endDate = Carbon::create(null, $month, 1)->endOfMonth();
+
+            // Fetch delivered sales within the current month
+            $salesWithinMonth = Sale::where('status', 'delivered')
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->get();
+
+            // Calculate total sales within the month
+            $totalSalesWithinMonth = $salesWithinMonth->sum('total_price');
+
+            // Store monthly sales data
+            $monthlySales[$month] = [
+                'month_name' => $startDate->format('F'),
+                'total_sales' => $totalSalesWithinMonth,
+                'sales_data' => $salesWithinMonth
+            ];
+        }
+
+        return view('superadmin.monthlyreport', compact('monthlySales'));
+    }
+
+    public function yearlyReport()
+    {
+        // Get the current year
+        $currentYear = Carbon::now()->year;
+
+        // Fetch delivered sales for the current year
+        $salesForCurrentYear = Sale::where('status', 'delivered')
+            ->whereYear('created_at', $currentYear)
+            ->get();
+
+        // Calculate total sales for the current year
+        $totalSalesForCurrentYear = $salesForCurrentYear->sum('total_price');
+
+        return view('superadmin.yearlyreport', compact('salesForCurrentYear', 'totalSalesForCurrentYear', 'currentYear'));
+    }
+
         
 
 }

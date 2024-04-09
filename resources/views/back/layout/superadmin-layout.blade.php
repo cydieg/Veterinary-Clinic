@@ -489,9 +489,10 @@
     						</a>
    		 					<ul class="submenu">
         						<li><a href="{{ url('/superadmin/report') }}">Daily</a></li>
-        						<li><a href="{{ route('weekly') }}">Weekly</a></li>
-        						<li><a href="#">Monthly</a></li>
-        						<li><a href="#">Yearly</a></li>
+								<li><a href="{{ route('weekly.report') }}">Weekly Sales Report</a></li>
+        						<li><a href="{{ route('monthly.report') }}">Monthly</a></li>
+        						<li><a href="{{ route('yearly.report') }}">Yearly</a></li>
+
     						</ul>
 						</li>
 
