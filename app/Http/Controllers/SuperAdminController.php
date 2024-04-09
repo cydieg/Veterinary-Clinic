@@ -134,7 +134,10 @@ class SuperAdminController extends Controller
         return view('superadmin.report', compact('deliveredSales', 'totalSales'));
     }
   
-    
+    public function dashboard()
+    {
+        return view('superadmin.dashboard');
+    }
         
 
 }

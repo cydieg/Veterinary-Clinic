@@ -448,7 +448,7 @@
 				<div class="sidebar-menu">
 					<ul id="accordion-menu">
 						<li class="dropdown">
-							<a href="javascript:;" class="dropdown-toggle no-arrow">
+							<a href="{{ route('dashboard') }}" class="dropdown-toggle no-arrow">
 								<span class="micon bi bi-house"></span
 								><span class="mtext">Home</span>
 							</a>
@@ -517,7 +517,7 @@
 				</div>
 			</div>
 				<div class="footer-wrap pd-20 mb-20 card-box">
-					@2023 | OralEase
+					@2023 | Rem's Pet Shop
 				</div>
 			</div>
 		</div>

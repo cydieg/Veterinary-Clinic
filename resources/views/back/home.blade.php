@@ -912,7 +912,7 @@
 
 
 				<div class="footer-wrap pd-20 mb-20 card-box">
-					@2023 | OralEase
+					@2023 | Rem's Pet Shop
 				</div>
 			</div>
 		</div>
