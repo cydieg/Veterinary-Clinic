@@ -483,21 +483,18 @@
 							</a>
 						</li>
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle no-arrow" data-toggle="dropdown">
-								<span class="micon bi bi-bar-chart"></span>
-								<span class="mtext">Reports</span>
-							</a>
-							<ul class="dropdown-menu">
-								<li><a href="{{ url('/superadmin/report') }}">Current Sales</a></li>
-								<li><a href="{{ route('weekly') }}">Weekly Report</a></li>
-								<li><a href="">Monthly</a></li>
-								<li><a href="">Yearly</a></li>
-							</ul>
+    						<a href="javascript:;" class="dropdown-toggle no-arrow">
+        						<span class="micon bi bi-bar-chart"></span>
+        						<span class="mtext">Reports</span>
+    						</a>
+   		 					<ul class="submenu">
+        						<li><a href="{{ url('/superadmin/report') }}">Daily</a></li>
+        						<li><a href="{{ route('weekly') }}">Weekly</a></li>
+        						<li><a href="#">Monthly</a></li>
+        						<li><a href="#">Yearly</a></li>
+    						</ul>
 						</li>
-						
-							
-						
-						
+
                        
 						<li class="dropdown">
 							<a href="{{ route('visualization') }}" class="dropdown-toggle no-arrow">
