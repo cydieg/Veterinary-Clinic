@@ -12,16 +12,16 @@
     </div>
     <div class="container ">
       <div class="img_box box-1">
-        <img src="assets petology/images/g-1.png" alt="">
+        <img src="back/images/dog.jpg" alt="">
       </div>
       <div class="img_box box-2">
         <img src="assets petology/images/g-2.png" alt="">
       </div>
       <div class="img_box box-3">
-        <img src="assets petology/images/g-3.png" alt="">
+        <img src="back/images/dog1.jpg" alt="">
       </div>
       <div class="img_box box-4">
-        <img src="assets petology/images/g-4.png" alt="">
+        <img src="back/images/dog2.jpg" alt="">
       </div>
       <div class="img_box box-5">
         <img src="assets petology/images/g-5.png" alt="">

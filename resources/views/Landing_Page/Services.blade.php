@@ -17,7 +17,7 @@
                 </div>
                 <div class="detail_box">
                   <h6>
-                    Pet Care
+                    Pet Grooming
                   </h6>
                   <p>
                     onsectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
@@ -45,7 +45,7 @@
                 </div>
                 <div class="detail_box">
                   <h6>
-                    Emergency
+                    Selling of Pet Products
                   </h6>
                   <p>
                     onsectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut

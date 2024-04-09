@@ -59,16 +59,16 @@
                   <a class="nav-link" href="{{ route('home') }}">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
+                  <a class="nav-link" href="{{ route('ourClinic') }}">About</a>
+                </li>
+                <li class="nav-item">
                   <a class="nav-link" href="{{ route('services') }}">Services</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{{ route('ourGallery') }}">Pet's gallery </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ route('ourClinic') }}">Clinic</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ route('ourShop') }}"> Our Shop </a>
+                  <a class="nav-link" href="{{ route('ourShop') }}"> Products </a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{{ route('contactUs') }}">Contact us</a>

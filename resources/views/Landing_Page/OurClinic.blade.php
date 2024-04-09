@@ -15,7 +15,7 @@
             <h2 class="custom_heading">
               About Our Pets
               <span>
-                Clinic
+                Shop
               </span>
             </h2>
             <p>
