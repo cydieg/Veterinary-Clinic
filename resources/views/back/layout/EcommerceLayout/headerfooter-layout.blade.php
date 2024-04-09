@@ -12,7 +12,7 @@
   <meta name="description" content="" />
   <meta name="author" content="" />
 
-  <title>@yield('pageTitle')</title>
+  <title>Rem's Pet Shop</title>
 
   <!-- slider stylesheet -->
   <link rel="stylesheet" type="text/css"
@@ -37,14 +37,17 @@
 </head>
 
 <body>
-  <div class="hero_area">
+<div class="hero_area">
     <!-- header section strats -->
     <header class="header_section">
-  <div class="container-fluid">
-    <nav class="navbar navbar-expand-lg custom_nav-container ">
-      <a class="navbar-brand" href="index.html">
-        <img src="/back/images/petlogo.png" width="100" height="40" alt="Rems Logo">
-      </a>
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container ">
+          <a class="navbar-brand" href="index.html">
+            <img src="back/images/new logo.png" alt="">
+            <span>
+              PetShop
+            </span>
+          </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
