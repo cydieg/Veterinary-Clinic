@@ -17,18 +17,18 @@
                 <div class="col-md-4 offset-md-2">
                   <div class="slider_detail-box">
                     <h1>
-                      Professional
+                      Welcome to
                       <span>
-                        Care Your Pet
+                        Rem's Pet Shop
                       </span>
                     </h1>
                     <p>
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry.
-                      Lorem Ipsum has been the industry's standard dummy text ever
+                      Quality goodies for your furbabies!
+                      <br>With Rem's warm smile and dedication to animal welfare, it's more than just a shop—it's a sanctuary 
+                      where lasting bonds between humans and pets are forged.
                     </p>
                     <div class="btn-box">
-                      <a href="" class="btn-1">
+                      <a href="{{ route('login') }}" class="btn-1">
                         Buy now
                       </a>
                       <a href="" class="btn-2">
