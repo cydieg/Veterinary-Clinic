@@ -1,9 +1,12 @@
+@extends('back.layout.superadmin-layout')
+@section('pageTitle', isset($pageTitle) ? $pageTitle : 'Create New User')
+@section('content')
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sales Report</title>
+    <div class="container p-3 my-3 custom-bg-color text-white">Daily Sales Report</div>
     <style>
         table {
             width: 100%;
@@ -20,14 +23,17 @@
         tr:nth-child(even) {
             background-color: #f2f2f2;
         }
+        .custom-bg-color {
+            background-color: #BC7FCD;
+            font-size: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Sales Report</h1>
-
         <table>
             <thead>
+            <p>Daily Total Sales ${{ $totalSales }}</p>
                 <tr>
                     <th>Product Name</th>
                     <th>Quantity</th>
@@ -48,8 +54,7 @@
                 @endforeach
             </tbody>
         </table>
-
-        <p>Daily Total Sales ${{ $totalSales }}</p>
     </div>
 </body>
 </html>
+@endsection

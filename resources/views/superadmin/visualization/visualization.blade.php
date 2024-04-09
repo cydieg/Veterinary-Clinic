@@ -1,3 +1,6 @@
+@extends('back.layout.superadmin-layout')
+@section('pageTitle', isset($pageTitle) ? $pageTitle : 'Create New User')
+@section('content')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,51 +12,56 @@
     <style>
         .container {
             display: flex;
+            flex-wrap: wrap; /* Allow wrapping to the next line */
             justify-content: space-between;
             margin-bottom: 20px;
         }
         .chart-container {
-            width: 45%;
+            width: 48%; /* Adjusted width */
+            padding: 20px; /* Added padding */
+            border-radius: 10px; /* Added border radius */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added box shadow */
+            background-color: #fff; /* Added background color */
+            box-sizing: border-box; /* Added box sizing */
+            margin-bottom: 20px; /* Adjusted margin */
         }
         canvas {
             width: 100%;
-            height: 400px;
+            height: 100px; /* Adjusted height */
         }
-        
+        select {
+            margin-bottom: 10px; /* Adjusted margin */
+        }
     </style>
 </head>
 <body>
-    <div>
-        <label for="dataOption">Select Data Option:</label>
-        <select id="dataOption">
-            <option value="day">Daily</option>
-            <option value="week">Weekly</option>
-            <option value="month">Monthly</option>
-            <option value="year">Yearly</option>
-        </select>
-    </div>
     <div class="container">
         <div class="chart-container">
-            <h1>Total Sales</h1>
-            <canvas id="salesChart" width="400" height="400"></canvas>
+            <h4>Total Sales</h4>
+            <label for="dataOption"></label>
+                <select id="dataOption">
+                    <option value="day">Daily</option>
+                    <option value="week">Weekly</option>
+                    <option value="month">Monthly</option>
+                    <option value="year">Yearly</option>
+                </select>
+            <canvas id="salesChart" width="400" height="300"></canvas>
         </div>
-    </div>
     
-    <div class="container">
         <div class="chart-container">
-            <h1>Number of Sales for Each Branch</h1>
-            <canvas id="salesPerBranchChart" width="400" height="400"></canvas>
-        </div>
-
-        <div class="chart-container">
-            <h1>Number of Users for Each Branch</h1>
-            <canvas id="usersPerBranchChart" width="400" height="400"></canvas>
+            <h4>Number of Sales for Each Branch</h4>
+            <canvas id="salesPerBranchChart" width="400" height="300"></canvas>
         </div>
     </div>
 
     <div class="container">
         <div class="chart-container">
-            <h1>Sales Distribution by Selected Data</h1>
+            <h4>Number of Users for Each Branch</h4>
+            <canvas id="usersPerBranchChart" width="400" height="300"></canvas>
+        </div>
+    
+        <div class="chart-container">
+            <h4>Sales Distribution by Selected Data</h4>
             <select id="dataSelect">
                 <option value="region">Region</option>
                 <option value="province">Province</option>
@@ -61,20 +69,27 @@
                 <option value="barangay">Barangay</option>
                 <option value="address">Address</option>
             </select>
-            <canvas id="chartCanvas" width="400" height="400"></canvas>
+            <canvas id="chartCanvas" width="400" height="300"></canvas>
         </div>
+    </div>
 
+    <div class="container">
         <div class="chart-container">
-            <h1>Appointments</h1>
+            <h4>Appointments</h4>
             <select id="appointmentType">
                 <option value="day">Appointments Completed by Day</option>
                 <option value="month">Appointments Completed by Month</option>
                 <option value="year">Appointments Completed by Year</option>
             </select>
-            <canvas id="appointmentsChart" width="400" height="400"></canvas>
+            <canvas id="appointmentsChart" width="400" height="300"></canvas>
         </div>
     </div>
 
+    <script>
+        // Your JavaScript code here...
+    </script>
+</body>
+</html>
 
     <script>
         var salesTotalBarData = {
@@ -367,3 +382,4 @@
     
 </body>
 </html>
+@endsection

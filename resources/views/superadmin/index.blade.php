@@ -1,3 +1,6 @@
+@extends('back.layout.superadmin-layout')
+@section('pageTitle', isset($pageTitle) ? $pageTitle : 'Create New User')
+@section('content')
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,3 +17,4 @@
     </ul>
 </body>
 </html>
+@endsection
