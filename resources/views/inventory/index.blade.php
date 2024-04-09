@@ -36,7 +36,7 @@
                     <i class="fas fa-hospital"></i> Select Branch
                 </button>
                 <!-- Display selected branch name -->
-                <h4 id="selectedBranchName"></h4>
+
             </div>
             <div class="col-md-4 text-right">
                 <!-- Button to add product -->
@@ -50,6 +50,13 @@
             <!-- Inventory table -->
             <table class="table">
                 <thead>
+                    <tr>
+                        <th colspan="12" class="transparent-header">
+                            <div class="container p-2 my-3  text-white">
+                                <h5 id="selectedBranchName"></h5>
+                            </div>
+                        </th>
+                    </tr>
                     <tr>
                         <th>Name</th>
                         <th>Description</th>
@@ -118,6 +125,7 @@
             </div>
         </div>
 
+        
         <!-- Add Product Modal -->
         <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog">
