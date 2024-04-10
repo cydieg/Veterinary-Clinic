@@ -184,6 +184,7 @@ Route::prefix('admin')->group(function () {
 // ecom routes
 Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
 Route::post('/shop/order', [ShopController::class, 'orderProduct'])->name('shop.order');
+
 // Cart routes
 Route::get('/cart', [ShopController::class, 'showCart'])->name('cart.show');
 Route::post('/cart/add', [ShopController::class, 'addToCart'])->name('cart.add');

@@ -146,16 +146,20 @@
                 </div>
                 <!-- /LOGO -->
 
-                <!-- SEARCH BAR -->
-                <div class="col-md-6">
-                    <div class="header-search">
-                        <form>
-                            <input class="input" placeholder="Search here">
-                            <button class="search-btn">Search</button>
-                        </form>
-                    </div>
-                </div>
-                <!-- /SEARCH BAR -->
+            <!-- SEARCH BAR -->
+           <!-- SEARCH BAR -->
+           <div class="col-md-6">
+            <div class="header-search">
+                <form id="searchForm" action="{{ route('shop.index') }}" method="GET">
+                    <input id="searchInput" class="input" type="text" placeholder="Search here for products" name="search">
+                    <!-- Add a hidden input field to submit the branch ID -->
+                    <input type="hidden" name="branch_id" value="{{ $encryptedBranchId }}">
+                    <button type="submit" class="search-btn">Search</button>
+                </form>
+                <div id="searchResults" class="search-dropdown"></div> <!-- Result container -->
+            </div>
+        </div>
+                    
 
                 <!-- ACCOUNT -->
                 <div class="col-md-3 clearfix">
@@ -238,7 +242,7 @@
                 
                <!-- Check if no category is selected -->
                <!-- Check if no category is selected -->
-                @if(!request()->has('category'))
+               @if(!$request->has('search') && !$request->has('category'))
                 <!-- HOT ITEMS section -->
                 <h2>HOT ITEMS</h2>
                 <div class="content">
@@ -368,6 +372,8 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      <!-- jQuery library (make sure it's included before your script) -->
+      <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
     
     <!-- jQuery Plugins -->
@@ -452,6 +458,9 @@
             }
         });
     </script>
+  
+    
+    
     
     <!-- Product Modal -->
     <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
