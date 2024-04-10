@@ -1,3 +1,6 @@
+@extends('back.layout.superadmin-layout')
+@section('pageTitle', isset($pageTitle) ? $pageTitle : 'Create New User')
+@section('content')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,15 +14,6 @@
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         h1 {
@@ -62,12 +56,14 @@
             text-align: right;
             font-weight: bold;
         }
+        .custom-bg-color {
+            background-color: #BC7FCD;
+            font-size: 20px;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Yearly Sales Report ({{ $currentYear }})</h1>
-        
+    <div class="container p-3 my-3 custom-bg-color text-white">Yearly Sales Report ({{ $currentYear }})</div>
         <!-- Add branch filter form -->
         <form action="{{ route('yearly.report') }}" method="get">
             <label for="branch">Select Branch:</label>
@@ -124,3 +120,4 @@
     </div>
 </body>
 </html>
+@endsection

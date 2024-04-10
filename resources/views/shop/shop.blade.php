@@ -53,6 +53,8 @@
         }
         #header {
        		background-color: #6AD4DD;
+            padding-top: -30px; /* Increase top padding */
+            padding-bottom: -30px
     	}
 		.dropdown-toggle .fa-shopping-cart {
     	color: black;
@@ -131,12 +133,13 @@
 <header>
     <!-- MAIN HEADER -->
     <div id="header">
-        <!-- container -->
-        <a href="/showDashboard" class="btn btn-secondary mt-3 back-button"><i class="fas fa-arrow-left"></i></a>
+        <!-- container -->  
+        <a href="/showDashboard" class="btn btn-secondary mt-3 back-button" style="background-color: transparent; padding-top: -30px; ;
+            padding-bottom: -30px"><i class="fas fa-arrow-left"></i></a>
         <div class="container">
             <!-- row -->
             <div class="row">
-                <!-- LOGO -->
+                <!-- LOGO and BACK BUTTON -->
                 <div class="col-md-3">
                     <div class="header-logo">
                         <a href="#" class="logo">
@@ -146,7 +149,7 @@
                 </div>
                 <!-- /LOGO -->
 
-           
+
                 <!-- SEARCH BAR -->
                 <div class="col-md-6">
                         <div class="header-search">

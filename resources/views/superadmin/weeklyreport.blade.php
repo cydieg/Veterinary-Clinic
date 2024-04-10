@@ -1,3 +1,6 @@
+@extends('back.layout.superadmin-layout')
+@section('pageTitle', isset($pageTitle) ? $pageTitle : 'Create New User')
+@section('content')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,12 +25,14 @@
             text-align: right;
             font-weight: bold;
         }
+        .custom-bg-color {
+            background-color: #BC7FCD;
+            font-size: 20px;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Weekly Sales Report ({{ $startDate->format('M d, Y') }} to {{ $endDate->format('M d, Y') }})</h1>
-        
+    <div class="container p-3 my-3 custom-bg-color text-white">Weekly Sales Report ({{ $startDate->format('M d, Y') }} to {{ $endDate->format('M d, Y') }})</div>
         <!-- Filter form -->
         <form action="{{ route('weekly.report') }}" method="get">
             <label for="branch">Select Branch:</label>
@@ -79,3 +84,4 @@
     </div>
 </body>
 </html>
+@endsection
