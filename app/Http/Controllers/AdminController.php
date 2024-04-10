@@ -278,9 +278,6 @@ class AdminController extends Controller
     return view('admin.reports.yearly', compact('yearlySales'));
 }
 
-
-
-
 }
 
 

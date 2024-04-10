@@ -1,3 +1,6 @@
+@extends('back.layout.main-layout')
+@section('pageTitle', isset($pageTitle) ? $pageTitle : 'Page Title here')
+@section('content')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,14 +8,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yearly Reports</title>
     <!-- Include any CSS files or stylesheets here -->
+    <style>
+        .custom-bg-color {
+            background-color: #BC7FCD;
+            font-size: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .total-column {
+            text-align: right;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Yearly Sales Reports</h1>
+        <div class="container p-3 my-3 custom-bg-color text-white">Yearly Sales Reports</div>
+        <div class="container">
         @foreach($yearlySales as $year => $monthlySales)
-            <h2>Sales for {{ $year }}</h2>
+            <h5>Sales for {{ $year }}</h5>
             @foreach($monthlySales as $month => $data)
-                <h3>{{ $month }}</h3>
+                <h5>{{ $month }}</h5>
                 <p>Total Sales (Delivered) from {{ $data['startDate']->format('F j, Y') }} to {{ $data['endDate']->format('F j, Y') }}: ${{ $data['totalSales'] }}</p>
                 <table>
                     <thead>
@@ -40,3 +69,4 @@
     <!-- Include any JavaScript files or scripts here -->
 </body>
 </html>
+@endsection

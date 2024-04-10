@@ -65,7 +65,6 @@ Route::get('/visualization', [SuperAdminController::class, 'visualization'])->na
 Route::get('/customer', [ClientController::class, 'customer'])->name('customer')->middleware('auth');
 
 
-
 //User Management rout//
 
 Route::group(['prefix' => 'user'], function () {
@@ -79,8 +78,6 @@ Route::group(['prefix' => 'user'], function () {
 });
 
 
-
-
 // Branch routes
 Route::get('/branches/view', [BranchController::class, 'viewBranches'])->name('branches.view')->middleware('auth');
 Route::get('/branches/create', [BranchController::class, 'createForm'])->name('branch.create.form')->middleware('auth');
@@ -92,21 +89,13 @@ Route::get('/branches', [BranchController::class, 'viewBranches'])->name('branch
 Route::delete('/branches/{id}/archive', [BranchController::class, 'archive'])->name('branch.archive')->middleware('auth');
 
 
-
-
-
-
 //CLIENT side//
 
 Route::get('/home1', [ClientController::class, 'home1'])->name('home1')->middleware('auth');
 Route::get('/about2', [ClientController::class, 'about2'])->name('about2')->middleware('auth');
 Route::get('/dentalClinic2', [ClientController::class, 'dentalClinic2'])->name('dentalClinic2')->middleware('auth');
 
-
-
 // routes/web.php
-
-
 
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register.form');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
