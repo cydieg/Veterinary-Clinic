@@ -14,6 +14,7 @@ class AdminController extends Controller
     // Display a listing of the users
     public function index()
     {
+        
         $branch = auth()->user()->branch;
         $users = User::where(function($query) use ($branch) {
                 $query->where('branch_id', $branch->id) // Users of the current branch
@@ -149,6 +150,8 @@ class AdminController extends Controller
     }
     public function dailyReports()
     {
+          // Get the authenticated user's branch ID
+        $branchId = auth()->user()->branch_id;
         // Get the current date
         $currentDate = now()->toDateString();
 
@@ -171,6 +174,8 @@ class AdminController extends Controller
     }
     public function weeklyReports()
     {
+          // Get the authenticated user's branch ID
+        $branchId = auth()->user()->branch_id;
         // Get the current week's start and end dates (Monday to Friday)
         $startDate = now()->startOfWeek()->addDays(1); // Monday
         $endDate = now()->startOfWeek()->addDays(5); // Friday
@@ -191,6 +196,8 @@ class AdminController extends Controller
     }
     public function monthlyReports()
     {
+          // Get the authenticated user's branch ID
+        $branchId = auth()->user()->branch_id;
         // Initialize an empty array to store monthly sales data
         $monthlySales = [];
 
@@ -225,6 +232,8 @@ class AdminController extends Controller
     }
     public function yearlyReports()
 {
+      // Get the authenticated user's branch ID
+    $branchId = auth()->user()->branch_id;
     // Initialize an empty array to store yearly sales data
     $yearlySales = [];
 
