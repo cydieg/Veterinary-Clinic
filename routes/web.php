@@ -126,6 +126,8 @@ Route::get('/Services', [LandingPageController::class, 'Services'])->name('servi
 Route::get('/OurClinic', [LandingPageController::class, 'OurClinic'])->name('ourClinic');
 Route::get('/OurShop', [LandingPageController::class, 'OurShop'])->name('ourShop');
 Route::get('/ourGallery', [LandingPageController::class, 'ourGallery'])->name('ourGallery');
+Route::get('/search', [LandingPageController::class, 'search'])->name('search');
+
 
 //Page Controller
 Route::get('/showDashboard', [PageController::class, 'showDashboard'])->name('showDashboard');
