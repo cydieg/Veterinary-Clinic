@@ -119,11 +119,12 @@
                     <li class="dropdown">
                         <a href="#" data-toggle="dropdown">Categories <i class="fa fa-angle-down"></i></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Dog</a></li>
-                            <li><a href="#">Cat</a></li>
-                            <li><a href="#">Fish</a></li>
-                            <li><a href="#">Bird</a></li>
-                        </ul>
+							<li><a href="{{ route('ourShop') }}">All</a></li>
+							<li><a href="{{ route('ourShop', ['category' => 'Dog']) }}">Dog</a></li>
+							<li><a href="{{ route('ourShop', ['category' => 'Cat']) }}">Cat</a></li>
+							<li><a href="{{ route('ourShop', ['category' => 'Fish']) }}">Fish</a></li>
+							<li><a href="{{ route('ourShop', ['category' => 'Bird']) }}">Bird</a></li>
+						</ul>
                     </li>
                 </ul>
                 <!-- /NAV -->
@@ -134,31 +135,35 @@
     </nav>
     <!-- /NAVIGATION -->
     <!-- SECTION -->
-	<div class="content">
-		<div class="container-fluid">
-			<div class="row">
-				@foreach($inventoryItems as $item)
-				<div class="col-lg-3 mb-4">
-					<div class="card">
-						<img src="{{ asset('images/' . $item->image) }}" class="card-img-top" alt="{{ $item->name }}">
-						<div class="card-body">
-							<h5 class="card-title">{{ $item->name }}</h5>
-							<p class="card-text">{{ $item->description }}</p>
-							<p class="card-text">Price: ₱ {{ $item->price }}</p>
-							
-						</div>
-					</div>
-				</div>
-				@endforeach
-			</div>
-			<!-- Pagination links -->
-			<div class="row">
-				<div class="col-12">
-					
-				</div>
-			</div>
-		</div>
-	</div>
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            @forelse($inventoryItems as $item)
+                <div class="col-lg-3 mb-4">
+                    <div class="card">
+                        <img src="{{ asset('images/' . $item->image) }}" class="card-img-top" alt="{{ $item->name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $item->name }}</h5>
+                            <p class="card-text">{{ $item->description }}</p>
+                            <p class="card-text">Price: ₱ {{ $item->price }}</p>
+                        </div>
+                    </div>
+                </div>
+            @empty
+                <div class="col-12">
+                    <p>No items found.</p>
+                </div>
+            @endforelse
+        </div>
+        <!-- Pagination links -->
+        <div class="row">
+            <div class="col-12">
+                <!-- You can add pagination links here if needed -->
+            </div>
+        </div>
+    </div>
+</div>
+
 	
 <!-- /SECTION -->
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 10, 2024 at 10:16 AM
+-- Generation Time: Apr 10, 2024 at 11:44 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -55,7 +55,8 @@ INSERT INTO `appointments` (`id`, `first_name`, `last_name`, `appointment_date`,
 (8, 'Jon Wendell', 'Cabrera', '2024-04-10', '08:00:00', '2024-04-09 21:09:59', '2024-04-10 01:58:28', 47, 'completed', 16),
 (9, 'Jon Wendell', 'Cabrera', '2024-04-10', '08:00:00', '2024-04-10 01:59:43', '2024-04-10 02:00:38', 47, 'completed', 16),
 (10, 'Jon Wendell', 'Cabrera', '2024-04-10', '17:00:00', '2024-04-10 02:01:19', '2024-04-10 02:07:53', 47, 'completed', 16),
-(11, 'Jon Wendell', 'Cabrera', '2024-04-10', '17:00:00', '2024-04-10 02:06:51', '2024-04-10 02:07:55', 47, 'completed', 16);
+(11, 'Jon Wendell', 'Cabrera', '2024-04-10', '17:00:00', '2024-04-10 02:06:51', '2024-04-10 02:07:55', 47, 'completed', 16),
+(12, 'Jon Wendell', 'Cabrera', '2024-04-27', '08:00:00', '2024-04-10 02:47:02', '2024-04-10 02:48:41', 47, 'completed', 16);
 
 -- --------------------------------------------------------
 
@@ -138,7 +139,9 @@ INSERT INTO `audits` (`id`, `inventory_id`, `upc`, `name`, `description`, `old_q
 (60, 5, '17102537969873', 'Chains', 'Dog Leash', 481, 401, 'sales', '2024-04-10 02:04:17', '2024-04-10 02:04:17'),
 (61, 12, '17103376866', 'MedDog', 'Dog Med', 266, 246, 'sales', '2024-04-10 02:08:07', '2024-04-10 02:08:07'),
 (62, 5, '17102537969873', 'Chains', 'Dog Leash', 401, 381, 'sales', '2024-04-10 02:08:09', '2024-04-10 02:08:09'),
-(63, 13, '171034228612', 'Leash', 'Dog Leash', 15, 1, 'sales', '2024-04-10 02:15:44', '2024-04-10 02:15:44');
+(63, 13, '171034228612', 'Leash', 'Dog Leash', 15, 1, 'sales', '2024-04-10 02:15:44', '2024-04-10 02:15:44'),
+(64, 5, '17102537969873', 'Chains', 'Dog Leash', 381, 331, 'sales', '2024-04-10 02:48:53', '2024-04-10 02:48:53'),
+(65, 12, '17103376866', 'MedDog', 'Dog Med', 246, 216, 'sales', '2024-04-10 02:48:55', '2024-04-10 02:48:55');
 
 -- --------------------------------------------------------
 
@@ -224,8 +227,8 @@ CREATE TABLE `inventories` (
 --
 
 INSERT INTO `inventories` (`id`, `name`, `description`, `quantity`, `image`, `category`, `price`, `upc`, `expiration`, `created_at`, `updated_at`, `branch_id`) VALUES
-(5, 'Chains', 'Dog Leash', 381, '1710253796.jpg', 'Solid', 32.00, '17102537969873', '2024-03-11 16:00:00', '2024-03-12 14:29:00', '2024-04-10 02:08:09', 16),
-(12, 'MedDog', 'Dog Med', 246, '1710337686.jpg', 'Liquid', 35.00, '17103376866', '2024-03-12 16:00:00', '2024-03-13 13:48:00', '2024-04-10 02:08:07', 16),
+(5, 'Chains', 'Dog Leash', 331, '1710253796.jpg', 'Solid', 32.00, '17102537969873', '2024-03-11 16:00:00', '2024-03-12 14:29:00', '2024-04-10 02:48:53', 16),
+(12, 'MedDog', 'Dog Med', 216, '1710337686.jpg', 'Liquid', 35.00, '17103376866', '2024-03-12 16:00:00', '2024-03-13 13:48:00', '2024-04-10 02:48:55', 16),
 (13, 'Leash', 'Dog Leash', 1, '1710342286.png', '35', 45.00, '171034228612', '2024-03-12 16:00:00', '2024-03-13 15:04:00', '2024-04-10 02:15:44', 18),
 (14, 'Test', 'Ewan', 200, '1712716869.jpg', 'Fish', 23.00, '171271686913', '2024-04-09 16:00:00', '2024-04-10 02:40:00', '2024-04-09 18:41:10', 16);
 
@@ -378,7 +381,9 @@ INSERT INTO `sales` (`id`, `user_id`, `product_id`, `quantity`, `total_price`, `
 (43, 47, 12, 200, 7000.00, 16, '2024-04-10 02:00:18', '2024-04-10 02:02:59', 'delivered'),
 (44, 47, 5, 80, 2560.00, 16, '2024-04-10 02:03:33', '2024-04-10 02:04:17', 'delivered'),
 (45, 47, 12, 20, 700.00, 16, '2024-04-10 02:07:16', '2024-04-10 02:08:07', 'delivered'),
-(46, 47, 5, 20, 640.00, 16, '2024-04-10 02:07:24', '2024-04-10 02:08:09', 'delivered');
+(46, 47, 5, 20, 640.00, 16, '2024-04-10 02:07:24', '2024-04-10 02:08:09', 'delivered'),
+(47, 47, 5, 50, 1600.00, 16, '2024-04-10 02:47:24', '2024-04-10 02:48:53', 'delivered'),
+(48, 47, 12, 30, 1050.00, 16, '2024-04-10 02:47:30', '2024-04-10 02:48:55', 'delivered');
 
 -- --------------------------------------------------------
 
@@ -510,13 +515,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `appointments`
 --
 ALTER TABLE `appointments`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `audits`
 --
 ALTER TABLE `audits`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `branches`
@@ -528,7 +533,7 @@ ALTER TABLE `branches`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -558,7 +563,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `users`

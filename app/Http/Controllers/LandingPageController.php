@@ -21,20 +21,28 @@ class LandingPageController extends Controller
     }
 
     public function ourShop(Request $request)
-{
-    // Check if there is a search query
-    if ($request->has('query')) {
-        $query = $request->input('query');
-        // Perform search for inventory items with names containing the query
-        $inventoryItems = Inventory::where('name', 'like', '%' . $query . '%')->get();
-    } else {
-        // If no search query, fetch all inventory items
-        $inventoryItems = Inventory::all();
+    {
+        // Define available categories
+        $categories = ['Dog', 'Cat', 'Fish', 'Bird'];
+    
+        // Initialize variable to hold inventory items
+        $inventoryItems = Inventory::query();
+    
+        // Check if a category is selected
+        if ($request->has('category')) {
+            $category = $request->input('category');
+            if ($category !== 'All' && in_array($category, $categories)) {
+                // Filter inventory items by selected category
+                $inventoryItems->where('category', $category);
+            }
+        }
+    
+        // Retrieve filtered inventory items
+        $inventoryItems = $inventoryItems->get();
+    
+        // Pass categories and inventory data to the view
+        return view('Landing_Page.OurShop', compact('categories', 'inventoryItems'));
     }
-
-    // Pass inventory data to the view
-    return view('Landing_Page.OurShop', compact('inventoryItems'));
-}
 
     public function search(Request $request)
 {
