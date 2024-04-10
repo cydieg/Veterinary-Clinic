@@ -121,73 +121,110 @@ class SuperAdminController extends Controller
     {
         return view('superadmin.dashboard');
     }
-    public function weeklyReport()
-    {
-        // Calculate the start and end dates for the current week (Monday to Sunday)
-        $startDate = Carbon::now()->startOfWeek();
-        $endDate = Carbon::now()->endOfWeek();
+    public function weeklyReport(Request $request)
+{
+    // Calculate the start and end dates for the current week (Monday to Sunday)
+    $startDate = Carbon::now()->startOfWeek();
+    $endDate = Carbon::now()->endOfWeek();
 
-        // Fetch delivered sales within the current week
-        $salesWithinWeek = Sale::where('status', 'delivered')
-            ->whereBetween('created_at', [$startDate, $endDate])
-            ->get();
+    // Get branches for the dropdown
+    $branches = Branch::all();
 
-        // Calculate total sales within the week
-        $totalSalesWithinWeek = $salesWithinWeek->sum('total_price');
+    // Get selected branch ID from the request
+    $branchId = $request->input('branch');
 
-        // Pass the data to the view
-        return view('superadmin.weeklyreport', [
-            'startDate' => $startDate,
-            'endDate' => $endDate,
-            'salesWithinWeek' => $salesWithinWeek,
-            'totalSalesWithinWeek' => $totalSalesWithinWeek
-        ]);
+    // Query for sales based on branch selection
+    $salesQuery = Sale::where('status', 'delivered');
+
+    if ($branchId) {
+        $salesQuery->where('branch_id', $branchId);
     }
-    public function monthlyReport()
-    {
-        // Initialize an array to store monthly sales data
-        $monthlySales = [];
 
-        // Loop through each month of the year
-        for ($month = 1; $month <= 12; $month++) {
-            // Calculate the start and end dates of the current month
-            $startDate = Carbon::create(null, $month, 1)->startOfMonth();
-            $endDate = Carbon::create(null, $month, 1)->endOfMonth();
+    // Fetch delivered sales within the current week
+    $salesWithinWeek = $salesQuery->whereBetween('created_at', [$startDate, $endDate])
+                                    ->get();
 
-            // Fetch delivered sales within the current month
-            $salesWithinMonth = Sale::where('status', 'delivered')
-                ->whereBetween('created_at', [$startDate, $endDate])
-                ->get();
+    // Calculate total sales within the week
+    $totalSalesWithinWeek = $salesWithinWeek->sum('total_price');
 
-            // Calculate total sales within the month
-            $totalSalesWithinMonth = $salesWithinMonth->sum('total_price');
+    // Pass the data to the view
+    return view('superadmin.weeklyreport', [
+        'startDate' => $startDate,
+        'endDate' => $endDate,
+        'salesWithinWeek' => $salesWithinWeek,
+        'totalSalesWithinWeek' => $totalSalesWithinWeek,
+        'branches' => $branches
+    ]);
+}
+public function monthlyReport(Request $request)
+{
+    // Initialize an array to store monthly sales data
+    $monthlySales = [];
 
-            // Store monthly sales data
-            $monthlySales[$month] = [
-                'month_name' => $startDate->format('F'),
-                'total_sales' => $totalSalesWithinMonth,
-                'sales_data' => $salesWithinMonth
-            ];
+    // Get branches for the dropdown
+    $branches = Branch::all();
+
+    // Loop through each month of the year
+    for ($month = 1; $month <= 12; $month++) {
+        // Calculate the start and end dates of the current month
+        $startDate = Carbon::create(null, $month, 1)->startOfMonth();
+        $endDate = Carbon::create(null, $month, 1)->endOfMonth();
+
+        // Get selected branch ID from the request
+        $branchId = $request->input('branch');
+
+        // Query for sales based on branch selection
+        $salesQuery = Sale::where('status', 'delivered')
+                         ->whereBetween('created_at', [$startDate, $endDate]);
+
+        if ($branchId) {
+            $salesQuery->where('branch_id', $branchId);
         }
 
-        return view('superadmin.monthlyreport', compact('monthlySales'));
+        // Fetch delivered sales within the current month
+        $salesWithinMonth = $salesQuery->get();
+
+        // Calculate total sales within the month
+        $totalSalesWithinMonth = $salesWithinMonth->sum('total_price');
+
+        // Store monthly sales data
+        $monthlySales[$month] = [
+            'month_name' => $startDate->format('F'),
+            'total_sales' => $totalSalesWithinMonth,
+            'sales_data' => $salesWithinMonth
+        ];
     }
 
-    public function yearlyReport()
-    {
-        // Get the current year
-        $currentYear = Carbon::now()->year;
+    return view('superadmin.monthlyreport', compact('monthlySales', 'branches'));
+}
 
-        // Fetch delivered sales for the current year
-        $salesForCurrentYear = Sale::where('status', 'delivered')
-            ->whereYear('created_at', $currentYear)
-            ->get();
+public function yearlyReport(Request $request)
+{
+    // Get the current year
+    $currentYear = Carbon::now()->year;
 
-        // Calculate total sales for the current year
-        $totalSalesForCurrentYear = $salesForCurrentYear->sum('total_price');
+    // Get branches for the dropdown
+    $branches = Branch::all();
 
-        return view('superadmin.yearlyreport', compact('salesForCurrentYear', 'totalSalesForCurrentYear', 'currentYear'));
+    // Get selected branch ID from the request
+    $branchId = $request->input('branch');
+
+    // Query for sales based on branch selection
+    $salesQuery = Sale::where('status', 'delivered')
+                     ->whereYear('created_at', $currentYear);
+
+    if ($branchId) {
+        $salesQuery->where('branch_id', $branchId);
     }
+
+    // Fetch delivered sales for the current year
+    $salesForCurrentYear = $salesQuery->get();
+
+    // Calculate total sales for the current year
+    $totalSalesForCurrentYear = $salesForCurrentYear->sum('total_price');
+
+    return view('superadmin.yearlyreport', compact('salesForCurrentYear', 'totalSalesForCurrentYear', 'currentYear', 'branches'));
+}
 
         
 

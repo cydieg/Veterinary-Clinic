@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weekly Sales Report</title>
     <style>
+        /* Your CSS styles */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -27,6 +28,24 @@
     <div class="container">
         <h1>Weekly Sales Report ({{ $startDate->format('M d, Y') }} to {{ $endDate->format('M d, Y') }})</h1>
         
+        <!-- Filter form -->
+        <form action="{{ route('weekly.report') }}" method="get">
+            <label for="branch">Select Branch:</label>
+            <select name="branch" id="branch">
+                <option value="">All Branches</option>
+                @foreach($branches as $branch)
+                    <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                @endforeach
+            </select>
+            <button type="submit">Filter</button>
+        </form>
+
+        <!-- Display selected branch name if filtered -->
+        @if(request('branch'))
+            <p>Filtered by: {{ $branches->where('id', request('branch'))->first()->name }}</p>
+        @endif
+
+        <!-- Sales table -->
         <table>
             <thead>
                 <tr>

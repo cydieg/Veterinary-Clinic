@@ -27,8 +27,39 @@
             text-align: center;
         }
 
+        h2 {
+            margin-top: 20px;
+            color: #333;
+        }
+
+        h3 {
+            margin-top: 10px;
+            color: #333;
+        }
+
         p {
             margin-top: 10px;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .total-column {
+            text-align: right;
             font-weight: bold;
         }
     </style>
@@ -37,7 +68,59 @@
     <div class="container">
         <h1>Yearly Sales Report ({{ $currentYear }})</h1>
         
+        <!-- Add branch filter form -->
+        <form action="{{ route('yearly.report') }}" method="get">
+            <label for="branch">Select Branch:</label>
+            <select name="branch" id="branch">
+                <option value="">All Branches</option>
+                @foreach($branches as $branch)
+                    <option value="{{ $branch->id }}" {{ request('branch') == $branch->id ? 'selected' : '' }}>{{ $branch->name }}</option>
+                @endforeach
+            </select>
+            <button type="submit">Filter</button>
+        </form>
+
+        <!-- Display selected branch name -->
+        @if(request('branch'))
+            <p>Filtered by: {{ $branches->where('id', request('branch'))->first()->name }} Sales</p>
+        @endif
+
         <p>Total Sales for {{ $currentYear }}: ${{ number_format($totalSalesForCurrentYear, 2) }}</p>
+
+        <!-- Display months with sales and products sold -->
+        @foreach ($salesForCurrentYear->groupBy(function($sale) { return $sale->created_at->format('F'); }) as $month => $sales)
+            <h2>{{ $month }}</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php
+                        $monthlyTotalPrice = 0;
+                    @endphp
+                    @foreach ($sales as $sale)
+                        <tr>
+                            <td>{{ $sale->product->name }}</td>
+                            <td>{{ $sale->quantity }}</td>
+                            <td>${{ number_format($sale->product->price, 2) }}</td>
+                            <td>${{ number_format($sale->total_price, 2) }}</td>
+                        </tr>
+                        @php
+                            $monthlyTotalPrice += $sale->total_price;
+                        @endphp
+                    @endforeach
+                    <tr>
+                        <td colspan="3" class="total-column">Total:</td>
+                        <td class="total-column">${{ number_format($monthlyTotalPrice, 2) }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        @endforeach
     </div>
 </body>
 </html>

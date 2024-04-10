@@ -61,6 +61,23 @@
     <div class="container">
         <h1>Monthly Sales Report</h1>
         
+        <!-- Add branch filter form -->
+        <form action="{{ route('monthly.report') }}" method="get">
+            <label for="branch">Select Branch:</label>
+            <select name="branch" id="branch">
+                <option value="">All Branches</option>
+                @foreach($branches as $branch)
+                    <option value="{{ $branch->id }}" {{ request('branch') == $branch->id ? 'selected' : '' }}>{{ $branch->name }}</option>
+                @endforeach
+            </select>
+            <button type="submit">Filter</button>
+        </form>
+
+        <!-- Display selected branch name -->
+        @if(request('branch'))
+            <p>Filtered by: {{ $branches->where('id', request('branch'))->first()->name }} Sales</p>
+        @endif
+
         @foreach ($monthlySales as $monthData)
             <h2>{{ $monthData['month_name'] }}</h2>
             <p>Total Sales: ${{ number_format($monthData['total_sales'], 2) }}</p>
