@@ -17,6 +17,8 @@ class StaffController extends Controller
 {
     public function index()
     {
+          // Get the authenticated user's branch ID
+        $branchId = auth()->user()->branch_id;
         try {
             // Get the authenticated user
             $user = Auth::user();
@@ -42,6 +44,8 @@ class StaffController extends Controller
 
     public function pendingAppointment(Appointment $appointment)
 {
+      // Get the authenticated user's branch ID
+    $branchId = auth()->user()->branch_id;
     try {
         // Send email notification
         Mail::to($appointment->user->email)->send(new AppointmentAccepted($appointment));
@@ -59,6 +63,8 @@ class StaffController extends Controller
 
     public function acceptedAppointments()
     {
+          // Get the authenticated user's branch ID
+        $branchId = auth()->user()->branch_id;
         try {
             // Get the authenticated user
             $user = Auth::user();
@@ -78,6 +84,8 @@ class StaffController extends Controller
 
     public function completeAppointment(Appointment $appointment)
     {
+          // Get the authenticated user's branch ID
+        $branchId = auth()->user()->branch_id;
         try {
             // Update appointment status to 'completed'
             $appointment->update(['status' => 'completed']);
@@ -97,6 +105,9 @@ class StaffController extends Controller
 
     public function cancelAppointment(Appointment $appointment)
     {
+        // Get the authenticated user's branch ID
+          
+        $branchId = auth()->user()->branch_id;
         try {
             // Update appointment status to 'canceled'
             $appointment->update(['status' => 'canceled']);
@@ -134,6 +145,8 @@ class StaffController extends Controller
 
    public function deliverSale(Sale $sale, Request $request)
    {
+      // Get the authenticated user's branch ID
+      $branchId = auth()->user()->branch_id;
        
        $sale->update(['status' => 'delivering']);
    
@@ -163,6 +176,8 @@ class StaffController extends Controller
    
     public function markAsDelivered($saleId)
     {
+          // Get the authenticated user's branch ID
+        $branchId = auth()->user()->branch_id;
         // Find the sale by ID
         $sale = Sale::findOrFail($saleId);
         
@@ -200,20 +215,24 @@ class StaffController extends Controller
     {
         // Get the authenticated user's branch ID
         $branchId = auth()->user()->branch_id;
-
-        // Fetch delivered sales related to the authenticated user's branch
+    
+        // Get the current date
+        $currentDate = now()->toDateString();
+    
+        // Fetch delivered sales related to the authenticated user's branch for the current date
         $deliveredSales = Sale::with('product')
                             ->where('branch_id', $branchId)
                             ->where('status', 'delivered')
+                            ->whereDate('created_at', $currentDate)
                             ->get();
-
+    
         // Initialize an empty array to store total prices and quantity sold for each product
         $totalPrices = [];
-
+    
         // Calculate total price and quantity sold for each product
         foreach ($deliveredSales as $sale) {
             $productId = $sale->product_id;
-
+    
             // If the product is not yet added to the totalPrices array, initialize its values
             if (!isset($totalPrices[$productId])) {
                 $totalPrices[$productId] = (object)[
@@ -222,16 +241,16 @@ class StaffController extends Controller
                     'quantitySold' => 0
                 ];
             }
-
+    
             // Accumulate total price and quantity sold
             $totalPrices[$productId]->totalPrice += $sale->total_price;
             $totalPrices[$productId]->quantitySold += $sale->quantity;
         }
-
+    
         // Pass total prices to the view
         return view('staff.dailysales', compact('totalPrices'));
     }
-
+    
 
 
 
