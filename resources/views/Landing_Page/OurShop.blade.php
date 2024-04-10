@@ -999,7 +999,7 @@
                         <ul class="footer-links">
                             <li><a href="#"><i class="fa fa-map-marker"></i>Camilmil, Calapan City</a></li>
                             <li><a href="#"><i class="fa fa-phone"></i>09071112979</a></li>
-                            <li><a href="#"><i class="fa fa-envelope-o"></i>remspetshop@email.com</a></li>
+                            <li><a href="#"><i class="fa fa-envelope"></i>remspetshop@email.com</a></li>
                         </ul>
                     </div>
                 </div>
