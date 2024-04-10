@@ -179,6 +179,14 @@ Route::prefix('admin')->group(function () {
     Route::get('/users/{user}/edit', [AdminController::class, 'edit'])->name('admin.users.edit');
     Route::put('/users/{user}', [AdminController::class, 'update'])->name('admin.users.update');
     Route::delete('/users/{user}', [AdminController::class, 'destroy'])->name('admin.users.destroy');
+    Route::get('/reports/daily', [AdminController::class, 'dailyReports'])->name('admin.reports.daily');
+    Route::get('/reports/weekly', [AdminController::class, 'weeklyReports'])->name('admin.reports.weekly');
+    Route::get('/reports/monthly', [AdminController::class, 'monthlyReports'])->name('admin.reports.monthly');
+    Route::get('/reports/yearly', [AdminController::class, 'yearlyReports'])->name('admin.reports.yearly');
+
+
+
+    
 });
 
 // ecom routes
@@ -205,3 +213,5 @@ Route::get('/report', [SuperAdminController::class, 'report'])->name('report');
 Route::get('/weekly-report', [SuperAdminController::class, 'weeklyReport'])->name('weekly.report');
 Route::get('/monthly-report', [SuperAdminController::class, 'monthlyReport'])->name('monthly.report');
 Route::get('/yearly-report', [SuperAdminController::class, 'yearlyReport'])->name('yearly.report');
+
+

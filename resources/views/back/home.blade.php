@@ -617,12 +617,19 @@
 						</li>
 						
 						<li class="dropdown">
-							<a href="javascript:;" class="dropdown-toggle no-arrow">
-								<span class="micon bi bi-bar-chart"></span>
-								<span class="mtext">Reports</span>
-							</a>
-						</li>						
-               
+    						<a href="javascript:;" class="dropdown-toggle no-arrow">
+        						<span class="micon bi bi-bar-chart"></span>
+        						<span class="mtext">Reports</span>
+    						</a>
+   		 					<ul class="submenu">
+        						<li><a href="{{ route('admin.reports.daily') }}">Daily</a></li>
+								<li><a href="{{ route('admin.reports.weekly') }}">Weekly Sales Report</a></li>
+        						<li><a href="{{ route('admin.reports.monthly') }}">Monthly</a></li>
+        						<li><a href="{{ route('admin.reports.yearly') }}">Yearly</a></li>
+
+
+    						</ul>
+						</li>	          
 						<li class="dropdown">
 							<a href="javascript:;" class="dropdown-toggle no-arrow">
 								<span class="micon bi bi-person"></span>
