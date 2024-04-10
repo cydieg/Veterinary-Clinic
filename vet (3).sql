@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 08, 2024 at 11:59 AM
+-- Generation Time: Apr 10, 2024 at 05:30 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -49,7 +49,10 @@ INSERT INTO `appointments` (`id`, `first_name`, `last_name`, `appointment_date`,
 (2, 'Jon Wendell', 'Cabrera', '2024-04-08', '08:00:00', '2024-04-07 20:18:05', '2024-04-07 20:21:17', 47, 'completed', 16),
 (3, 'Jon Wendell', 'Cabrera', '2024-04-08', '11:00:00', '2024-04-07 20:22:09', '2024-04-07 20:30:30', 47, 'completed', 16),
 (4, 'Jon Wendell', 'Cabrera', '2024-04-08', '17:00:00', '2024-04-07 20:28:21', '2024-04-07 20:30:28', 47, 'completed', 16),
-(5, 'Jon Wendell', 'Cabrera', '2024-04-08', '08:00:00', '2024-04-08 03:46:50', '2024-04-08 03:47:19', 47, 'completed', 16);
+(5, 'Jon Wendell', 'Cabrera', '2024-04-08', '08:00:00', '2024-04-08 03:46:50', '2024-04-08 03:47:19', 47, 'completed', 16),
+(6, 'Jon Wendell', 'Cabrera', '2024-04-08', '08:00:00', '2024-04-08 04:06:36', '2024-04-08 04:06:36', 47, 'pending', 18),
+(7, 'Jon Wendell', 'Cabrera', '2024-04-08', '08:00:00', '2024-04-08 04:06:40', '2024-04-08 04:08:02', 47, 'completed', 16),
+(8, 'Jon Wendell', 'Cabrera', '2024-04-10', '08:00:00', '2024-04-09 21:09:59', '2024-04-09 21:09:59', 47, 'pending', 16);
 
 -- --------------------------------------------------------
 
@@ -112,7 +115,19 @@ INSERT INTO `audits` (`id`, `inventory_id`, `upc`, `name`, `description`, `old_q
 (40, 12, '17103376866', 'MedDog', 'Dog Med', 537, 528, 'sales', '2024-04-07 21:44:28', '2024-04-07 21:44:28'),
 (41, 5, '17102537969873', 'Chains', 'Dog Leash', 70, 61, 'sales', '2024-04-07 21:44:30', '2024-04-07 21:44:30'),
 (42, 5, '17102537969873', 'Chains', 'Dog Leash', 61, 51, 'sales', '2024-04-08 03:46:33', '2024-04-08 03:46:33'),
-(43, 5, '17102537969873', 'Chains', 'Dog Leash', 51, 47, 'sales', '2024-04-08 03:46:35', '2024-04-08 03:46:35');
+(43, 5, '17102537969873', 'Chains', 'Dog Leash', 51, 47, 'sales', '2024-04-08 03:46:35', '2024-04-08 03:46:35'),
+(44, 5, '17102537969873', 'Chains', 'Dog Leash', 47, 41, 'sales', '2024-04-08 07:57:24', '2024-04-08 07:57:24'),
+(45, 12, '17103376866', 'MedDog', 'Dog Med', 528, 516, 'sales', '2024-04-08 07:57:26', '2024-04-08 07:57:26'),
+(46, 5, '17102537969873', 'Chains', 'Dog Leash', 41, 34, 'sales', '2024-04-08 07:57:27', '2024-04-08 07:57:27'),
+(47, 5, '17102537969873', 'Chains', 'Dog Leash', 34, 26, 'sales', '2024-04-08 08:02:11', '2024-04-08 08:02:11'),
+(48, 12, '17103376866', 'MedDog', 'Dog Med', 516, 506, 'sales', '2024-04-08 08:02:13', '2024-04-08 08:02:13'),
+(49, 13, '171034228612', 'Leash', 'Dog Leash', 35, 15, 'sales', '2024-04-08 08:21:50', '2024-04-08 08:21:50'),
+(50, 5, '17102537969873', 'Chains', 'Dog Leash', 26, 2, 'sales', '2024-04-09 03:15:22', '2024-04-09 03:15:22'),
+(51, 14, '171271686913', 'Test', 'Ewan', 0, 200, 'inbound', '2024-04-09 18:41:10', '2024-04-09 18:41:10'),
+(52, 12, '17103376866', 'MedDog', 'Dog Med', 506, 496, 'sales', '2024-04-09 20:54:40', '2024-04-09 20:54:40'),
+(53, 5, '17102537969873', 'Chains', 'Dog Leash', 2, 0, 'sales', '2024-04-09 20:54:42', '2024-04-09 20:54:42'),
+(54, 12, '17103376866', 'MedDog', 'Dog Med', 496, 477, 'sales', '2024-04-09 20:54:44', '2024-04-09 20:54:44'),
+(55, 5, '17102537969873', 'Chains', 'Dog Leash', 0, 500, 'inbound', '2024-04-09 20:55:53', '2024-04-09 20:55:53');
 
 -- --------------------------------------------------------
 
@@ -198,9 +213,10 @@ CREATE TABLE `inventories` (
 --
 
 INSERT INTO `inventories` (`id`, `name`, `description`, `quantity`, `image`, `category`, `price`, `upc`, `expiration`, `created_at`, `updated_at`, `branch_id`) VALUES
-(5, 'Chains', 'Dog Leash', 47, '1710253796.jpg', 'Solid', 32.00, '17102537969873', '2024-03-11 16:00:00', '2024-03-12 14:29:00', '2024-04-08 03:46:35', 16),
-(12, 'MedDog', 'Dog Med', 528, '1710337686.jpg', 'Liquid', 35.00, '17103376866', '2024-03-12 16:00:00', '2024-03-13 13:48:00', '2024-04-07 21:44:28', 16),
-(13, 'Leash', 'Dog Leash', 35, '1710342286.png', '35', 45.00, '171034228612', '2024-03-12 16:00:00', '2024-03-13 15:04:00', '2024-03-13 07:04:46', 18);
+(5, 'Chains', 'Dog Leash', 500, '1710253796.jpg', 'Solid', 32.00, '17102537969873', '2024-03-11 16:00:00', '2024-03-12 14:29:00', '2024-04-09 20:55:53', 16),
+(12, 'MedDog', 'Dog Med', 477, '1710337686.jpg', 'Liquid', 35.00, '17103376866', '2024-03-12 16:00:00', '2024-03-13 13:48:00', '2024-04-09 20:54:44', 16),
+(13, 'Leash', 'Dog Leash', 15, '1710342286.png', '35', 45.00, '171034228612', '2024-03-12 16:00:00', '2024-03-13 15:04:00', '2024-04-08 08:21:50', 18),
+(14, 'Test', 'Ewan', 200, '1712716869.jpg', 'Fish', 23.00, '171271686913', '2024-04-09 16:00:00', '2024-04-10 02:40:00', '2024-04-09 18:41:10', 16);
 
 -- --------------------------------------------------------
 
@@ -333,7 +349,19 @@ INSERT INTO `sales` (`id`, `user_id`, `product_id`, `quantity`, `total_price`, `
 (25, 72, 12, 9, 315.00, 16, '2024-04-07 21:43:02', '2024-04-07 21:44:28', 'delivered'),
 (26, 72, 5, 9, 288.00, 16, '2024-04-07 21:43:28', '2024-04-07 21:44:29', 'delivered'),
 (27, 47, 5, 10, 320.00, 16, '2024-04-08 01:01:00', '2024-04-08 03:46:33', 'delivered'),
-(28, 47, 5, 4, 128.00, 16, '2024-04-08 03:46:03', '2024-04-08 03:46:35', 'delivered');
+(28, 47, 5, 4, 128.00, 16, '2024-04-08 03:46:03', '2024-04-08 03:46:35', 'delivered'),
+(29, 47, 5, 6, 192.00, 16, '2024-04-08 04:04:59', '2024-04-08 07:57:24', 'delivered'),
+(30, 47, 12, 12, 420.00, 16, '2024-04-08 04:07:09', '2024-04-08 07:57:25', 'delivered'),
+(31, 47, 5, 7, 224.00, 16, '2024-04-08 04:07:26', '2024-04-08 07:57:27', 'delivered'),
+(32, 47, 5, 8, 256.00, 16, '2024-04-08 08:01:26', '2024-04-08 08:02:10', 'delivered'),
+(33, 47, 12, 10, 350.00, 16, '2024-04-08 08:01:34', '2024-04-08 08:02:13', 'delivered'),
+(34, 47, 13, 20, 900.00, 18, '2024-04-08 08:21:34', '2024-04-08 08:21:50', 'delivered'),
+(35, 47, 5, 24, 768.00, 16, '2024-04-09 03:15:04', '2024-04-09 03:15:22', 'delivered'),
+(36, 47, 12, 10, 350.00, 16, '2024-04-09 04:15:57', '2024-04-09 20:54:40', 'delivered'),
+(37, 47, 5, 2, 64.00, 16, '2024-04-09 20:53:45', '2024-04-09 20:54:42', 'delivered'),
+(38, 47, 12, 19, 665.00, 16, '2024-04-09 20:53:53', '2024-04-09 20:54:44', 'delivered'),
+(39, 47, 5, 11, 352.00, 16, '2024-04-09 21:10:29', '2024-04-09 21:10:29', 'pending'),
+(40, 47, 12, 11, 385.00, 16, '2024-04-09 21:10:40', '2024-04-09 21:10:40', 'pending');
 
 -- --------------------------------------------------------
 
@@ -379,7 +407,8 @@ INSERT INTO `users` (`id`, `username`, `firstName`, `lastName`, `middleName`, `r
 (52, 'namonamo', 'namonamo', 'namonamo', 'namonamo', 'Region X (Northern Mindanao)', 'Lanao Del Norte', 'Salvador', 'Panaliwad-on', 'MIMAROPA, Oriental Mindoro, City Of Calapan (Capital), Biga', 'male', 21, 'namonamo@gmail.com', '$2y$12$jshD96Tkx6a4rISM.nPYP.dAiGPZawy0x.6S7PapABVqjXuoLoy3K', '2024-04-06 21:20:17', '2024-04-06 21:25:11', 16, '09305115251', 'patient'),
 (53, 'Erzie', 'Janzel', 'Bongo', 'Managaze', 'Region VII (Central Visayas)', 'Cebu', 'Cebu City (Capital)', 'Sawang Calero (Pob.)', 'Region VII (Central Visayas), Cebu, Cebu City (Capital), Sawang Calero (Pob.)', 'female', 20, 'janzkiemalditz@gmail.com', '$2y$12$UZkKZcVvyYzI.ymCRMr21uVLC8K1kHzPAf..C4/PBNg6ZgAQUkiAi', '2024-04-06 23:58:23', '2024-04-06 23:58:23', NULL, '09652577632', 'patient'),
 (66, 'furparent', 'furparent', 'furparent', 'furparent', 'Region III (Central Luzon)', 'Aurora', 'Baler (Capital)', 'Barangay I (Pob.)', 'Region III (Central Luzon), Aurora, Baler (Capital), Barangay I (Pob.)', 'male', 21, 'furparent@gmail.com', '$2y$12$MTRSRzsj.SNLwP9Y6bRV3eIaQoftovW1xwJHjYu6jG4nvoypL64eG', '2024-04-07 06:03:45', '2024-04-07 06:03:45', NULL, '09305321232', 'patient'),
-(72, 'clientbiga', 'clientbiga', 'clientbiga', 'clientbiga', 'MIMAROPA', 'Oriental Mindoro', 'City Of Calapan (Capital)', 'Biga', 'MIMAROPA, Oriental Mindoro, City Of Calapan (Capital), Biga', 'female', 21, 'clientbiga@gmail.com', '$2y$12$SSNqH7Uyoa8QtXuREYodVeXxTbNzMrnjlTynJ/7FJRUC7baws81YO', '2024-04-07 21:42:25', '2024-04-07 21:42:25', NULL, '09817523253', 'patient');
+(72, 'clientbiga', 'clientbiga', 'clientbiga', 'clientbiga', 'MIMAROPA', 'Oriental Mindoro', 'City Of Calapan (Capital)', 'Biga', 'MIMAROPA, Oriental Mindoro, City Of Calapan (Capital), Biga', 'female', 21, 'clientbiga@gmail.com', '$2y$12$SSNqH7Uyoa8QtXuREYodVeXxTbNzMrnjlTynJ/7FJRUC7baws81YO', '2024-04-07 21:42:25', '2024-04-07 21:42:25', NULL, '09817523253', 'patient'),
+(74, 'testkilikili', 'testkilikili', 'testkilikili', 'testkilikili', 'Region I (Ilocos Region)', 'Ilocos Norte', 'Adams', 'Adams (Pob.)', 'Region I (Ilocos Region), Ilocos Norte, Adams, Adams (Pob.)', 'female', 22, 'testkilikili@gmail.com', '$2y$12$vDnbVRNh8G5lx5V80gEbcutmDxOK9aSutX2Rj8BPThZZGYA9BSQdW', '2024-04-08 07:11:15', '2024-04-08 07:11:15', NULL, '09305115251', 'patient');
 
 --
 -- Indexes for dumped tables
@@ -471,13 +500,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `appointments`
 --
 ALTER TABLE `appointments`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `audits`
 --
 ALTER TABLE `audits`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `branches`
@@ -489,7 +518,7 @@ ALTER TABLE `branches`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -501,7 +530,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `inventories`
 --
 ALTER TABLE `inventories`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -519,13 +548,13 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- Constraints for dumped tables
