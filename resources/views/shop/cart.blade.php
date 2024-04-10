@@ -16,6 +16,12 @@
         margin-right: 5px; /* Add some spacing between buttons */
         font-size: 12px; /* Adjust button font size */
     }
+    .button-container form {
+    display: inline-block; /* Make forms display inline */
+    }
+    .button-container form:first-child {
+        margin-right: 10px; /* Add margin between buttons */
+    }
 </style>
 
 <div class="col-md-7 col-lg-8 col-xl-9">
@@ -40,11 +46,11 @@
                             <td>${{ $item->product->price }}</td>
                             <td>{{ $item->quantity }}</td>
                             <td>${{ $item->product->price * $item->quantity }}</td>
-                            <td>
+                            <td class="button-container">
                                 <form method="POST" action="{{ route('cart.order') }}">
                                     @csrf
                                     <input type="hidden" name="product_id" value="{{ $item->product_id }}">
-                                    <button type="submit">Place Order</button>
+                                    <button type="submit" class="btn btn-success btn-sm">Place Order</button>
                                 </form>
                                 <form method="POST" action="{{ route('cart.remove') }}">
                                     @csrf
