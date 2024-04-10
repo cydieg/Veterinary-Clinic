@@ -20,6 +20,22 @@ class LandingPageController extends Controller
         return view('Landing_Page.OurClinic');
     }
 
+    public function ourShop(Request $request)
+{
+    // Check if there is a search query
+    if ($request->has('query')) {
+        $query = $request->input('query');
+        // Perform search for inventory items with names containing the query
+        $inventoryItems = Inventory::where('name', 'like', '%' . $query . '%')->get();
+    } else {
+        // If no search query, fetch all inventory items
+        $inventoryItems = Inventory::all();
+    }
+
+    // Pass inventory data to the view
+    return view('Landing_Page.OurShop', compact('inventoryItems'));
+}
+
     public function search(Request $request)
 {
     // Check if there is a search query
