@@ -157,7 +157,13 @@
                             </div>
                             <div class="form-group">
                                 <label for="category">Category</label>
-                                <input type="text" class="form-control" id="category" name="category" required>
+                                <select class="form-control" id="category" name="category" required>
+                                    <option value="Dog">Dog</option>
+                                    <option value="Cat">Cat</option>
+                                    <option value="Fish">Fish</option>
+                                    <option value="Bird">Bird</option>
+                                    <option value="Other">Other</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="price">Price</label>
@@ -263,6 +269,7 @@
             });
         });
     </script>
+    
 </body>
 
 </html>

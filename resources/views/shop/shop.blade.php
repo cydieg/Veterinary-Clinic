@@ -150,13 +150,6 @@
                 <div class="col-md-6">
                     <div class="header-search">
                         <form>
-                            <select class="input-select">
-                                <option value="0">All Categories</option>
-                                <option value="1">Dog</option>
-                                <option value="1">Cat</option>
-                                <option value="1">Bird</option>
-                                <option value="1">Fish</option>
-                            </select>
                             <input class="input" placeholder="Search here">
                             <button class="search-btn">Search</button>
                         </form>
@@ -206,12 +199,14 @@
                 <li class="dropdown">
                     <a href="#" data-toggle="dropdown">Categories <i class="fa fa-angle-down"></i></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Dog</a></li>
-                        <li><a href="#">Cat</a></li>
-                        <li><a href="#">Fish</a></li>
-                        <li><a href="#">Bird</a></li>
+                        <li><a href="{{ route('shop.index', ['branch_id' => $encryptedBranchId]) }}">All</a></li>
+                        <li><a href="{{ route('shop.index', ['branch_id' => $encryptedBranchId, 'category' => 'Dog']) }}">Dog</a></li>
+                        <li><a href="{{ route('shop.index', ['branch_id' => $encryptedBranchId, 'category' => 'Cat']) }}">Cat</a></li>
+                        <li><a href="{{ route('shop.index', ['branch_id' => $encryptedBranchId, 'category' => 'Fish']) }}">Fish</a></li>
+                        <li><a href="{{ route('shop.index', ['branch_id' => $encryptedBranchId, 'category' => 'Bird']) }}">Bird</a></li>
                     </ul>
                 </li>
+                
                 <li class="dropdown">
                     <button class="btn" type="button" id="branchDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         @if($branchId)
@@ -241,29 +236,38 @@
         <div class="row">
             <div class="container mt-4">
                 
+               <!-- Check if no category is selected -->
+               <!-- Check if no category is selected -->
+                @if(!request()->has('category'))
                 <!-- HOT ITEMS section -->
                 <h2>HOT ITEMS</h2>
                 <div class="content">
                     <div class="container-fluid">
                         <div class="row">
-                            @foreach($hotItems as $hotItem)
-                                <div class="col-lg-3 mb-4">
-                                    <div class="card">
-                                        <img src="{{ asset('images/' . $hotItem->product->image) }}" class="card-img-top" alt="{{ $hotItem->product->name }}">
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{ $hotItem->product->name }}</h5>
-                                            <p class="card-text">{{ $hotItem->product->description }}</p>
-                                            <p class="card-text">Price: ₱ {{ $hotItem->product->price }}</p>
-                                            <button class="btn btn-primary" onclick="showProductModal('{{ $hotItem->product->name }}', '{{ $hotItem->product->description }}', {{ $hotItem->product->price }}, {{ $hotItem->product->quantity }}, '{{ $hotItem->product->id }}', '{{ $branchId }}')">Add to Cart</button>
-                                            <div class="hot-item-indicator">Hot Item!</div>
+                            @if($hotItems->isNotEmpty()) <!-- Check if there are any hot items -->
+                                @foreach($hotItems as $hotItem)
+                                    <div class="col-lg-3 mb-4">
+                                        <div class="card">
+                                            <img src="{{ asset('images/' . $hotItem->product->image) }}" class="card-img-top" alt="{{ $hotItem->product->name }}">
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ $hotItem->product->name }}</h5>
+                                                <p class="card-text">{{ $hotItem->product->description }}</p>
+                                                <p class="card-text">Price: ₱ {{ $hotItem->product->price }}</p>
+                                                <button class="btn btn-primary" onclick="showProductModal('{{ $hotItem->product->name }}', '{{ $hotItem->product->description }}', {{ $hotItem->product->price }}, {{ $hotItem->product->quantity }}, '{{ $hotItem->product->id }}', '{{ $branchId }}')">Add to Cart</button>
+                                                <div class="hot-item-indicator">Hot Item!</div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                             @endforeach
-                        
+                                @endforeach
+                            @else
+                                <p>No hot items available.</p>
+                            @endif
                         </div>
                     </div>
                 </div>
+                @endif
+
+
 
                 <!-- Other items section -->
                 <h2>Other Items</h2>
