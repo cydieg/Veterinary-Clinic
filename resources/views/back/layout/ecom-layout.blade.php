@@ -119,15 +119,6 @@
 													<span>Cart</span>
 												</a>
 											</li>
-											
-											<li>
-												<a href="{{ route('message') }}">
-													<i class="fas fa-comments"></i>
-													<span>Message</span>
-													<small class="unread-msg"></small>
-												</a>
-											</li>
-											
 										
 											<li>
 												<a href="{{ route('manual.logout') }}">
