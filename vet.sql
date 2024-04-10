@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 10, 2024 at 05:30 AM
+-- Generation Time: Apr 10, 2024 at 11:01 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -151,8 +151,8 @@ CREATE TABLE `branches` (
 --
 
 INSERT INTO `branches` (`id`, `name`, `location`, `contact`, `status`, `created_at`, `updated_at`, `user_id`) VALUES
-(16, 'Gwenchana Dentist', 'Santo Ninos', '09305115251', 'Active', '2024-02-19 05:30:54', '2024-04-01 08:08:06', 1),
-(18, 'Janzel Clinic', 'Cebu', '09092133212', 'Active', '2024-02-19 06:15:17', '2024-02-19 06:15:17', 1);
+(16, 'Camilmil Branch', 'JP Rizal Street, Camilmil Calapan City, Oriental Mindoro', '09305115251', 'Active', '2024-02-19 05:30:54', '2024-04-11 05:25:09', 1),
+(18, 'Roxas Branch', 'Roxas, Oriental Mindoro', '09092133212', 'Active', '2024-02-19 06:15:17', '2024-04-11 05:26:09', 1);
 
 -- --------------------------------------------------------
 
@@ -361,7 +361,9 @@ INSERT INTO `sales` (`id`, `user_id`, `product_id`, `quantity`, `total_price`, `
 (37, 47, 5, 2, 64.00, 16, '2024-04-09 20:53:45', '2024-04-09 20:54:42', 'delivered'),
 (38, 47, 12, 19, 665.00, 16, '2024-04-09 20:53:53', '2024-04-09 20:54:44', 'delivered'),
 (39, 47, 5, 11, 352.00, 16, '2024-04-09 21:10:29', '2024-04-09 21:10:29', 'pending'),
-(40, 47, 12, 11, 385.00, 16, '2024-04-09 21:10:40', '2024-04-09 21:10:40', 'pending');
+(40, 47, 12, 11, 385.00, 16, '2024-04-09 21:10:40', '2024-04-09 21:10:40', 'pending'),
+(41, 11, 5, 1, 32.00, 16, '2024-04-11 03:34:42', '2024-04-11 03:34:42', 'pending'),
+(42, 11, 5, 1, 32.00, 16, '2024-04-11 04:21:07', '2024-04-11 04:21:07', 'pending');
 
 -- --------------------------------------------------------
 
@@ -397,18 +399,12 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `username`, `firstName`, `lastName`, `middleName`, `region`, `province`, `city`, `barangay`, `address`, `gender`, `age`, `email`, `password`, `created_at`, `updated_at`, `branch_id`, `contact_number`, `role`) VALUES
 (1, 'Settse', 'Jon Wendell', 'Cabrera', 'Lontoc', 'MIMAROPA', 'Oriental Mindoro', 'City Of Calapan (Capital)', 'Santo Niño', 'Nacoco Santo Nino', 'male', 22, 'corvecc1@gmail.com', '$2y$12$2k8M1Dr4znqRowxeg/4LiePrDsTbOftt0NC43FwikNg0jk9IoQUCi', '2024-02-19 05:31:38', '2024-04-07 06:54:50', 16, '09817523253', 'super_admin'),
-(4, 'staffcal', 'staffcal', 'staffcal', 'staffcal', NULL, NULL, NULL, NULL, 'Test', 'female', 21, 'staffcal@gmail.com', '$2y$12$1xIoG7fECmJyaCvzk9hB7uMn6lh0Yt4k04a5LkaVMwlxe97cW98z6', '2024-02-19 06:13:07', '2024-02-19 06:13:07', 16, NULL, 'staff'),
-(6, 'staffvic', 'staffvic', 'staffvic', 'staffvic', NULL, NULL, NULL, NULL, 'Test', 'female', 21, 'staffvic@gmail.com', '$2y$12$PW0q/y1f8t7Lu61MSqdSeOcDvKU1t66xeoMDh3ImIFpKDKsI91av2', '2024-02-19 06:15:48', '2024-02-19 06:15:48', 18, NULL, 'staff'),
-(7, 'admincal', 'admincal', 'admincal', 'admincal', NULL, NULL, NULL, NULL, 'Test', 'female', 21, 'admincal@gmail.com', '$2y$12$xgLPf4n42RNZ4Ewog5sC8.uKW/go4WSFYehre9FExL4soV3iI/kFu', '2024-02-19 06:16:39', '2024-02-19 06:16:39', 16, NULL, 'admin'),
-(10, 'patienteses', 'patient', 'patient', 'patient', NULL, NULL, NULL, NULL, 'Test', 'male', 21, 'patient@gmail.com', '$2y$12$g1HHkQYSA9RngbJG4h5twukLX3qJf8sS2u0SDk.twPhMnZ1xH3JB2', '2024-02-19 06:50:01', '2024-04-04 20:57:11', NULL, NULL, 'patient'),
-(11, 'clientcal', 'clientcal', 'clientcal', 'clientcal', NULL, NULL, NULL, NULL, 'Test', 'female', 21, 'clientcal@gmail.com', '$2y$12$MXJHFcL5KU0JqA/aaLGVbuZ5L0i9tMzNvdjbc6kL1KONuSqkWfa52', '2024-02-19 06:56:07', '2024-02-19 06:56:07', NULL, NULL, 'patient'),
-(13, 'adminvic', 'adminvic', 'adminvic', 'adminvic', NULL, NULL, NULL, NULL, 'test', 'female', 32, 'adminvic@gmail.com', '$2y$12$ln9eWedJqdIjAMTWjHJeKeVa1kDyI.stctmp/7OAzJtSK0oXazt9e', '2024-03-13 06:38:37', '2024-03-13 06:38:37', 18, NULL, 'admin'),
-(47, 'Sett', 'Jon Wendell', 'Cabrera', 'Lontoc', 'MIMAROPA', 'Oriental Mindoro', 'City Of Calapan (Capital)', 'Balite', 'MIMAROPA, Oriental Mindoro, City Of Calapan (Capital), Balite', 'female', 21, 'nopona21@gmail.com', '$2y$12$1aOkHuZOEitZInVq9vBPEOs75ehoNFq3fV0XyqUP2pZcOpVMXJhHO', '2024-04-06 08:46:53', '2024-04-06 08:46:53', NULL, '09305115251', 'patient'),
-(52, 'namonamo', 'namonamo', 'namonamo', 'namonamo', 'Region X (Northern Mindanao)', 'Lanao Del Norte', 'Salvador', 'Panaliwad-on', 'MIMAROPA, Oriental Mindoro, City Of Calapan (Capital), Biga', 'male', 21, 'namonamo@gmail.com', '$2y$12$jshD96Tkx6a4rISM.nPYP.dAiGPZawy0x.6S7PapABVqjXuoLoy3K', '2024-04-06 21:20:17', '2024-04-06 21:25:11', 16, '09305115251', 'patient'),
-(53, 'Erzie', 'Janzel', 'Bongo', 'Managaze', 'Region VII (Central Visayas)', 'Cebu', 'Cebu City (Capital)', 'Sawang Calero (Pob.)', 'Region VII (Central Visayas), Cebu, Cebu City (Capital), Sawang Calero (Pob.)', 'female', 20, 'janzkiemalditz@gmail.com', '$2y$12$UZkKZcVvyYzI.ymCRMr21uVLC8K1kHzPAf..C4/PBNg6ZgAQUkiAi', '2024-04-06 23:58:23', '2024-04-06 23:58:23', NULL, '09652577632', 'patient'),
-(66, 'furparent', 'furparent', 'furparent', 'furparent', 'Region III (Central Luzon)', 'Aurora', 'Baler (Capital)', 'Barangay I (Pob.)', 'Region III (Central Luzon), Aurora, Baler (Capital), Barangay I (Pob.)', 'male', 21, 'furparent@gmail.com', '$2y$12$MTRSRzsj.SNLwP9Y6bRV3eIaQoftovW1xwJHjYu6jG4nvoypL64eG', '2024-04-07 06:03:45', '2024-04-07 06:03:45', NULL, '09305321232', 'patient'),
-(72, 'clientbiga', 'clientbiga', 'clientbiga', 'clientbiga', 'MIMAROPA', 'Oriental Mindoro', 'City Of Calapan (Capital)', 'Biga', 'MIMAROPA, Oriental Mindoro, City Of Calapan (Capital), Biga', 'female', 21, 'clientbiga@gmail.com', '$2y$12$SSNqH7Uyoa8QtXuREYodVeXxTbNzMrnjlTynJ/7FJRUC7baws81YO', '2024-04-07 21:42:25', '2024-04-07 21:42:25', NULL, '09817523253', 'patient'),
-(74, 'testkilikili', 'testkilikili', 'testkilikili', 'testkilikili', 'Region I (Ilocos Region)', 'Ilocos Norte', 'Adams', 'Adams (Pob.)', 'Region I (Ilocos Region), Ilocos Norte, Adams, Adams (Pob.)', 'female', 22, 'testkilikili@gmail.com', '$2y$12$vDnbVRNh8G5lx5V80gEbcutmDxOK9aSutX2Rj8BPThZZGYA9BSQdW', '2024-04-08 07:11:15', '2024-04-08 07:11:15', NULL, '09305115251', 'patient');
+(75, 'Saydi', 'Cydie', 'Gargullo', 'Seno', 'MIMAROPA', 'Oriental Mindoro', 'Naujan', 'Bancuro', 'MIMAROPA, Oriental Mindoro, Naujan, Bancuro', 'female', 20, 'cydiegargullo@gmail.com', '$2y$12$nJLX0v5bbHudz7r1aZa07O8edV85csu38t7e9eAt9R4bFpIs.H84G', '2024-04-11 05:29:01', '2024-04-11 05:29:01', 18, '09637411286', 'admin'),
+(76, 'staff', 'Riza', 'Mendoza', 'Toledo', 'MIMAROPA', 'Oriental Mindoro', 'City Of Calapan (Capital)', 'Camilmil', 'MIMAROPA, Oriental Mindoro, City Of Calapan (Capital), Camilmil', 'male', 31, 'camilmil@gmail.com', '$2y$12$CbGMTDYcGxpujL0pl5RRbOuVo05/LVOOHsh.MnsFydboYmq1MvmfG', '2024-04-11 05:42:15', '2024-04-11 05:42:15', 16, '09297664376', 'staff'),
+(77, 'roxas staff', 'Aldrin', 'Garibay', 'Ponse', 'MIMAROPA', 'Oriental Mindoro', 'Roxas', 'San Jose', 'MIMAROPA, Oriental Mindoro, Roxas, San Jose', 'male', 24, 'roxasstaff@gmail.com', '$2y$12$pYETNkNUV7txdyZ4DElZu.fpyOQvn3hFCSRrQKL6n2IZiPX/NGx2K', '2024-04-11 05:43:55', '2024-04-11 05:43:55', 18, '09653765134', 'staff'),
+(78, 'camilmil admin', 'Carlo', 'Aquino', 'Pedroza', 'MIMAROPA', 'Oriental Mindoro', 'Roxas', 'San Isidro', 'MIMAROPA, Oriental Mindoro, Roxas, San Isidro', 'male', 23, 'camilmiladmin@gmail.com', '$2y$12$JLQLyGD.s5s5hxLSeq1K6.FVcIWxgoxFrfRXdkyOUzFbPNB8gWCPO', '2024-04-11 05:47:57', '2024-04-11 05:47:57', 16, '09574516374', 'admin'),
+(79, 'customer camilmil', 'Juvy', 'Papasin', 'Tore', 'MIMAROPA', 'Oriental Mindoro', 'City Of Calapan (Capital)', 'Bulusan', 'MIMAROPA, Oriental Mindoro, City Of Calapan (Capital), Bulusan', 'female', 41, 'customer1@gmail.com', '$2y$12$JjcZvhWNi.2tJTT34qClzOdTZsvYuqaKK7LT1JK4P5G0xuntwflOG', '2024-04-11 05:51:13', '2024-04-11 05:51:13', NULL, '09517283546', 'patient'),
+(80, 'customer roxas', 'Mark', 'Genabe', 'Aledo', 'MIMAROPA', 'Oriental Mindoro', 'Puerto Galera', 'San Antonio', 'MIMAROPA, Oriental Mindoro, Puerto Galera, San Antonio', 'male', 37, 'customer2@gmail.com', '$2y$12$ix9SR8VIrkNOy/FjNCi7AOGQZM16XPCxFr8UKn2FkMsuvpwIBUDa6', '2024-04-11 05:52:26', '2024-04-11 05:52:26', NULL, '095638164523', 'patient');
 
 --
 -- Indexes for dumped tables
@@ -518,7 +514,7 @@ ALTER TABLE `branches`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -548,13 +544,13 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 
 --
 -- Constraints for dumped tables
