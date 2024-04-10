@@ -194,7 +194,8 @@ class ShopController extends Controller
     
         return redirect()->route('cart.show')->with('success', 'Order placed successfully.');
     }
-  
+
+    
     
 
 }

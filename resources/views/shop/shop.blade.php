@@ -146,19 +146,20 @@
                 </div>
                 <!-- /LOGO -->
 
-            <!-- SEARCH BAR -->
-           <!-- SEARCH BAR -->
-           <div class="col-md-6">
-            <div class="header-search">
-                <form id="searchForm" action="{{ route('shop.index') }}" method="GET">
-                    <input id="searchInput" class="input" type="text" placeholder="Search here for products" name="search">
-                    <!-- Add a hidden input field to submit the branch ID -->
-                    <input type="hidden" name="branch_id" value="{{ $encryptedBranchId }}">
-                    <button type="submit" class="search-btn">Search</button>
-                </form>
-                <div id="searchResults" class="search-dropdown"></div> <!-- Result container -->
-            </div>
-        </div>
+           
+                <!-- SEARCH BAR -->
+                <div class="col-md-6">
+                        <div class="header-search">
+                            <form id="searchForm" action="{{ route('shop.index') }}" method="GET">
+                                <input id="searchInput" class="input" type="text" placeholder="Search here for products" name="search">
+                                <!-- Add a hidden input field to submit the branch ID -->
+                                <input type="hidden" name="branch_id" value="{{ $encryptedBranchId }}">
+                                <button type="submit" class="search-btn">Search</button>
+                            </form>
+                            <div id="searchResults" class="search-dropdown"></div> <!-- Result container -->
+                        </div>
+                    </div>
+            
                     
 
                 <!-- ACCOUNT -->
@@ -458,6 +459,7 @@
             }
         });
     </script>
+  
   
     
     
