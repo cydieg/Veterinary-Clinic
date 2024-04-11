@@ -36,9 +36,12 @@ class ClientController extends Controller
     
         $futureAppointments = [];
         foreach ($nextWeekDates as $date) {
-            $bookedSlots = Appointment::where('appointment_date', $date)->count();
-            $remainingSlots = $totalSlots - $bookedSlots;
-            $futureAppointments[$date] = $remainingSlots;
+            $branches = Branch::all();
+            foreach ($branches as $branch) {
+                $bookedSlots = Appointment::where('appointment_date', $date)->where('branch_id', $branch->id)->count();
+                $remainingSlots = $totalSlots - $bookedSlots;
+                $futureAppointments[$date][$branch->id] = $remainingSlots;
+            }
         }
     
         $branches = Branch::all();
@@ -67,8 +70,10 @@ class ClientController extends Controller
             return redirect()->back()->with('error', 'Please update your profile with your first name and last name before making an appointment.');
         }
 
-        // Get the number of existing appointments for the selected date
-        $existingAppointmentsCount = Appointment::where('appointment_date', $request->input('appointment_date'))->count();
+        // Get the number of existing appointments for the selected branch and date
+        $existingAppointmentsCount = Appointment::where('appointment_date', $request->input('appointment_date'))
+            ->where('branch_id', $request->input('branch_id'))
+            ->count();
 
         // Calculate the slot number
         $slotNumber = $existingAppointmentsCount + 1;
