@@ -19,10 +19,14 @@
     <table class="table mt-4 table-bordered table-striped">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Name</th>
+                <th>Pet Name</th>
+                <th>Breed</th>
+                <th>Address</th>
+                <th>Contact Number</th>
+                <th>Description</th> 
                 <th>Date</th>
-                <th>Time</th>
+                <th>Slot</th>
                 <th>Status</th>
                 <th>Action</th>
             </tr>
@@ -30,10 +34,14 @@
         <tbody>
             @foreach($acceptedAppointments as $appointment)
                 <tr>
-                    <td>{{ $appointment->id }}</td>
                     <td>{{ $appointment->user->firstName }} {{ $appointment->user->lastName }}</td>
+                    <td>{{ $appointment->pet_name }}</td>
+                    <td>{{ $appointment->breed }}</td>
+                    <td>{{ $appointment->user->address }}</td>
+                    <td>{{ $appointment->user->contact_number }}</td>
+                    <td>{{ $appointment->description }}</td> <!-- Display contact number -->
                     <td>{{ $appointment->appointment_date }}</td>
-                    <td>{{ $appointment->appointment_time }}</td>
+                    <td>{{ $appointment->appointment_slot }}</td>
                     <td>{{ $appointment->status }}</td>
                     <td class="action-buttons">
                         @if($appointment->status === 'accepted')
