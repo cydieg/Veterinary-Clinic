@@ -24,6 +24,10 @@ class ClientController extends Controller
         $totalSlots = 10; // Total slots per day
         $remainingSlots = $totalSlots - $bookedSlots;
     
+        // Calculate remaining slots for the current date booked by the current user
+        $currentDateBookedSlots = Auth::user()->appointments()->where('appointment_date', $selectedDate)->count();
+        $currentDateRemainingSlots = $totalSlots - $currentDateBookedSlots;
+    
         // Fetch appointments for the next 7 days to display available slots
         $nextWeekDates = [];
         for ($i = 1; $i <= 7; $i++) {
@@ -38,9 +42,10 @@ class ClientController extends Controller
         }
     
         $branches = Branch::all();
-        return view('client.customer', compact('appointments', 'branches', 'selectedDate', 'remainingSlots', 'futureAppointments'));
+        return view('client.customer', compact('appointments', 'branches', 'selectedDate', 'remainingSlots', 'futureAppointments', 'currentDateRemainingSlots'));
     }
     
+
 
     public function store(Request $request)
     {

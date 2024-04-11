@@ -32,10 +32,7 @@
                             <input type="date" name="appointment_date" id="appointment_date" class="form-control" value="{{ $selectedDate }}" min="{{ $selectedDate }}" required>
                         </div>
 
-                        <div class="form-group">
-                            <label>Slots Remaining for {{ $selectedDate }}:</label>
-                            <p>{{ $remainingSlots }} slots left</p>
-                        </div>
+                       
 
                         <div class="form-group">
                             <label for="branch_id">Select Branch:</label>
@@ -82,39 +79,56 @@
                         <button type="submit" class="btn btn-info btn-block">Request Reservation</button>
                     </form>
                 </div>
-                <!-- Available Slots for Next 7 Days -->
-                <div class="col-md-12 col-lg-6">
+                <div class="col-md-7 col-lg-8 col-xl-9">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Available Slots for Next 7 Days</h5>
-                            <ul class="list-group">
-                                @foreach($futureAppointments as $date => $slots)
-                                    <li class="list-group-item">
-                                        <span>{{ $date }}</span>
-                                        <span class="badge badge-primary badge-pill">{{ $slots }} slots left</span>
-                                    </li>
-                                @endforeach
-                            </ul>
+                            <div class="row">
+                                <!-- Display Available Slots for Current Date -->
+                                <div class="col-md-12 col-lg-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Available Slots for Current Date ({{ $selectedDate }})</h5>
+                                            <ul class="list-group">
+                                                <li class="list-group-item">
+                                                    <span>{{ $selectedDate }}</span>
+                                                    <span class="badge badge-primary badge-pill">{{ $currentDateRemainingSlots }} slots left</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                
+                                <!-- Display Available Slots for Next 7 Days -->
+                                <div class="col-md-12 col-lg-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Available Slots for Next 7 Days</h5>
+                                            <ul class="list-group">
+                                                @foreach($futureAppointments as $date => $slots)
+                                                    <li class="list-group-item">
+                                                        <span>{{ $date }}</span>
+                                                        <span class="badge badge-primary badge-pill">{{ $slots }} slots left</span>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!-- End of Available Slots -->
-            </div>
-        </div>
-    </div>
-</div>
-
-@endsection
-
-@section('scripts')
-<script>
-    document.getElementById('appointment_date').addEventListener('change', function() {
-        var selectedDate = this.value; // Get the selected date
-        // Perform an action, such as fetching available slots for the selected date via AJAX
-        // You can make an AJAX request to your backend to fetch the available slots for the selected date and update the UI accordingly
-        // For simplicity, I'm just logging the selected date here
-        console.log(selectedDate);
-        // You can then update the UI with the available slots for the selected date
-    });
-</script>
-@endsection
+                @endsection
+                
+                @section('scripts')
+                <script>
+                    document.getElementById('appointment_date').addEventListener('change', function() {
+                        var selectedDate = this.value; // Get the selected date
+                        // Perform an action, such as fetching available slots for the selected date via AJAX
+                        // You can make an AJAX request to your backend to fetch the available slots for the selected date and update the UI accordingly
+                        // For simplicity, I'm just logging the selected date here
+                        console.log(selectedDate);
+                        // You can then update the UI with the available slots for the selected date
+                    });
+                </script>
+                @endsection
