@@ -13,10 +13,15 @@ class Appointment extends Model
         'first_name',
         'last_name',
         'appointment_date',
-        'appointment_time',
+        'appointment_slot',
         'user_id',
         'status',
-        'branch_id', // Add this line to the $fillable array
+        'branch_id',
+        'pet_name',
+        'animal_type', // Added animal_type to the $fillable array
+        'breed',
+        'description',
+        'service_type',
     ];
 
     public function user()
@@ -24,10 +29,8 @@ class Appointment extends Model
         return $this->belongsTo(User::class);
     }
 
-        public function branch()
+    public function branch()
     {
         return $this->belongsTo(Branch::class, 'branch_id');
     }
-
-    
 }
