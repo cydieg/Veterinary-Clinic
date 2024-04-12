@@ -125,6 +125,7 @@ class AdminController extends Controller
         $user->gender = $request->input('gender');
         $user->age = $request->input('age');
         $user->role = $request->input('role');
+        $user->contact_number = $request->input('contact_number'); // Update contact number
 
         // Concatenate address components
         $addressComponents = [
@@ -145,7 +146,6 @@ class AdminController extends Controller
 
         return redirect()->route('admin.users.index')->with('success', 'User updated successfully');
     }
-
     
 
     // Remove the specified user from storage

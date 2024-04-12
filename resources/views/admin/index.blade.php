@@ -138,9 +138,11 @@
                                                     <input type="text" name="middleName" id="middleName" class="form-control" value="{{ $user->middleName }}">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="address">Address:</label>
-                                                    <input type="text" name="address" id="address" class="form-control" value="{{ $user->address }}">
+                                                    <label for="contact_number">Contact Number:</label>
+                                                    <input type="text" name="contact_number" id="contact_number" class="form-control" value="{{ $user->contact_number }}">
                                                 </div>
+                                                
+                                                
                                                 <!-- Address Selector -->
                                                 <div class="row">
                                                     <div class="col-md-4">
