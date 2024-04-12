@@ -148,6 +148,7 @@ Route::prefix('superadmin')->group(function () {
     Route::delete('/superadmin/user/{id}/archive', [UserManagementController::class, 'archive'])->name('superadmin.user.archive')->middleware('auth');
 
 });
+Route::get('/superadmin/user/{id}/show', [UserManagementController::class, 'show'])->name('superadmin.user.show');
 
 
 //inventory routes

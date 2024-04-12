@@ -164,4 +164,5 @@ class UserManagementController extends Controller
 
         return redirect()->route('superadmin.user.index')->with('success', 'User archived successfully');
     }
+
 }
