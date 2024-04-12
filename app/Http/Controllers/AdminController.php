@@ -11,22 +11,22 @@ use Illuminate\Support\Facades\Hash;
 class AdminController extends Controller
 {
     // Display a listing of the users
-    public function index()
-{
-    $branch = auth()->user()->branch;
-    $users = User::where(function($query) use ($branch) {
-            $query->where('branch_id', $branch->id) // Users of the current branch
-                ->whereIn('role', ['staff', 'admin']);
-        })
-        ->orWhere(function($query) {
-            $query->whereNull('branch_id') // Users with null branch_id
-                ->where('role', 'patient');
-        })
-        ->select('id', 'username', 'email', 'role', 'contact_number', 'age', 'gender', 'firstName', 'lastName', 'middleName', 'address', 'region', 'province', 'city', 'barangay') // Include region, province, city, and barangay fields
-        ->get();
+        public function index()
+    {
+        $branch = auth()->user()->branch;
+        $users = User::where(function($query) use ($branch) {
+                $query->where('branch_id', $branch->id) // Users of the current branch
+                    ->whereIn('role', ['staff', 'admin']);
+            })
+            ->orWhere(function($query) {
+                $query->whereNull('branch_id') // Users with null branch_id
+                    ->where('role', 'patient');
+            })
+            ->select('id', 'username', 'email', 'role', 'contact_number', 'age', 'gender', 'firstName', 'lastName', 'middleName', 'address', 'region', 'province', 'city', 'barangay') // Include region, province, city, and barangay fields
+            ->get();
 
-    return view('admin.index', compact('users'));
-}
+        return view('admin.index', compact('users'));
+    }
 
 
     // Show the form for creating a new user
@@ -109,35 +109,42 @@ class AdminController extends Controller
 
     // Update the specified user in storage
     public function update(Request $request, $id)
-{
-    $request->validate([
-        'username' => 'required|string|max:255|unique:users,username,' . $id,
-        'email' => 'required|email|unique:users,email,' . $id,
-        'firstName' => 'required|string|max:255',
-        'lastName' => 'required|string|max:255',
-        'middleName' => 'nullable|string|max:255',
-        'address' => 'nullable|string|max:255',
-        'gender' => 'required|in:male,female',
-        'age' => 'required|integer|min:0',
-        'role' => 'required|in:admin,patient,staff',
-        'password' => 'nullable|string|min:6',
-    ]);
+    {
+        $user = User::findOrFail($id);
 
-    $user = User::findOrFail($id);
-    $user->fill($request->all());
+        // Update user details
+        $user->username = $request->input('username');
+        $user->email = $request->input('email');
+        $user->firstName = $request->input('firstName');
+        $user->lastName = $request->input('lastName');
+        $user->middleName = $request->input('middleName');
+        $user->region = $request->input('region_text');
+        $user->province = $request->input('province_text');
+        $user->city = $request->input('city_text');
+        $user->barangay = $request->input('barangay_text');
+        $user->gender = $request->input('gender');
+        $user->age = $request->input('age');
+        $user->role = $request->input('role');
 
-    // Update password only if provided and not empty
-    if ($request->filled('password')) {
-        $user->password = Hash::make($request->password);
-    } else {
-        // If password is not provided, remove it from the update array
-        unset($user->password);
+        // Concatenate address components
+        $addressComponents = [
+            $request->input('barangay_text'),
+            $request->input('city_text'),
+            $request->input('province_text'),
+            $request->input('region_text')
+        ];
+
+        $user->address = implode(', ', array_filter($addressComponents));
+
+        // Check if password field is not empty
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->input('password'));
+        }
+
+        $user->save();
+
+        return redirect()->route('admin.users.index')->with('success', 'User updated successfully');
     }
-
-    $user->save();
-
-    return redirect()->route('admin.users.index')->with('success', 'User updated successfully');
-}
 
     
 
