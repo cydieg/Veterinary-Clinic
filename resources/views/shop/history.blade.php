@@ -1,3 +1,6 @@
+@extends('back.layout.ecom-layout')
+@section('pageTitle', isset($pageTitle) ? $pageTitle : 'Vet')
+@section('content')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,21 +60,24 @@
         .table tbody tr:hover {
             background-color: #f2f2f2;
         }
+        .custom-bg-color {
+        background-color: #BC7FCD;
+        font-size: 20px;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Purchase History</div>
-    
-                    <div class="card-body">
+<div class="col-md-7 col-lg-8 col-xl-9">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="container p-3 my-3 custom-bg-color text-white">Purchase History</div>
                         @if($sales->isEmpty())
                             <p>You haven't made any purchases yet.</p>
                         @else
-                            <table class="table">
-                                <thead>
+                <table class="table mt-4 table-bordered table-striped">
+                    <thead>
+                    <thead>
                                     <tr>
                                         <th>Product</th>
                                         <th>Quantity</th>
@@ -98,3 +104,4 @@
     </div>
 </body>
 </html>
+@endsection

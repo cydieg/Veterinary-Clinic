@@ -55,19 +55,20 @@
                             <td>{{ $user->age }}</td>
                             <td>{{ $user->gender }}</td>
                             <td>
-                                <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#userModal{{ $user->id }}">
-                                    View
-                                </button>
-                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editUserModal{{ $user->id }}">
-                                    Edit
-                                </button>
-                                <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" style="display: inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
-                                </form>
+                                <div style="display: flex;">
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#userModal{{ $user->id }}">View</button>
+                                    
+                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editUserModal{{ $user->id }}">Edit</button>
+                                    
+                                    <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                                    </form>
+                                </div>
                             </td>
+
                         </tr>
                         <!-- View User Modal -->
                         <div class="modal fade" id="userModal{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
