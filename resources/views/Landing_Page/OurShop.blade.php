@@ -36,7 +36,7 @@
             color: black;
         }
         #footer {
-            background-color: #6AD4DD;
+            background-color: #37B5B6;
         }
         #footer .footer-links li a {
             color: black;
@@ -46,187 +46,181 @@
         #footer .footer p {
             color: black;
         }
+        .navbar {
+            background-color: #37B5B6; /* background color */
+            padding: 1px; /* padding */
+            border-radius: 10px; /* rounded corners */
+        }
+
+        .navbar-brand img {
+            width: 50px; /* logo width */
+            margin-right: 10px; /* space between logo and text */
+            vertical-align: middle;
+        }
+
+        .navbar-brand span {
+            color: #fff; /* text color */
+            font-size: 30px; /* font size */
+            vertical-align: middle;
+        }
     </style>
 </head>
 <body>
-    <!-- HEADER -->
-    <header>
-        <!-- MAIN HEADER -->
-        <div id="header">
-            <!-- container -->
-            <a href="/" class="btn btn-secondary mt-3 back-button"><i class="fas fa-arrow-left"></i></a>
-            <div class="container">
-                <!-- row -->
-                <div class="row">
-                    <!-- LOGO -->
-                    <div class="col-md-3">
-                        <div class="header-logo">
-                            <a href="#" class="logo">
-                                <img src="" alt="">
-                            </a>
-                        </div>
-                    </div>
-                    <!-- /LOGO -->
-                    <!-- SEARCH BAR -->
-                    <form action="{{ route('search') }}" method="GET">
-						<input type="text" name="query" class="input" placeholder="Search here">
-						<button type="submit" class="search-btn">Search</button>
-					</form>
-					
-                    <!-- /SEARCH BAR -->
-                    <!-- ACCOUNT -->
-                    <div class="col-md-3 clearfix">
-                        <div class="header-ctn">
-                            
-                            <!-- /Cart -->
-                            <!-- Login -->
-                            <div class="dropdown">
-                                <a href="{{ route('login') }}" aria-expanded="true">
-                                    <i class="fa fa-user" style="color: black;"></i>
-                                    <span style="color: black;">Login</span>
-                                </a>
-                            </div>
-                            <!-- /Login -->
-                            <!-- Menu Toogle -->
-                            <div class="menu-toggle">
-                                <a href="#">
-                                    <i class="fa fa-bars"></i>
-                                    <span>Menu</span>
-                                </a>
-                            </div>
-                            <!-- /Menu Toogle -->
-                        </div>
-                    </div>
-                    <!-- /ACCOUNT -->
-                </div>
-                <!-- row -->
+        <header class="header_section">
+            <div class="container-fluid">
+                <nav class="navbar navbar-expand-lg custom_nav-container">
+                    <a class="navbar-brand" href="index.html">
+                        <img src="back/images/new logo.png" alt="">
+                        <span>
+                            Rem's Pet Shop
+                        </span>
+                    </a>
+                </nav>
             </div>
-            <!-- container -->
-        </div>
-        <!-- /MAIN HEADER -->
-    </header>
-    <!-- /HEADER -->
-    <!-- NAVIGATION -->
-    <nav id="navigation">
-        <!-- container -->
-        <div class="container">
-            <!-- responsive-nav -->
-            <div id="responsive-nav">
-                <!-- NAV -->
-                <ul class="main-nav nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#">Hot Deals</a></li>
-                    <li class="dropdown">
-                        <a href="#" data-toggle="dropdown">Categories <i class="fa fa-angle-down"></i></a>
-                        <ul class="dropdown-menu">
-							<li><a href="{{ route('ourShop') }}">All</a></li>
-							<li><a href="{{ route('ourShop', ['category' => 'Dog']) }}">Dog</a></li>
-							<li><a href="{{ route('ourShop', ['category' => 'Cat']) }}">Cat</a></li>
-							<li><a href="{{ route('ourShop', ['category' => 'Fish']) }}">Fish</a></li>
-							<li><a href="{{ route('ourShop', ['category' => 'Bird']) }}">Bird</a></li>
-						</ul>
-                    </li>
-                </ul>
-                <!-- /NAV -->
-            </div>
-            <!-- /responsive-nav -->
-        </div>
-        <!-- /container -->
-    </nav>
-    <!-- /NAVIGATION -->
+        </header>
+                    <!-- NAVIGATION -->
+                    <nav id="navigation">
+                        <!-- container -->
+                        <div class="container">
+                            <!-- responsive-nav -->
+                            <div id="responsive-nav">
+                                <!-- NAV -->
+                                <div class="col-md-3" style="margin-right: 100px;">
+                                    <div class="header-ctn">
+                                        <!-- SEARCH BAR -->
+                                        <form action="{{ route('search') }}" method="GET" class="d-inline-flex justify-content-center">
+                                            <input type="text" name="query" class="input" placeholder="Search here" style="width: 350px; outline: 2px solid red;">
+                                        </form>
+                                        <!-- /SEARCH BAR -->
+                                    </div>
+                                </div>
+
+                                <ul class="main-nav nav navbar-nav" style="margin-right: 80px;">
+                                    <li class="active" style="margin-right: 80px;"><a href="#">Home</a></li>
+                                    <li><a href="#" style="margin-right: 80px;">Hot Deals</a></li>
+                                    <li class="dropdown">
+                                        <a href="#" data-toggle="dropdown" style="margin-right: 80px;">Categories <i class="fa fa-angle-down"></i></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ route('ourShop') }}">All</a></li>
+                                            <li><a href="{{ route('ourShop', ['category' => 'Dog']) }}">Dog</a></li>
+                                            <li><a href="{{ route('ourShop', ['category' => 'Cat']) }}">Cat</a></li>
+                                            <li><a href="{{ route('ourShop', ['category' => 'Fish']) }}">Fish</a></li>
+                                            <li><a href="{{ route('ourShop', ['category' => 'Bird']) }}">Bird</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <!-- /NAV -->
+                            </div>
+                            <!-- /responsive-nav -->
+                        </div>
+                        <!-- /container -->
+                    </nav>
+                    <!-- /NAVIGATION -->
+<!-- Container -->
+<div class="container">
+    <!-- Space before header -->
+    <div style="margin-top: 30px;"></div>
+
     <!-- SECTION -->
-<div class="content">
-    <div class="container-fluid">
-        <div class="row">
-            @forelse($inventoryItems as $item)
-                <div class="col-lg-3 mb-4">
-                    <div class="card">
-                        <img src="{{ asset('images/' . $item->image) }}" class="card-img-top" alt="{{ $item->name }}">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $item->name }}</h5>
-                            <p class="card-text">{{ $item->description }}</p>
-                            <p class="card-text">Price: ₱ {{ $item->price }}</p>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                @forelse($inventoryItems as $item)
+                    <div class="col-lg-3 mb-4">
+                        <div class="card" style="border: 1px solid #ccc; border-radius: 5px; padding: 10px;">
+                            <div style="height: 250px; overflow: hidden; border-bottom: 1px solid #ccc;">
+                                <img src="{{ asset('images/' . $item->image) }}" class="card-img-top" alt="{{ $item->name }}" style="object-fit: cover; width: 100%; height: 100%; border-right: 1px solid #ccc; border-top: 1px solid #ccc; border-radius: 1px;">
+                            </div><br>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $item->name }}</h5>
+                                <p class="card-text">{{ $item->description }}</p>
+                                <p class="card-text">Price: ₱ {{ $item->price }}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            @empty
+                @empty
+                    <div class="col-12">
+                        <p>No items found.</p>
+                    </div>
+                @endforelse
+            </div>
+            <!-- Pagination links -->
+            <div class="row">
                 <div class="col-12">
-                    <p>No items found.</p>
+                    <!-- You can add pagination links here if needed -->
                 </div>
-            @endforelse
-        </div>
-        <!-- Pagination links -->
-        <div class="row">
-            <div class="col-12">
-                <!-- You can add pagination links here if needed -->
             </div>
         </div>
-    </div>
-</div>
-
-	
-<!-- /SECTION -->
-
-        <!-- /container -->
     </div>
     <!-- /SECTION -->
-    <!-- FOOTER -->
-    <footer id="footer">
-        <!-- top footer -->
-        <div class="section">
-            <!-- container -->
-            <div class="container">
-                <!-- row -->
-                <div class="row">
-                    <div class="col-md-3 col-xs-6">
-                        <div class="footer">
-                            <h3 class="footer-title">About Us</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.</p>
-                            <ul class="footer-links">
-                                <li><a href="#"><i class="fa fa-map-marker"></i>Camilmil, Calapan City</a></li>
-                                <li><a href="#"><i class="fa fa-phone"></i>09071112979</a></li>
-                                <li><a href="#"><i class="fa fa-envelope"></i>remspetshop@email.com</a></li>
-                            </ul>
-                        </div>
+
+    <!-- Space before footer -->
+    <div style="margin-bottom: 30px;"></div>
+</div>
+<!-- /Container -->
+
+
+
+                        <!-- /container -->
                     </div>
-                    <div class="col-md-3 col-xs-6">
-                        <div class="footer">
-                            <h3 class="footer-title">Categories</h3>
-                            <ul class="footer-links">
-                                <li><a href="#">Hot deals</a></li>
-                                <li><a href="#">Dog Products</a></li>
-                                <li><a href="#">Cat Products</a></li>
-                                <li><a href="#">Bird Products</a></li>
-                                <li><a href="#">Fish Products</a></li>
-                            </ul>
+                    <!-- /SECTION -->
+                    <!-- FOOTER -->
+                    <footer id="footer">
+                        <!-- top footer -->
+                        <div class="section">
+                            <!-- container -->
+                            <div class="container">
+                                <!-- row -->
+                                <div class="row">
+                                    <div class="col-md-3 col-xs-6">
+                                        <div class="footer">
+                                            <h3 class="footer-title">About Us</h3>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.</p>
+                                            <ul class="footer-links">
+                                                <li><a href="#"><i class="fa fa-map-marker"></i>Camilmil, Calapan City</a></li>
+                                                <li><a href="#"><i class="fa fa-phone"></i>09071112979</a></li>
+                                                <li><a href="#"><i class="fa fa-envelope"></i>remspetshop@email.com</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-xs-6">
+                                        <div class="footer">
+                                            <h3 class="footer-title">Categories</h3>
+                                            <ul class="footer-links">
+                                                <li><a href="#">Hot deals</a></li>
+                                                <li><a href="#">Dog Products</a></li>
+                                                <li><a href="#">Cat Products</a></li>
+                                                <li><a href="#">Bird Products</a></li>
+                                                <li><a href="#">Fish Products</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix visible-xs"></div>
+                                    <div class="col-md-3 col-xs-6">
+                                        <div class="footer">
+                                            <h3 class="footer-title">Information</h3>
+                                            <ul class="footer-links">
+                                                <li><a href="#">About Us</a></li>
+                                                <li><a href="#">Contact Us</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-xs-6">
+                                        <div class="footer">
+                                            <h3 class="footer-title">Service</h3>
+                                            <ul class="footer-links">
+                                                <li><a href="#">Grooming</a></li>
+                                                <li><a href="#">Pet Hotel</a></li>
+                                                <li><a href="#">Selling Products</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /row -->
+                            </div>
+                            <!-- /container -->
                         </div>
-                    </div>
-                    <div class="clearfix visible-xs"></div>
-                    <div class="col-md-3 col-xs-6">
-                        <div class="footer">
-                            <h3 class="footer-title">Information</h3>
-                            <ul class="footer-links">
-                                <li><a href="#">About Us</a></li>
-                                <li><a href="#">Contact Us</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-xs-6">
-                        <div class="footer">
-                            <h3 class="footer-title">Service</h3>
-                            <ul class="footer-links">
-                                <li><a href="#">Grooming</a></li>
-                                <li><a href="#">Pet Hotel</a></li>
-                                <li><a href="#">Selling Products</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <!-- /row -->
-            </div>
-            <!-- /container -->
-        </div>
-        <!-- /top footer -->
+                        <!-- /top footer -->
     </footer>
     <!-- /FOOTER -->
     <!-- jQuery Plugins -->
