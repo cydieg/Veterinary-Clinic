@@ -458,7 +458,7 @@
 						</li>
 						<li class="dropdown">
 							<a href="{{ route('admin.inventory.indexadmin') }}" class="dropdown-toggle no-arrow">
-								<span class="micon bi bi-bar-chart"></span>
+								<span class="micon bi bi-archive"></span>
 								<span class="mtext">Inventory</span>
 							</a>
 						</li>

@@ -66,9 +66,9 @@
                         <th>Price</th>
                         <th>Created At</th>
                         <th>Branch</th>
-                        <th>Action</th>
                         <th>Expiration</th>
                         <th>UPC</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -83,20 +83,19 @@
                         <td>&#8369;{{ number_format($item->price, 2) }}</td>
                         <td>{{ $item->created_at }}</td>
                         <td>{{ $item->branch->name }}</td>
-                        <td>
-                            <div class="d-flex">
-                                <!-- Update action to redirect to audit page -->
-                                <a href="{{ route('inventory.audit.show', ['id' => $item->id]) }}" class="btn btn-primary btn-sm mr-1">Audit</a>
-                                <!-- Button to trigger quantity modal -->
-                                <button type="button" class="btn btn-success btn-sm add-quantity-btn" data-toggle="modal" data-target="#addQuantityModal" data-item-id="{{ $item->id }}">Add Quantity</button>
-                                <!-- Edit button -->
-                                <a href="{{ route('inventory.edit', ['id' => $item->id]) }}" class="btn btn-primary btn-sm ml-1">Edit</a>
-                            </div>
-                        </td>
-                        
                         <td>{{ $item->expiration }}</td>
                         <!-- Display UPC -->
                         <td>{{ $item->upc }}</td>
+                        <td>
+                            <div class="d-flex">
+                                <!-- Edit button -->
+                                <a href="{{ route('inventory.edit', ['id' => $item->id]) }}" class="btn btn-warning btn-sm">Edit</a>
+                                <!-- Button to trigger quantity modal -->
+                                <button type="button" class="btn btn-success btn-sm add-quantity-btn" data-toggle="modal" data-target="#addQuantityModal" data-item-id="{{ $item->id }}">Add Quantity</button>
+                                 <!-- Update action to redirect to audit page -->
+                                 <a href="{{ route('inventory.audit.show', ['id' => $item->id]) }}" class="btn btn-primary btn-sm">Audit</a>
+                            </div>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>

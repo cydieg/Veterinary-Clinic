@@ -1,3 +1,6 @@
+@extends('back.layout.superadmin-layout')
+@section('pageTitle', isset($pageTitle) ? $pageTitle : 'Vet')
+@section('content')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,12 +13,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <!-- Custom CSS -->
     <style>
-        /* Your custom CSS styles can go here */
+        .custom-bg-color {
+        background-color: #BC7FCD;
+        font-size: 20px;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Edit Inventory Item</h2>
+    <div class="container p-3 my-3 custom-bg-color text-white">Edit Inventory Item</div>
+        <div class="container">
         <!-- Edit form for inventory item -->
         <form method="POST" action="{{ route('inventory.update', ['id' => $inventoryItem->id]) }}" enctype="multipart/form-data">
             @csrf
@@ -77,11 +83,12 @@
             
     
             <!-- Add more fields as needed -->
-    
-            <button type="submit" class="btn btn-primary">Update</button>
-        </form>
+        <div class="row">
+            <div class="col-md-12 mb-3 text-right">
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </div>
     </div>
-    
 
     <!-- Bootstrap JS and jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -95,3 +102,4 @@
     </script>
 </body>
 </html>
+@endsection
