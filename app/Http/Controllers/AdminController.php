@@ -12,22 +12,23 @@ class AdminController extends Controller
 {
     // Display a listing of the users
     public function index()
-    {
-        
-        $branch = auth()->user()->branch;
-        $users = User::where(function($query) use ($branch) {
-                $query->where('branch_id', $branch->id) // Users of the current branch
-                      ->whereIn('role', ['staff', 'admin']);
-            })
-            ->orWhere(function($query) {
-                $query->whereNull('branch_id') // Users with null branch_id
-                      ->where('role', 'patient');
-            })
-            ->get();
+{
+    $branch = auth()->user()->branch;
+    $users = User::where(function($query) use ($branch) {
+            $query->where('branch_id', $branch->id) // Users of the current branch
+                ->whereIn('role', ['staff', 'admin']);
+        })
+        ->orWhere(function($query) {
+            $query->whereNull('branch_id') // Users with null branch_id
+                ->where('role', 'patient');
+        })
+        ->select('id', 'username', 'email', 'role', 'contact_number', 'age', 'gender', 'firstName', 'lastName', 'middleName', 'address', 'region', 'province', 'city', 'barangay') // Include region, province, city, and barangay fields
+        ->get();
 
-        return view('admin.index', compact('users'));
-    } 
-      
+    return view('admin.index', compact('users'));
+}
+
+
     // Show the form for creating a new user
     public function create()
     {

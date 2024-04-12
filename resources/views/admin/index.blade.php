@@ -28,18 +28,30 @@
             <table class="table">
                 <thead>
                     <tr>
-                       
+                        <th>Full Name</th>
                         <th>Username</th>
                         <th>Email</th>
+                        <th>Role</th>
+                        <th>Address</th>
+                        <th>Contact Number</th>
+                        <th>Age</th>
+                        <th>Gender</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
+
                 <tbody>
                     @foreach ($users as $user)
                         <tr>
                              
+                            <td>{{ $user->firstName }} {{ $user->lastName }}</td>
                             <td>{{ $user->username }}</td>
                             <td>{{ $user->email }}</td>
+                            <td>{{ $user->role }}</td>
+                            <td>{{ $user->address }}</td>
+                            <td>{{ $user->contact_number }}</td>
+                            <td>{{ $user->age }}</td>
+                            <td>{{ $user->gender }}</td>
                             <td>
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#userModal{{ $user->id }}">
@@ -66,15 +78,19 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <p><strong>ID:</strong> {{ $user->id }}</p>
                                         <p><strong>Username:</strong> {{ $user->username }}</p>
                                         <p><strong>Email:</strong> {{ $user->email }}</p>
                                         <p><strong>First Name:</strong> {{ $user->firstName }}</p>
                                         <p><strong>Last Name:</strong> {{ $user->lastName }}</p>
                                         <p><strong>Middle Name:</strong> {{ $user->middleName }}</p>
                                         <p><strong>Address:</strong> {{ $user->address }}</p>
+                                        <p><strong>Region:</strong> {{ $user->region }}</p>
+                                        <p><strong>Province:</strong> {{ $user->province }}</p>
+                                        <p><strong>City:</strong> {{ $user->city }}</p>
+                                        <p><strong>Barangay:</strong> {{ $user->barangay }}</p>
                                         <p><strong>Gender:</strong> {{ $user->gender }}</p>
                                         <p><strong>Age:</strong> {{ $user->age }}</p>
+                                        
                                         <!-- Add other user details as needed -->
                                     </div>
                                     <div class="modal-footer">
