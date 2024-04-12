@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 10, 2024 at 11:44 AM
+-- Generation Time: Apr 12, 2024 at 12:02 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -32,31 +32,27 @@ CREATE TABLE `appointments` (
   `first_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `appointment_date` date NOT NULL,
-  `appointment_time` time NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
   `status` enum('pending','accepted','completed','canceled') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
-  `branch_id` bigint UNSIGNED DEFAULT NULL
+  `branch_id` bigint UNSIGNED DEFAULT NULL,
+  `pet_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `animal_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `breed` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci,
+  `service_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `appointment_slot` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `appointments`
 --
 
-INSERT INTO `appointments` (`id`, `first_name`, `last_name`, `appointment_date`, `appointment_time`, `created_at`, `updated_at`, `user_id`, `status`, `branch_id`) VALUES
-(1, 'Jon Wendell', 'Cabrera', '2024-04-07', '08:00:00', '2024-04-07 05:29:26', '2024-04-07 05:29:52', 47, 'completed', 16),
-(2, 'Jon Wendell', 'Cabrera', '2024-04-08', '08:00:00', '2024-04-07 20:18:05', '2024-04-07 20:21:17', 47, 'completed', 16),
-(3, 'Jon Wendell', 'Cabrera', '2024-04-08', '11:00:00', '2024-04-07 20:22:09', '2024-04-07 20:30:30', 47, 'completed', 16),
-(4, 'Jon Wendell', 'Cabrera', '2024-04-08', '17:00:00', '2024-04-07 20:28:21', '2024-04-07 20:30:28', 47, 'completed', 16),
-(5, 'Jon Wendell', 'Cabrera', '2024-04-08', '08:00:00', '2024-04-08 03:46:50', '2024-04-08 03:47:19', 47, 'completed', 16),
-(6, 'Jon Wendell', 'Cabrera', '2024-04-08', '08:00:00', '2024-04-08 04:06:36', '2024-04-10 02:15:33', 47, 'completed', 18),
-(7, 'Jon Wendell', 'Cabrera', '2024-04-08', '08:00:00', '2024-04-08 04:06:40', '2024-04-08 04:08:02', 47, 'completed', 16),
-(8, 'Jon Wendell', 'Cabrera', '2024-04-10', '08:00:00', '2024-04-09 21:09:59', '2024-04-10 01:58:28', 47, 'completed', 16),
-(9, 'Jon Wendell', 'Cabrera', '2024-04-10', '08:00:00', '2024-04-10 01:59:43', '2024-04-10 02:00:38', 47, 'completed', 16),
-(10, 'Jon Wendell', 'Cabrera', '2024-04-10', '17:00:00', '2024-04-10 02:01:19', '2024-04-10 02:07:53', 47, 'completed', 16),
-(11, 'Jon Wendell', 'Cabrera', '2024-04-10', '17:00:00', '2024-04-10 02:06:51', '2024-04-10 02:07:55', 47, 'completed', 16),
-(12, 'Jon Wendell', 'Cabrera', '2024-04-27', '08:00:00', '2024-04-10 02:47:02', '2024-04-10 02:48:41', 47, 'completed', 16);
+INSERT INTO `appointments` (`id`, `first_name`, `last_name`, `appointment_date`, `created_at`, `updated_at`, `user_id`, `status`, `branch_id`, `pet_name`, `animal_type`, `breed`, `description`, `service_type`, `appointment_slot`) VALUES
+(1, 'Jon Wendell', 'Cabrera', '2024-04-11', '2024-04-11 08:48:21', '2024-04-11 18:34:14', 47, 'completed', 16, 'Chacha', 'Dog', 'Aspin', 'qwe', 'Pet Hotel', 'Slot 1'),
+(2, 'Jon Wendell', 'Cabrera', '2024-04-12', '2024-04-11 08:48:47', '2024-04-11 18:34:16', 47, 'completed', 16, 'Chacha', 'Dog', 'Aspin', 'we', 'Pet Hotel', 'Slot 1'),
+(3, 'Jon Wendell', 'Cabrera', '2024-04-12', '2024-04-11 09:18:17', '2024-04-11 09:18:17', 47, 'pending', 18, 'Meow Meow', 'Cat', 'Tiger', 'pagupet', 'Pet Hotel', 'Slot 1');
 
 -- --------------------------------------------------------
 
@@ -141,7 +137,9 @@ INSERT INTO `audits` (`id`, `inventory_id`, `upc`, `name`, `description`, `old_q
 (62, 5, '17102537969873', 'Chains', 'Dog Leash', 401, 381, 'sales', '2024-04-10 02:08:09', '2024-04-10 02:08:09'),
 (63, 13, '171034228612', 'Leash', 'Dog Leash', 15, 1, 'sales', '2024-04-10 02:15:44', '2024-04-10 02:15:44'),
 (64, 5, '17102537969873', 'Chains', 'Dog Leash', 381, 331, 'sales', '2024-04-10 02:48:53', '2024-04-10 02:48:53'),
-(65, 12, '17103376866', 'MedDog', 'Dog Med', 246, 216, 'sales', '2024-04-10 02:48:55', '2024-04-10 02:48:55');
+(65, 12, '17103376866', 'MedDog', 'Dog Med', 246, 216, 'sales', '2024-04-10 02:48:55', '2024-04-10 02:48:55'),
+(66, 5, '17102537969873', 'Chains', 'Dog Leash', 331, 301, 'sales', '2024-04-11 18:34:24', '2024-04-11 18:34:24'),
+(67, 14, '171271686913', 'Test', 'Ewan', 200, 150, 'sales', '2024-04-11 18:38:55', '2024-04-11 18:38:55');
 
 -- --------------------------------------------------------
 
@@ -227,10 +225,10 @@ CREATE TABLE `inventories` (
 --
 
 INSERT INTO `inventories` (`id`, `name`, `description`, `quantity`, `image`, `category`, `price`, `upc`, `expiration`, `created_at`, `updated_at`, `branch_id`) VALUES
-(5, 'Chains', 'Dog Leash', 331, '1710253796.jpg', 'Solid', 32.00, '17102537969873', '2024-03-11 16:00:00', '2024-03-12 14:29:00', '2024-04-10 02:48:53', 16),
+(5, 'Chains', 'Dog Leash', 301, '1710253796.jpg', 'Dog', 31.00, '17102537969873', '2024-04-11 16:00:00', '2024-04-11 19:07:00', '2024-04-11 19:07:33', 16),
 (12, 'MedDog', 'Dog Med', 216, '1710337686.jpg', 'Liquid', 35.00, '17103376866', '2024-03-12 16:00:00', '2024-03-13 13:48:00', '2024-04-10 02:48:55', 16),
 (13, 'Leash', 'Dog Leash', 1, '1710342286.png', '35', 45.00, '171034228612', '2024-03-12 16:00:00', '2024-03-13 15:04:00', '2024-04-10 02:15:44', 18),
-(14, 'Test', 'Ewan', 200, '1712716869.jpg', 'Fish', 23.00, '171271686913', '2024-04-09 16:00:00', '2024-04-10 02:40:00', '2024-04-09 18:41:10', 16);
+(14, 'Test', 'Ewan', 150, '1712716869.jpg', 'Fish', 23.00, '171271686913', '2024-04-09 16:00:00', '2024-04-10 02:40:00', '2024-04-11 18:38:55', 16);
 
 -- --------------------------------------------------------
 
@@ -280,7 +278,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (29, '2024_04_06_152708_add_address_components_to_users_table', 28),
 (30, '2024_04_06_154327_add_default_value_to_address_column_in_users_table', 29),
 (31, '2024_04_07_104135_add_total_price_to_carts_table', 30),
-(32, '2024_04_07_104828_add_total_price_to_sales_table', 31);
+(32, '2024_04_07_104828_add_total_price_to_sales_table', 31),
+(33, '2024_04_11_125241_add_additional_fields_to_appointments_table', 32),
+(34, '2024_04_11_130504_update_appointments_table', 33),
+(35, '2024_04_11_133903_add_animal_type_to_appointments_table', 34);
 
 -- --------------------------------------------------------
 
@@ -383,7 +384,9 @@ INSERT INTO `sales` (`id`, `user_id`, `product_id`, `quantity`, `total_price`, `
 (45, 47, 12, 20, 700.00, 16, '2024-04-10 02:07:16', '2024-04-10 02:08:07', 'delivered'),
 (46, 47, 5, 20, 640.00, 16, '2024-04-10 02:07:24', '2024-04-10 02:08:09', 'delivered'),
 (47, 47, 5, 50, 1600.00, 16, '2024-04-10 02:47:24', '2024-04-10 02:48:53', 'delivered'),
-(48, 47, 12, 30, 1050.00, 16, '2024-04-10 02:47:30', '2024-04-10 02:48:55', 'delivered');
+(48, 47, 12, 30, 1050.00, 16, '2024-04-10 02:47:30', '2024-04-10 02:48:55', 'delivered'),
+(49, 47, 5, 30, 960.00, 16, '2024-04-11 18:33:49', '2024-04-11 18:34:24', 'delivered'),
+(50, 47, 14, 50, 1150.00, 16, '2024-04-11 18:36:09', '2024-04-11 18:38:55', 'delivered');
 
 -- --------------------------------------------------------
 
@@ -418,8 +421,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `firstName`, `lastName`, `middleName`, `region`, `province`, `city`, `barangay`, `address`, `gender`, `age`, `email`, `password`, `created_at`, `updated_at`, `branch_id`, `contact_number`, `role`) VALUES
-(1, 'Settse', 'Raymond', 'Mendoza', 'Arguelles', 'MIMAROPA', 'Oriental Mindoro', 'City Of Calapan (Capital)', 'Santo Niño', 'Nacoco Santo Nino', 'male', 35, 'remspetshop@gmail.com', '$2y$12$2k8M1Dr4znqRowxeg/4LiePrDsTbOftt0NC43FwikNg0jk9IoQUCi', '2024-02-19 05:31:38', '2024-04-10 02:12:19', 16, '09817523253', 'super_admin'),
-(4, 'staffcal', 'staffcal', 'staffcal', 'staffcal', NULL, NULL, NULL, NULL, 'Test', 'female', 21, 'staffcal@gmail.com', '$2y$12$1xIoG7fECmJyaCvzk9hB7uMn6lh0Yt4k04a5LkaVMwlxe97cW98z6', '2024-02-19 06:13:07', '2024-02-19 06:13:07', 16, NULL, 'staff'),
+(1, 'Rem\'s Petshop', 'Raymond', 'Mendoza', 'Arguelles', 'MIMAROPA', 'Oriental Mindoro', 'City Of Calapan (Capital)', 'Santo Niño', 'Nacoco Santo Nino', 'male', 35, 'remspetshop@gmail.com', '$2y$12$2k8M1Dr4znqRowxeg/4LiePrDsTbOftt0NC43FwikNg0jk9IoQUCi', '2024-02-19 05:31:38', '2024-04-11 18:39:54', 16, '09817523253', 'super_admin'),
+(4, 'staffcal', 'staffcal', 'staffcal', 'staffcal', 'Region IV-A (CALABARZON)', 'Batangas', 'Agoncillo', 'Adia', 'Adia, Agoncillo, Batangas, Region IV-A (CALABARZON)', 'female', 21, 'staffcal@gmail.com', '$2y$12$1xIoG7fECmJyaCvzk9hB7uMn6lh0Yt4k04a5LkaVMwlxe97cW98z6', '2024-02-19 06:13:07', '2024-04-11 20:29:42', 16, '09305115251', 'staff'),
 (6, 'staffroxas', 'staffroxas', 'staffroxas', 'staffroxas', NULL, NULL, NULL, NULL, 'Test', 'female', 21, 'staffroxas@gmail.com', '$2y$12$PW0q/y1f8t7Lu61MSqdSeOcDvKU1t66xeoMDh3ImIFpKDKsI91av2', '2024-02-19 06:15:48', '2024-04-10 02:09:59', 18, '09172321122', 'staff'),
 (7, 'admincal', 'admincal', 'admincal', 'admincal', NULL, NULL, NULL, NULL, 'Test', 'female', 21, 'admincal@gmail.com', '$2y$12$xgLPf4n42RNZ4Ewog5sC8.uKW/go4WSFYehre9FExL4soV3iI/kFu', '2024-02-19 06:16:39', '2024-02-19 06:16:39', 16, NULL, 'admin'),
 (47, 'Sett', 'Jon Wendell', 'Cabrera', 'Lontoc', 'MIMAROPA', 'Oriental Mindoro', 'City Of Calapan (Capital)', 'Balite', 'MIMAROPA, Oriental Mindoro, City Of Calapan (Capital), Balite', 'female', 21, 'nopona21@gmail.com', '$2y$12$1aOkHuZOEitZInVq9vBPEOs75ehoNFq3fV0XyqUP2pZcOpVMXJhHO', '2024-04-06 08:46:53', '2024-04-06 08:46:53', NULL, '09305115251', 'patient'),
@@ -515,13 +518,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `appointments`
 --
 ALTER TABLE `appointments`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `audits`
 --
 ALTER TABLE `audits`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT for table `branches`
@@ -533,7 +536,7 @@ ALTER TABLE `branches`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -551,7 +554,7 @@ ALTER TABLE `inventories`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -563,13 +566,13 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- Constraints for dumped tables
