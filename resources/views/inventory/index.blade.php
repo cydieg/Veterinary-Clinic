@@ -89,8 +89,11 @@
                                 <a href="{{ route('inventory.audit.show', ['id' => $item->id]) }}" class="btn btn-primary btn-sm mr-1">Audit</a>
                                 <!-- Button to trigger quantity modal -->
                                 <button type="button" class="btn btn-success btn-sm add-quantity-btn" data-toggle="modal" data-target="#addQuantityModal" data-item-id="{{ $item->id }}">Add Quantity</button>
+                                <!-- Edit button -->
+                                <a href="{{ route('inventory.edit', ['id' => $item->id]) }}" class="btn btn-primary btn-sm ml-1">Edit</a>
                             </div>
                         </td>
+                        
                         <td>{{ $item->expiration }}</td>
                         <!-- Display UPC -->
                         <td>{{ $item->upc }}</td>
@@ -223,6 +226,8 @@
             </div>
         </div>
     </div>
+    
+    
 
     <!-- Bootstrap JS and jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

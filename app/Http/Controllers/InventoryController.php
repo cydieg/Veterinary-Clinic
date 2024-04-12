@@ -123,5 +123,41 @@ class InventoryController extends Controller
 
         return redirect()->route('admin.inventory.indexadmin')->with('success', 'Product deleted successfully.');
     }
+        public function edit($id)
+    {
+        // Fetch the inventory item for editing
+        $inventoryItem = Inventory::findOrFail($id);
+        // Fetch branches if needed
+        $branches = Branch::all();
+        
+        return view('inventory.edit', compact('inventoryItem', 'branches'));
+    }
+    public function update(Request $request, $id)
+    {
+        // Find the inventory item by ID
+        $inventory = Inventory::findOrFail($id);
+
+        // Validate the request data
+        $request->validate([
+            // Define your validation rules here...
+        ]);
+
+        // Update the inventory item with the request data
+        $inventory->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'quantity' => $request->quantity,
+            'category' => $request->category,
+            'price' => $request->price,
+            'created_at' => $request->created_at,
+            'expiration' => $request->expiration,
+            'branch_id' => $request->branch_id
+        ]);
+
+        // Redirect back with a success message
+        return redirect()->route('inventory.index')->with('success', 'Product updated successfully.');
+    }
+
+
 
 }

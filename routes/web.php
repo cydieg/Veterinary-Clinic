@@ -155,8 +155,9 @@ Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory
 Route::post('/inventory', [InventoryController::class, 'store'])->name('inventory.store');
 Route::get('/inventory/{id}/audit', 'App\Http\Controllers\InventoryController@showAudit')->name('inventory.audit.show');
 Route::post('/inventory/addquantity/{id}', [InventoryController::class, 'addQuantity'])->name('inventory.addquantity');
-
-
+// Add the edit route
+Route::get('/inventory/{id}/edit', [InventoryController::class, 'edit'])->name('inventory.edit');
+Route::put('/inventory/{id}', [InventoryController::class, 'update'])->name('inventory.update');
 //admin in ventory
 Route::get('/admin/inventory', [InventoryController::class, 'indexadmin'])->name('admin.inventory.indexadmin');
 Route::delete('/admin/inventory/{id}', [InventoryController::class, 'destroy'])->name('admin.inventory.delete');
@@ -205,4 +206,7 @@ Route::get('/weekly-report', [SuperAdminController::class, 'weeklyReport'])->nam
 Route::get('/monthly-report', [SuperAdminController::class, 'monthlyReport'])->name('monthly.report');
 Route::get('/yearly-report', [SuperAdminController::class, 'yearlyReport'])->name('yearly.report');
 
+
+//history 
+Route::get('/purchase-history', [ShopController::class, 'history'])->name('purchase.history');
 

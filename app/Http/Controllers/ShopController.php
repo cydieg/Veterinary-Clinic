@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Crypt;
 use App\Mail\OrderProcessed;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
+use Carbon\Carbon;
 
 
 class ShopController extends Controller
@@ -194,7 +195,20 @@ class ShopController extends Controller
     
         return redirect()->route('cart.show')->with('success', 'Order placed successfully.');
     }
-
+    public function history()
+    {
+        // Retrieve the user's purchase history
+        $user = Auth::user();
+        
+        // Retrieve sales records for delivered and pending products that are not older than a day
+        $sales = Sale::where('user_id', $user->id)
+                     ->whereIn('status', ['delivering','delivered', 'pending'])
+                     ->where('created_at', '>=', Carbon::now()->subDay())
+                     ->get();
+    
+        // Pass the filtered purchase history to the view and render it
+        return view('shop.history', compact('sales'));
+    }
     
     
 

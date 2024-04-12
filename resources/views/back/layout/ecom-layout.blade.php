@@ -119,6 +119,13 @@
 													<span>Cart</span>
 												</a>
 											</li>
+											<li>
+												<a href="{{ route('purchase.history') }}">
+													<i class="fas fa-shopping-cart"></i>
+													<span>Purchase History</span>
+												</a>
+											</li>
+											
 										
 											<li>
 												<a href="{{ route('manual.logout') }}">
