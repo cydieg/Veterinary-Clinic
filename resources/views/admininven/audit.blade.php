@@ -14,19 +14,27 @@
             <table class="table">
                 <thead>
                     <tr>
+                        <th>Date</th>
+                        <th>UPC</th>
+                        <th>Name</th>
+                        <th>Description</th>
                         <th>Old Quantity</th>
                         <th>New Quantity</th>
+                        <th>Total Quantity</th>
                         <th>Type</th>
-                        <th>Date</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($auditRecords as $auditRecord)
                         <tr>
+                            <td>{{ $auditRecord->created_at }}</td>
+                            <td>{{ $auditRecord->upc }}</td>
+                            <td>{{ $auditRecord->name }}</td>
+                            <td>{{ $auditRecord->description }}</td>
                             <td>{{ $auditRecord->old_quantity }}</td>
                             <td>{{ $auditRecord->quantity }}</td>
+                            <td>{{ $auditRecord->old_quantity + $auditRecord->quantity }}</td>
                             <td>{{ ucfirst($auditRecord->type) }}</td>
-                            <td>{{ $auditRecord->created_at }}</td>
                         </tr>
                     @endforeach
                 </tbody>
