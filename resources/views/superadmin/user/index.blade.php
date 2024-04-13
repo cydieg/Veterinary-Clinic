@@ -35,7 +35,7 @@
                 <td>{{ $user->username }}</td>
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->firstName }} {{ $user->middleName }} {{ $user->lastName }}</td>
-                <td>{{ $user->address }}, {{ $user->barangay }}, {{ $user->city }}, {{ $user->province }}, {{ $user->region }}</td>
+                <td>{{ $user->barangay }}, {{ $user->city }}, {{ $user->province }}, {{ $user->region }}</td>
                 <td>{{ $user->gender }}</td>
                 <td>{{ $user->age }}</td>
                 <td>{{ $user->contact_number }}</td>
