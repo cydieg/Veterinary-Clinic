@@ -41,7 +41,7 @@
                 <option value="Yearly">Yearly</option>
             </select>
             <!-- Adjusted canvas size to make it super small -->
-            <canvas id="salesChart" width="200" height="5"></canvas> <!-- Changed height to 5 -->
+            <canvas id="salesChart" width="200" height="10"></canvas>
         </div>
         <!-- Add more divs with charts here -->
     </div>
