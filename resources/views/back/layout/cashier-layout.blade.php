@@ -500,6 +500,13 @@
 								<span class="mtext">Daily Sales</span>
 							</a>
 						</li>
+						<li class="dropdown">
+							<a href="{{ route('store.purchase') }}" class="dropdown-toggle no-arrow">
+								<i class="micon bi bi-graph-up"></i>
+								<span class="mtext">Store Purchase</span>
+							</a>
+						</li>
+						
 						
 						
 						

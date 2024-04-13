@@ -250,21 +250,55 @@ class StaffController extends Controller
         // Pass total prices to the view
         return view('staff.dailysales', compact('totalPrices'));
     }
+    public function showInventory()
+    {
+        // Get the authenticated user's branch ID
+        $branchId = auth()->user()->branch_id;
+
+        try {
+            // Fetch inventory items related to the authenticated user's branch
+            $inventory = Inventory::where('branch_id', $branchId)->get();
+
+            return view('staff.store', compact('inventory'));
+        } catch (\Exception $e) {
+            // Log or handle the exception
+            return back()->with('error', 'An error occurred while retrieving inventory.');
+        }
+    }
+    public function storePurchase(Request $request)
+    {
+        try {
+            // Get the authenticated user's branch ID
+            $branchId = auth()->user()->branch_id;
     
-
-
-
-
-
-
-
-        
+            // Retrieve the inventory item by ID
+            $inventoryItem = Inventory::findOrFail($request->input('inventory_id'));
+    
+            // Calculate total price
+            $totalPrice = $inventoryItem->price * $request->input('quantity');
+    
+            // Create a new sale
+            $sale = new Sale();
+            $sale->branch_id = $branchId;
+            $sale->user_id = auth()->id();
+            $sale->product_id = $inventoryItem->id;
+            $sale->quantity = $request->input('quantity');
+            $sale->total_price = $totalPrice;
+            $sale->status = 'delivered'; // Automatically mark as delivered
+            $sale->save();
+    
+            // Deduct the quantity from inventory
+            $inventoryItem->quantity -= $request->input('quantity');
+            $inventoryItem->save();
+    
+            return redirect()->route('staff.storePurchase')->with('success', 'Purchase recorded successfully.');
+        } catch (\Exception $e) {
+            // Log or handle the exception
+            dd($e->getMessage()); // Add this line to see the error message
+            return back()->with('error', 'An error occurred while recording the purchase.');
+        }
+    }
     
     
-    
-
-
-    
-
 
 }
