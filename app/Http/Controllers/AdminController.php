@@ -5,8 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Sale;
 use App\Models\Branch;
+use App\Models\Audit;
+use App\Models\Inventory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class AdminController extends Controller
 {
@@ -286,6 +290,63 @@ class AdminController extends Controller
     return view('admin.reports.yearly', compact('yearlySales'));
 }
 
+    // Add this method to your AdminController
+    public function audit()
+    {
+        // Fetch all audit records including the price
+        $auditRecords = Audit::all();
+
+        // Calculate total price of all audit records
+        $totalPrice = $auditRecords->sum(function ($auditRecord) {
+            // Assuming each audit record has a related inventory item
+            return $auditRecord->inventory->price * $auditRecord->quantity;
+        });
+
+        // Return the audit view with audit records and total price
+        return view('admininven.audit', compact('auditRecords', 'totalPrice'));
+    }
+    public function addinven()
+    {
+        return view('admininven.create');
+    }
+   // AdminController.php
+
+   public function storeinven(Request $request)
+   {
+       $validatedData = $request->validate([
+           'name' => 'required|string|max:255',
+           'description' => 'nullable|string|max:255',
+           'quantity' => 'required|integer',
+           'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+           'category' => 'required|string|max:255',
+           'price' => 'required|numeric',
+           'expiration' => 'nullable|date',
+           // Remove the 'branch_id' validation rule
+       ]);
+   
+       // Handle file upload
+       if ($request->hasFile('image')) {
+           $imageName = time().'.'.$request->image->extension();
+           $request->image->move(public_path('images'), $imageName);
+           $validatedData['image'] = $imageName;
+       } else {
+           $validatedData['image'] = null; // Set default value if no image is uploaded
+       }
+   
+       // Set the creation date
+       $validatedData['created_at'] = now();
+   
+       // Manually assign the branch_id
+       $validatedData['branch_id'] = auth()->user()->branch_id; // Assuming authenticated user has branch_id
+   
+       // Create the product
+       Inventory::create($validatedData);
+   
+       return redirect()->route('admin.inventory.indexadmin')->with('success', 'Product added successfully');
+   }
+   
+
+ 
 }
 
 
