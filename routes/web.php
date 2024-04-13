@@ -165,7 +165,8 @@ Route::delete('/admin/inventory/{id}', [InventoryController::class, 'destroy'])-
 Route::get('/admin/inventory/audit/{productId}', [AdminController::class, 'audit'])->name('admin.inventory.audit');
 Route::get('admin/inventory/add', [AdminController::class, 'addinven'])->name('admin.inventory.add');
 Route::post('admin/inventory/addQuantity/{productId}', [AdminController::class, 'addQuantity'])->name('admin.inventory.addQuantity');
-
+//admin visualization
+Route::get('/visualize-sales', [AdminController::class, 'visualizeSales'])->name('visualize.sales');
 //addmin usermanagement
 
 Route::prefix('admin')->group(function () {

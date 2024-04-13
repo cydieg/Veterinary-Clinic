@@ -7,6 +7,7 @@ use App\Models\Sale;
 use App\Models\Branch;
 use App\Models\Audit;
 use App\Models\Inventory;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -379,6 +380,66 @@ class AdminController extends Controller
         // Redirect back or wherever appropriate
         return redirect()->back()->with('success', 'Quantity added successfully');
     }
+   public function visualizeSales(Request $request)
+{
+    $today = Carbon::today();
+
+    // Fetch daily sales (current day) and total sales price
+    $dailySales = Sale::whereDate('created_at', $today)
+                      ->where('status', 'delivered')
+                      ->get();
+    $dailySalesCount = $dailySales->count();
+    $dailySalesTotalPrice = $dailySales->sum('price');
+
+    // Fetch weekly sales (Monday to Sunday of the current week) and total sales price
+    $startOfWeek = $today->startOfWeek()->format('Y-m-d');
+    $endOfWeek = $today->endOfWeek()->format('Y-m-d');
+    
+    // Fetch daily sales for each day of the week
+    $weeklySales = [];
+    $weeklySalesTotalPrice = 0;
+    $datesOfWeek = [];
+    $currentDate = Carbon::parse($startOfWeek);
+    while ($currentDate->lte($today)) {
+        $date = $currentDate->format('Y-m-d');
+        $dayName = $currentDate->format('l');
+        $dailySales = Sale::whereDate('created_at', $date)
+                          ->where('status', 'delivered')
+                          ->get();
+        $weeklySales[$dayName] = $dailySales->count();
+        $weeklySalesTotalPrice += $dailySales->sum('price');
+        $datesOfWeek[] = $dayName;
+        $currentDate->addDay();
+    }
+
+    // Fetch monthly sales (January to December of the current year) and total sales price
+    $monthlySales = [];
+    $monthlySalesTotalPrice = 0;
+    for ($i = 1; $i <= 12; $i++) {
+        $monthlySalesData = Sale::whereYear('created_at', $today->year)
+                                ->whereMonth('created_at', $i)
+                                ->where('status', 'delivered')
+                                ->get();
+        $monthlySales[Carbon::createFromDate(null, $i, null)->monthName] = $monthlySalesData->count();
+        $monthlySalesTotalPrice += $monthlySalesData->sum('price');
+    }
+
+    // Fetch yearly sales (all months of the current year) and total sales price
+    $yearlySales = [];
+    $yearlySalesTotalPrice = 0;
+    for ($i = 1; $i <= 12; $i++) {
+        $yearlySalesData = Sale::whereYear('created_at', $today->year)
+                              ->whereMonth('created_at', $i)
+                              ->where('status', 'delivered')
+                              ->get();
+        $yearlySales[Carbon::createFromDate(null, $i, null)->monthName] = $yearlySalesData->count();
+        $yearlySalesTotalPrice += $yearlySalesData->sum('price');
+    }
+
+    return view('admin.visualization.adminvisual', compact('dailySalesCount', 'dailySalesTotalPrice', 'weeklySales', 'weeklySalesTotalPrice', 'monthlySales', 'monthlySalesTotalPrice', 'yearlySales', 'yearlySalesTotalPrice', 'datesOfWeek'));
+}
+
+
 
 
  
