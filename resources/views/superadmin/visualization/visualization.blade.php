@@ -38,25 +38,26 @@
     <div class="container">
         <div class="chart-container">
             <h4>Total Sales</h4>
-            <select id="dataOption">
-                <option value="day">Daily</option>
-                <option value="week">Weekly</option>
-                <option value="month">Monthly</option>
-                <option value="year">Yearly</option>
-            </select>
-            <canvas id="salesChart" width="400" height="100"></canvas> <!-- Adjusted height -->
+            <label for="dataOption"></label>
+                <select id="dataOption">
+                    <option value="day">Daily</option>
+                    <option value="week">Weekly</option>
+                    <option value="month">Monthly</option>
+                    <option value="year">Yearly</option>
+                </select>
+            <canvas id="salesChart" width="400" height="300"></canvas>
         </div>
     
         <div class="chart-container">
             <h4>Number of Sales for Each Branch</h4>
-            <canvas id="salesPerBranchChart" width="400" height="100"></canvas> <!-- Adjusted height -->
+            <canvas id="salesPerBranchChart" width="400" height="300"></canvas>
         </div>
     </div>
 
     <div class="container">
         <div class="chart-container">
             <h4>Number of Users for Each Branch</h4>
-            <canvas id="usersPerBranchChart" width="400" height="100"></canvas> <!-- Adjusted height -->
+            <canvas id="usersPerBranchChart" width="400" height="300"></canvas>
         </div>
     
         <div class="chart-container">
@@ -68,7 +69,7 @@
                 <option value="barangay">Barangay</option>
                 <option value="address">Address</option>
             </select>
-            <canvas id="chartCanvas" width="400" height="100"></canvas> <!-- Adjusted height -->
+            <canvas id="chartCanvas" width="400" height="300"></canvas>
         </div>
     </div>
 
@@ -80,7 +81,7 @@
                 <option value="month">Appointments Completed by Month</option>
                 <option value="year">Appointments Completed by Year</option>
             </select>
-            <canvas id="appointmentsChart" width="400" height="100"></canvas> <!-- Adjusted height -->
+            <canvas id="appointmentsChart" width="400" height="300"></canvas>
         </div>
     </div>
 
