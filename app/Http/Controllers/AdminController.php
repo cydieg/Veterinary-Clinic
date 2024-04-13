@@ -399,7 +399,39 @@ class AdminController extends Controller
     
         return view('admin.visualization.adminvisual', compact('dailySales', 'weeklySales', 'monthlySales', 'yearlySales', 'datesOfWeek'));
     }
+    public function addQuantity($id, Request $request)
+    {
+        // Find the inventory item by its ID
+        $inventoryItem = Inventory::findOrFail($id);
     
+        // Validate the request data
+        $validatedData = $request->validate([
+            'quantity' => 'required|integer|min:1', // Ensure quantity is a positive integer
+        ]);
+    
+        // Store the old quantity before updating
+        $oldQuantity = $inventoryItem->quantity;
+    
+        // Add the requested quantity to the current quantity
+        $inventoryItem->quantity += $validatedData['quantity'];
+    
+        // Save the updated quantity
+        $inventoryItem->save();
+    
+        // Create an audit record for the quantity change
+        Audit::create([
+            'inventory_id' => $inventoryItem->id,
+            'upc' => $inventoryItem->upc,
+            'name' => $inventoryItem->name,
+            'description' => $inventoryItem->description,
+            'old_quantity' => $oldQuantity,
+            'quantity' => $validatedData['quantity'],
+            'type' => 'add', // Indicate that quantity was added
+        ]);
+    
+        // Redirect back with a success message
+        return redirect()->back()->with('success', 'Quantity added successfully');
+    }
 
 
 
