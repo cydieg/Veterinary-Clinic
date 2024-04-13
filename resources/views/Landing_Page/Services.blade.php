@@ -20,8 +20,8 @@
                     Pet Grooming
                   </h6>
                   <p>
-                    onsectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                    enim ad minim veniam, quis nostrud exe
+                  Treat your furry friend to a pampering session at Rem's Pet Shop, 
+                  where our expert groomers will have them looking and feeling their best in no time.
                   </p>
                 </div>
               </div>
@@ -34,8 +34,9 @@
                     Pet Hotel
                   </h6>
                   <p>
-                    onsectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                    enim ad minim veniam, quis nostrud exe
+                  When you're away, you can trust Rem's Pet Shop to 
+                  provide a safe and comfortable stay for your beloved pets, 
+                  with attentive care and plenty of love.
                   </p>
                 </div>
               </div>
@@ -48,8 +49,8 @@
                     Selling of Pet Products
                   </h6>
                   <p>
-                    onsectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                    enim ad minim veniam, quis nostrud exe
+                  From pet foods to toys, accessories, and grooming supplies, 
+                  find everything you need to keep your pets happy and healthy at Rem's Pet Shop.
                   </p>
                 </div>
               </div>

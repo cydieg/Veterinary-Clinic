@@ -8,7 +8,6 @@
           <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
           <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
           <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
         </ol>
         <div class="carousel-inner">
           <div class="carousel-item active">
@@ -28,10 +27,10 @@
                       where lasting bonds between humans and pets are forged.
                     </p>
                     <div class="btn-box">
-                      <a href="{{ route('login') }}" class="btn-1">
-                        Buy now
+                      <a href="{{ route('ourClinic') }}" class="btn-1">
+                        Learn More
                       </a>
-                      <a href="" class="btn-2">
+                      <a href="{{ route('contactUs') }}" class="btn-2">
                         Contact
                       </a>
                     </div>
@@ -50,23 +49,19 @@
               <div class="row">
                 <div class="col-md-4 offset-md-2">
                   <div class="slider_detail-box">
-                    <h1>
-                      Professional
-                      <span>
-                        Care Your Pet
-                      </span>
-                    </h1>
-                    <p>
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry.
-                      Lorem Ipsum has been the industry's standard dummy text ever
-                    </p>
+                  <h1>
+                        Quality Products
+                        <span>
+                          for Your Furry Friends
+                        </span>
+                      </h1>
+                      <p>
+                        Find the finest selection of pet supplies and accessories,
+                        curated with love and care for your beloved pets.
+                      </p>
                     <div class="btn-box">
-                      <a href="" class="btn-1">
+                      <a href="{{ route('ourShop') }}" class="btn-1">
                         Buy now
-                      </a>
-                      <a href="" class="btn-2">
-                        Contact
                       </a>
                     </div>
                   </div>
@@ -84,57 +79,19 @@
               <div class="row">
                 <div class="col-md-4 offset-md-2">
                   <div class="slider_detail-box">
-                    <h1>
-                      Professional
-                      <span>
-                        Care Your Pet
-                      </span>
-                    </h1>
-                    <p>
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry.
-                      Lorem Ipsum has been the industry's standard dummy text ever
-                    </p>
+                  <h1>
+                    Exceptional Services
+                    <span>
+                      for Your Pet's Well-being
+                    </span>
+                  </h1>
+                  <p>
+                    From grooming to boarding, our expert team is dedicated to
+                    providing top-notch care and attention to your furry companions.
+                  </p>
                     <div class="btn-box">
-                      <a href="" class="btn-1">
-                        Buy now
-                      </a>
-                      <a href="" class="btn-2">
-                        Contact
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="slider_img-box">
-                    <img src="/assets petology/images/slider-img.png" alt="">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-md-4 offset-md-2">
-                  <div class="slider_detail-box">
-                    <h1>
-                      Professional
-                      <span>
-                        Care Your Pet
-                      </span>
-                    </h1>
-                    <p>
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry.
-                      Lorem Ipsum has been the industry's standard dummy text ever
-                    </p>
-                    <div class="btn-box">
-                      <a href="" class="btn-1">
-                        Buy now
-                      </a>
-                      <a href="" class="btn-2">
-                        Contact
+                      <a href="{{ route('services') }}" class="btn-1">
+                        Learn more about our Services
                       </a>
                     </div>
                   </div>
@@ -213,11 +170,11 @@
                 </div>
                 <div class="detail_box">
                   <h6>
-                    Pet Care
+                    Pet Grooming
                   </h6>
                   <p>
-                    onsectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                    enim ad minim veniam, quis nostrud exe
+                  Treat your furry friend to a pampering session at Rem's Pet Shop, 
+                  where our expert groomers will have them looking and feeling their best in no time.
                   </p>
                 </div>
               </div>
@@ -230,8 +187,9 @@
                     Pet Hotel
                   </h6>
                   <p>
-                    onsectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                    enim ad minim veniam, quis nostrud exe
+                  When you're away, you can trust Rem's Pet Shop to 
+                  provide a safe and comfortable stay for your beloved pets, 
+                  with attentive care and plenty of love.
                   </p>
                 </div>
               </div>
@@ -241,11 +199,11 @@
                 </div>
                 <div class="detail_box">
                   <h6>
-                    Emergency
+                    Selling of Pet Products
                   </h6>
                   <p>
-                    onsectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                    enim ad minim veniam, quis nostrud exe
+                  From pet foods to toys, accessories, and grooming supplies, 
+                  find everything you need to keep your pets happy and healthy at Rem's Pet Shop.
                   </p>
                 </div>
               </div>
@@ -277,19 +235,19 @@
     </div>
     <div class="container ">
       <div class="img_box box-1">
-        <img src="/assets petology/images/g-1.png" alt="">
+        <img src="back/images/dog.jpg" alt="">
       </div>
       <div class="img_box box-2">
-        <img src="/assets petology/images/g-2.png" alt="">
+        <img src="assets petology/images/g-2.png" alt="">
       </div>
       <div class="img_box box-3">
-        <img src="/assets petology/images/g-3.png" alt="">
+        <img src="back/images/dog1.jpg" alt="">
       </div>
       <div class="img_box box-4">
-        <img src="/assets petology/images/g-4.png" alt="">
+        <img src="back/images/dog2.jpg" alt="">
       </div>
       <div class="img_box box-5">
-        <img src="/assets petology/images/g-5.png" alt="">
+        <img src="assets petology/images/g-5.png" alt="">
       </div>
     </div>
   </section>
@@ -303,14 +261,13 @@
   <section class="buy_section layout_padding">
     <div class="container">
       <h2>
-        You Can Buy Pet From Our Clinic
+        You Can Buy Pet Supplies and Accesories from our Shop
       </h2>
       <p>
-        consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+        We offer pet food supplies, grooming supplies, toys for your furbabies and many more!!!
       </p>
       <div class="d-flex justify-content-center">
-        <a href="">
+        <a href="{{ route('login') }}">
           Buy Now
         </a>
       </div>
@@ -329,7 +286,7 @@
         </span>
       </h2>
       <p class="text-center">
-        orem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut la
+        This part contains comments from our previous clients. Check it out!!!
       </p>
       <div id="carouselExample2Indicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
@@ -342,20 +299,17 @@
             <div class="layout_padding2 pl-100">
               <div class="client_container ">
                 <div class="img_box">
-                  <img src="/assets petology/images/client.jpg" alt="">
+                  <img src="/back/images/pic1.jpg" alt="">
                 </div>
                 <div class="detail_box">
                   <h5>
-                    Sandy Mark
+                    Sandy Lopez
                   </h5>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et
-                    dolore
-                    magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-                    ea
-                    commodo
-                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+                  Rem's Pet Shop offers exceptional pet grooming services! 
+                  Their skilled groomers not only make my pet look fabulous 
+                  but also ensure they feel comfortable and relaxed throughout the process. 
+                  I always leave with a happy and well-groomed pet, thanks to Rem's!
                   </p>
                 </div>
               </div>
@@ -365,20 +319,14 @@
             <div class="layout_padding2 pl-100">
               <div class="client_container ">
                 <div class="img_box">
-                  <img src="/assets petology/images/client.jpg" alt="">
+                  <img src="/back/images/pic2.jpg" alt="">
                 </div>
                 <div class="detail_box">
                   <h5>
-                    Sandy Mark
+                    Shiena Mendoza
                   </h5>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et
-                    dolore
-                    magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-                    ea
-                    commodo
-                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+                    Grabe, ang galing nila mag groom. As in pet glow up talaga ang nangyari!!!
                   </p>
                 </div>
               </div>
@@ -388,20 +336,16 @@
             <div class="layout_padding2 pl-100">
               <div class="client_container ">
                 <div class="img_box">
-                  <img src="/assets petology/images/client.jpg" alt="">
+                  <img src="/back/images/pic3.jpg" alt="">
                 </div>
                 <div class="detail_box">
                   <h5>
-                    Sandy Mark
+                    Ryan Tupido
                   </h5>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et
-                    dolore
-                    magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-                    ea
-                    commodo
-                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+                    Di lang sila dito nag-o-offer ng services like grooming and pet hotel, 
+                    but also nagbebenta din sila ng mga products na perfect para sa aking furbabies. 
+                    They are also very accomodating when it comes to their customer.
                   </p>
                 </div>
               </div>
