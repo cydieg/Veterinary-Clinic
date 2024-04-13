@@ -149,7 +149,7 @@
                         Please select a valid barangay.
                     </div>
                 </div>
-                <!-- Password -->
+               <!-- Password -->
                 <div class="col-md-4 mb-3">
                     <label for="password">Password:</label>
                     <input type="password" class="form-control" id="password" name="password">
@@ -157,6 +157,7 @@
                         Please provide a valid password.
                     </div>
                 </div>
+
             </div>
 
             <!-- Submit Button -->
