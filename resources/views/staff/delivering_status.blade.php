@@ -59,7 +59,7 @@
                         <td>{{ $sale->user->address }}</td>
                         <td>{{ $sale->product->name }}</td>
                         <td>{{ $sale->quantity }}</td>
-                        <td>{{ $sale->total_price }}</td>
+                        <td>₱{{ $sale->total_price }}</td>
                         <td class="action-buttons">
                             @if($sale->status == 'delivering')
                                 <form action="{{ route('mark-as-delivered', $sale->id) }}" method="POST">

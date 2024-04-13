@@ -56,7 +56,7 @@
                 <tr>
                     <td>{{ $totalPrice->product->name }}</td>
                     <td>{{ $totalPrice->quantitySold }}</td>
-                    <td>{{ $totalPrice->totalPrice }}</td>
+                    <td>₱{{ $totalPrice->totalPrice }}</td>
                 </tr>
                 @php
                     $totalSales += $totalPrice->totalPrice; // Accumulate total sales
@@ -64,7 +64,7 @@
                 @endforeach
                 <tr class="total-row">
                     <td colspan="2"><strong>Total Sales</strong></td>
-                    <td><strong>{{ $totalSales }}</strong></td>
+                    <td><strong>₱{{ $totalSales }}</strong></td>
                 </tr>
             </tbody>
         </table>

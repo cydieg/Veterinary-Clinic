@@ -49,7 +49,7 @@
                     <td>{{ $sale->product->name }}</td>
                     <td>{{ $sale->quantity }}</td>
                     <td>{{ $sale->branch->name }}</td>
-                    <td>{{ $sale->total_price }}</td>
+                    <td>₱{{ $sale->total_price }}</td>
                     <td class="action-buttons">
                         <form action="{{ route('deliver.sale', $sale->id) }}" method="POST">
                             @csrf
