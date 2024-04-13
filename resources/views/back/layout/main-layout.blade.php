@@ -469,7 +469,7 @@
     						</a>
    		 					<ul class="submenu">
         						<li><a href="{{ route('admin.reports.daily') }}">Daily</a></li>
-								<li><a href="{{ route('admin.reports.weekly') }}">Weekly Sales Report</a></li>
+								<li><a href="{{ route('admin.reports.weekly') }}">Weekly</a></li>
         						<li><a href="{{ route('admin.reports.monthly') }}">Monthly</a></li>
         						<li><a href="{{ route('admin.reports.yearly') }}">Yearly</a></li>
     						</ul>
@@ -501,10 +501,6 @@
 			<div class="main-container">
 				<div class="card-box mb-30">
 					@yield('content')
-				</div>
-			</div>
-				<div class="footer-wrap pd-20 mb-20 card-box">
-					@2023 | Rem's Pet Shop
 				</div>
 			</div>
 		</div>

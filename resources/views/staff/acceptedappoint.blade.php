@@ -47,8 +47,10 @@
                         @if($appointment->status === 'accepted')
                             <form method="POST" action="{{ route('complete.appointment', $appointment) }}">
                                 @csrf
-                                <button type="submit" class="btn btn-success btn-sm">Completed</button>
-                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#cancelModal{{$appointment->id}}">Cancel</button>
+                                <div class="d-flex">
+                                    <button type="submit" class="btn btn-success btn-sm mr-2">Completed</button>
+                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#cancelModal{{$appointment->id}}">Cancel</button>
+                                </div>
                                 <!-- Modal -->
                                 <div class="modal fade" id="cancelModal{{$appointment->id}}" tabindex="-1" role="dialog" aria-labelledby="cancelModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">

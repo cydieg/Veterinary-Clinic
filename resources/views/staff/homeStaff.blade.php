@@ -10,13 +10,13 @@
                 </div>
                 <div class="col-md-8">
                     <h4 class="font-20 weight-500 mb-10 text-capitalize">
-                        Welcome back
-                        <div class="weight-600 font-30 text-blue">Cydie Gargullo!</div>
+                        Welcome to
+                        <div class="weight-600 font-30 text-blue"> Rem's Pet Shop</div>
                     </h4>
                     <p class="font-18 max-width-600">
-                        OralEase is committed to providing quality healthcare services and products. 
-                        Our experienced denstists are dedicated to ensuring you receive the best possible care for your health needs.
+                    Quality goodies for your furbabies!
+                      <br>With Rem's warm smile and dedication to animal welfare, it's more than just a shop—it's a sanctuary 
+                      where lasting bonds between humans and pets are forged.
                     </p>
                 </div>
-
 @endsection

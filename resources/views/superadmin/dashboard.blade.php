@@ -1,30 +1,20 @@
 @extends('back.layout.superadmin-layout')
 @section('pageTitle', isset($pageTitle) ? $pageTitle : 'Page Title here')
 @section('content')
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Super Admin Dashboard</title>
-    <!-- Add your CSS or any other meta tags here -->
-</head>
-<body>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Super Admin Dashboard</div>
-
-                    <div class="card-body">
-                        Welcome, Super Admin! This is your dashboard. 
-                        </form>
-                    </div>
+<div class="card-box pd-20 height-100-p mb-30">
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                    <img src="/back/vendors/images/banner-img.png" alt="" />
                 </div>
-            </div>
-        </div>
-    </div>
-    <!-- Add your scripts or any other HTML content here -->
-</body>
-</html>
+                <div class="col-md-8">
+                    <h4 class="font-20 weight-500 mb-10 text-capitalize">
+                        Welcome to
+                        <div class="weight-600 font-30 text-blue"> Rem's Pet Shop</div>
+                    </h4>
+                    <p class="font-18 max-width-600">
+                    Quality goodies for your furbabies!
+                      <br>With Rem's warm smile and dedication to animal welfare, it's more than just a shop—it's a sanctuary 
+                      where lasting bonds between humans and pets are forged.
+                    </p>
+                </div>
 @endsection
