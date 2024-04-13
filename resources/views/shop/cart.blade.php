@@ -28,7 +28,7 @@
     <div class="card">
         <div class="card-body">
             <div class="row">
-                <div class="container p-3 my-3 custom-bg-color text-white">Accepted Appointments</div>
+                <div class="container p-3 my-3 custom-bg-color text-white">Shopping Cart</div>
                 <table class="table mt-4 table-bordered table-striped">
                     <thead>
                         <tr>
