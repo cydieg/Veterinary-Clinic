@@ -488,7 +488,7 @@
 						</li>
 						</ul>
 						 <li class="dropdown">
-							<a href="javascript:;" class="dropdown-toggle no-arrow">
+							<a href="{{ route('visualize.sales') }}" class="dropdown-toggle no-arrow">
 								<span class="micon bi bi-arrow-up-right-square"></span
 								><span class="mtext">Visualization</span>
 							</a>
