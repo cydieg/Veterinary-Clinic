@@ -92,7 +92,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <strong>Address:</strong> {{ $user->address }}, {{ $user->barangay }}, {{ $user->city }}, {{ $user->province }}, {{ $user->region }}
+                                        <strong>Address:</strong> {{ $user->barangay }}, {{ $user->city }}, {{ $user->province }}, {{ $user->region }}
                                     </div>
                                     <div class="col-md-6">
                                         <strong>Branch:</strong> {{ $user->branch ? $user->branch->name : 'N/A' }}
