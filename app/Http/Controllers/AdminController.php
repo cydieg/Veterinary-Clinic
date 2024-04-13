@@ -290,7 +290,6 @@ class AdminController extends Controller
     return view('admin.reports.yearly', compact('yearlySales'));
 }
 
-    // Add this method to your AdminController
     public function audit($productId)
     {
         // Fetch audit records related to the specified product ID
@@ -301,13 +300,14 @@ class AdminController extends Controller
         // Return the view with audit records
         return view('admininven.audit', compact('auditRecords'));
     }
+
     public function addinven()
     {
         return view('admininven.create');
     }
    // AdminController.php
 
-    public function storeinven(Request $request)
+   public function storeinven(Request $request)
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
@@ -343,6 +343,43 @@ class AdminController extends Controller
 
         return redirect()->route('admin.inventory.indexadmin')->with('success', 'Product added successfully');
     }
+
+   
+
+    public function addQuantity(Request $request, $productId)
+    {
+        // Validate the request data
+        $validatedData = $request->validate([
+            'quantity' => 'required|integer|min:1', // Example validation rules
+        ]);
+    
+        // Find the inventory item by ID
+        $inventoryItem = Inventory::findOrFail($productId);
+    
+        // Store the old quantity for audit
+        $oldQuantity = $inventoryItem->quantity;
+    
+        // Add the quantity to the existing quantity
+        $inventoryItem->quantity += $request->quantity;
+    
+        // Save the changes
+        $inventoryItem->save();
+    
+        // Create an audit record for the quantity addition
+        Audit::create([
+            'inventory_id' => $inventoryItem->id,
+            'upc' => $inventoryItem->upc,
+            'name' => $inventoryItem->name,
+            'description' => $inventoryItem->description,
+            'old_quantity' => $oldQuantity,
+            'quantity' => $request->quantity,
+            'type' => 'addition',
+        ]);
+    
+        // Redirect back or wherever appropriate
+        return redirect()->back()->with('success', 'Quantity added successfully');
+    }
+
 
  
 }

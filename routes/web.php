@@ -164,7 +164,7 @@ Route::get('/admin/inventory', [InventoryController::class, 'indexadmin'])->name
 Route::delete('/admin/inventory/{id}', [InventoryController::class, 'destroy'])->name('admin.inventory.delete');
 Route::get('/admin/inventory/audit/{productId}', [AdminController::class, 'audit'])->name('admin.inventory.audit');
 Route::get('admin/inventory/add', [AdminController::class, 'addinven'])->name('admin.inventory.add');
-Route::post('admin/inventory/store', [AdminController::class, 'storeinven'])->name('admin.inventory.store');
+Route::post('admin/inventory/addQuantity/{productId}', [AdminController::class, 'addQuantity'])->name('admin.inventory.addQuantity');
 
 //addmin usermanagement
 

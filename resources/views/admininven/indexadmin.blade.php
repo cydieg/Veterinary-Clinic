@@ -6,6 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@yield('pageTitle')</title> <!-- Add this line to set the title -->
     <div class="container p-3 my-3 custom-bg-color text-white">Inventory</div>
     <!-- Link Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -25,7 +26,6 @@
         <!-- Add Product button -->
         <a href="{{ route('admin.inventory.add') }}" class="btn btn-success mb-3">Add Product</a>
 
-        
         <!-- Inventory table -->
         <table class="table table-bordered mt-3">
             <thead class="thead-light">
@@ -55,17 +55,42 @@
                         <td>{{ $item->created_at }}</td>
                         <td>{{ $item->branch->name }}</td>
                         <td>
+                            <button type="button" class="btn btn-info btn-sm mr-2" data-toggle="modal" data-target="#quantityModal{{ $item->id }}">Add Quantity</button>
                             <form method="POST" action="{{ route('admin.inventory.delete', $item->id) }}" onsubmit="return confirm('Are you sure you want to delete this product?');">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm mr-2">Delete</button>
                             </form>
-                            <a href="{{ route('admin.inventory.audit', ['productId' => $item->id]) }}" class="btn btn-primary">Audit</a>
-                        </td>
-                        
+                            <!-- Add the link to view audits -->
+                            <a href="{{ route('admin.inventory.audit', ['productId' => $item->id]) }}">Audit</a>
+                        </td>                 
                         <td>{{ $item->expiration }}</td>
                         <td>{{ $item->upc }}</td>
                     </tr>
+
+                    <!-- Quantity Modal -->
+                    <div class="modal fade" id="quantityModal{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="quantityModalLabel{{ $item->id }}" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="quantityModalLabel{{ $item->id }}">Add Quantity</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="POST" action="{{ route('admin.inventory.addQuantity', $item->id) }}">
+                                        @csrf
+                                        <div class="form-group">
+                                            <label for="quantity">Quantity:</label>
+                                            <input type="number" class="form-control" id="quantity" name="quantity" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Add</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 @endforeach
             </tbody>
         </table>
