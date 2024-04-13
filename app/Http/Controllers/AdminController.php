@@ -39,60 +39,68 @@ class AdminController extends Controller
     {
         // Assuming you have authenticated user and you're fetching the branch
         $branch = auth()->user()->branch;
+        $branches = Branch::all();
+
 
         // Pass the branch to the view
         return view('admin.create', compact('branch'));
     }
 
     public function store(Request $request)
-    {
-        $validatedData = $request->validate([
-            'username' => 'required|string|max:50',
-            'firstName' => 'required|string|max:50',
-            'lastName' => 'required|string|max:50',
-            'middleName' => 'nullable|string|max:50',
-            'gender' => 'required|in:male,female,other',
-            'age' => 'required|integer',
-            'email' => 'required|email|max:50',
-            'role' => 'required|in:super_admin,admin,staff,patient',
-            'password' => 'required|string|max:255',
-            'branch_id' => $request->role === 'patient' ? 'nullable' : 'required|exists:branches,id',
-            'contact_number' => 'nullable|string|max:20',
-            'region' => 'required|string|max:255',
-            'province' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
-            'barangay' => 'required|string|max:255',
-        ]);
-
-        // Hash the password
-        $validatedData['password'] = bcrypt($validatedData['password']);
-
-
-        // Add the actual names of region, province, city, and barangay
-            $validatedData['region'] = $request->region_text;
-            $validatedData['province'] = $request->province_text;
-            $validatedData['city'] = $request->city_text;
-            $validatedData['barangay'] = $request->barangay_text;
-
-        // Construct the address from individual components
-        $addressComponents = [
-            'region' => $request->region_text,
-            'province' => $request->province_text,
-            'city' => $request->city_text,
-            'barangay' => $request->barangay_text,
-        ];
-         // Concatenate the address components into a single string
-        $address = implode(', ', $addressComponents);
-
-         // Add the concatenated address to validated data
-        $validatedData['address'] = $address;
- 
-
-        // Create the user
-        $user = User::create($validatedData);
-
-        return redirect()->route('admin.users.index')->with('success', 'User created successfully');
+{
+    // Check if role is "patient"
+    if ($request->role === 'patient') {
+        // If role is "patient", set branch_id to null
+        $request->merge(['branch_id' => null]);
     }
+
+    $validatedData = $request->validate([
+        'username' => 'required|string|max:50',
+        'firstName' => 'required|string|max:50',
+        'lastName' => 'required|string|max:50',
+        'middleName' => 'nullable|string|max:50',
+        'gender' => 'required|in:male,female,other',
+        'age' => 'required|integer',
+        'email' => 'required|email|max:50',
+        'role' => 'required|in:super_admin,admin,staff,patient',
+        'password' => 'required|string|max:255',
+        'branch_id' => 'nullable|exists:branches,id',
+        'contact_number' => 'nullable|string|max:20',
+        'region' => 'required|string|max:255',
+        'province' => 'required|string|max:255',
+        'city' => 'required|string|max:255',
+        'barangay' => 'required|string|max:255',
+    ]);
+
+    // Hash the password
+    $validatedData['password'] = bcrypt($validatedData['password']);
+
+    // Add the actual names of region, province, city, and barangay
+    $validatedData['region'] = $request->region_text;
+    $validatedData['province'] = $request->province_text;
+    $validatedData['city'] = $request->city_text;
+    $validatedData['barangay'] = $request->barangay_text;
+
+    // Construct the address from individual components
+    $addressComponents = [
+        'region' => $request->region_text,
+        'province' => $request->province_text,
+        'city' => $request->city_text,
+        'barangay' => $request->barangay_text,
+    ];
+
+    // Concatenate the address components into a single string
+    $address = implode(', ', $addressComponents);
+
+    // Add the concatenated address to validated data
+    $validatedData['address'] = $address;
+
+    // Create the user
+    $user = User::create($validatedData);
+
+    return redirect()->route('admin.users.index')->with('success', 'User created successfully');
+}
+
 
 
 

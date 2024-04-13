@@ -163,6 +163,18 @@
                 </div>
             </div>
         </div>
+        <!-- Sixth Row -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="branch_id">Branch:</label>
+                    <select name="branch_id" id="branch_id" class="form-control">
+                        <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
 
         <!-- Submit Button -->
         <div class="row">
