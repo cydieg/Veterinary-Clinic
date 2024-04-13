@@ -418,24 +418,6 @@
             document.getElementById('addToCartForm').submit();
         }
     
-        // Function to increment quantity
-        function incrementQuantity() {
-            var quantityElement = document.getElementById('quantity');
-            var currentQuantity = parseInt(quantityElement.value);
-            quantityElement.value = currentQuantity + 1;
-            calculateTotal();
-        }
-    
-        // Function to decrement quantity
-        function decrementQuantity() {
-            var quantityElement = document.getElementById('quantity');
-            var currentQuantity = parseInt(quantityElement.value);
-            if (currentQuantity > 1) {
-                quantityElement.value = currentQuantity - 1;
-                calculateTotal();
-            }
-        }
-    
         // Function to calculate total price based on quantity input
         function calculateTotal() {
             var quantity = parseInt(document.getElementById('quantity').value);
@@ -444,7 +426,6 @@
             document.getElementById('totalPrice').innerText = totalPrice.toFixed(2);
         }
     </script>
-    
 
     <!-- Script to hide the error message after 2.5 seconds -->
     <script>
@@ -467,47 +448,39 @@
     
     
     
-    <!-- Product Modal -->
-    <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="productModalLabel">Product Details</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <h5 id="productName"></h5>
-                    <p id="productDescription"></p>
-                    <p>Price: ₱<span id="productPrice"></span></p>
-                    <p>Current Quantity: <span id="productQuantity"></span></p>
-                    <form id="addToCartForm" action="{{ route('cart.add') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="product_id" id="productId">
-                        <!-- Add this line to include the branch_id -->
-                        <input type="hidden" name="branch_id" id="branchId" value="{{ $branchId }}">
-                        <div class="form-group">
-                            <label for="quantity">Quantity:</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <button class="btn btn-outline-secondary" type="button" onclick="decrementQuantity()">-</button>
-                                </div>
-                                <input type="text" class="form-control text-center" id="quantity" name="quantity" value="1">
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="button" onclick="incrementQuantity()">+</button>
-                                </div>
-                            </div>
-                        </div>
-                        <p>Total Price: ₱<span id="totalPrice"></span></p>
-                        <button type="button" class="btn btn-primary" onclick="addToCart()">Add to Cart</button>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
+   <!-- Product Modal -->
+<div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productModalLabel">Product Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5 id="productName"></h5>
+                <p id="productDescription"></p>
+                <p>Price: ₱<span id="productPrice"></span></p>
+                <p>Current Quantity: <span id="productQuantity"></span></p>
+                <form id="addToCartForm" action="{{ route('cart.add') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="product_id" id="productId">
+                    <!-- Add this line to include the branch_id -->
+                    <input type="hidden" name="branch_id" id="branchId" value="{{ $branchId }}">
+                    <div class="form-group">
+                        <label for="quantity">Quantity:</label>
+                        <input type="text" class="form-control text-center" id="quantity" name="quantity" oninput="calculateTotal()" value="1">
+                    </div>
+                    <p>Total Price: ₱<span id="totalPrice"></span></p>
+                    <button type="button" class="btn btn-primary" onclick="addToCart()">Add to Cart</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>
