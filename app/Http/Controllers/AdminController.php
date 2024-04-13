@@ -291,19 +291,15 @@ class AdminController extends Controller
 }
 
     // Add this method to your AdminController
-    public function audit()
+    public function audit($productId)
     {
-        // Fetch all audit records including the price
-        $auditRecords = Audit::all();
+        // Fetch audit records related to the specified product ID
+        $auditRecords = Audit::where('inventory_id', $productId)->get();
 
-        // Calculate total price of all audit records
-        $totalPrice = $auditRecords->sum(function ($auditRecord) {
-            // Assuming each audit record has a related inventory item
-            return $auditRecord->inventory->price * $auditRecord->quantity;
-        });
+        // Assuming you need other data in the view, fetch it here if needed
 
-        // Return the audit view with audit records and total price
-        return view('admininven.audit', compact('auditRecords', 'totalPrice'));
+        // Return the view with audit records
+        return view('admininven.audit', compact('auditRecords'));
     }
     public function addinven()
     {
@@ -311,40 +307,42 @@ class AdminController extends Controller
     }
    // AdminController.php
 
-   public function storeinven(Request $request)
-   {
-       $validatedData = $request->validate([
-           'name' => 'required|string|max:255',
-           'description' => 'nullable|string|max:255',
-           'quantity' => 'required|integer',
-           'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-           'category' => 'required|string|max:255',
-           'price' => 'required|numeric',
-           'expiration' => 'nullable|date',
-           // Remove the 'branch_id' validation rule
-       ]);
-   
-       // Handle file upload
-       if ($request->hasFile('image')) {
-           $imageName = time().'.'.$request->image->extension();
-           $request->image->move(public_path('images'), $imageName);
-           $validatedData['image'] = $imageName;
-       } else {
-           $validatedData['image'] = null; // Set default value if no image is uploaded
-       }
-   
-       // Set the creation date
-       $validatedData['created_at'] = now();
-   
-       // Manually assign the branch_id
-       $validatedData['branch_id'] = auth()->user()->branch_id; // Assuming authenticated user has branch_id
-   
-       // Create the product
-       Inventory::create($validatedData);
-   
-       return redirect()->route('admin.inventory.indexadmin')->with('success', 'Product added successfully');
-   }
-   
+    public function storeinven(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:255',
+            'quantity' => 'required|integer',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'category' => 'required|string|max:255',
+            'price' => 'required|numeric',
+            'expiration' => 'nullable|date',
+            // Remove the 'branch_id' validation rule
+        ]);
+
+        // Handle file upload
+        if ($request->hasFile('image')) {
+            $imageName = time().'.'.$request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+            $validatedData['image'] = $imageName;
+        } else {
+            $validatedData['image'] = null; // Set default value if no image is uploaded
+        }
+
+        // Generate UPC
+        $validatedData['upc'] = rand(100000000000, 999999999999); // Generate a random UPC
+
+        // Set the creation date
+        $validatedData['created_at'] = now();
+
+        // Manually assign the branch_id
+        $validatedData['branch_id'] = auth()->user()->branch_id; // Assuming authenticated user has branch_id
+
+        // Create the product
+        Inventory::create($validatedData);
+
+        return redirect()->route('admin.inventory.indexadmin')->with('success', 'Product added successfully');
+    }
 
  
 }

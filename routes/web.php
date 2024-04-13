@@ -162,7 +162,7 @@ Route::put('/inventory/{id}', [InventoryController::class, 'update'])->name('inv
 //admin in ventory
 Route::get('/admin/inventory', [InventoryController::class, 'indexadmin'])->name('admin.inventory.indexadmin');
 Route::delete('/admin/inventory/{id}', [InventoryController::class, 'destroy'])->name('admin.inventory.delete');
-Route::get('/admin/inventory/audit', [AdminController::class, 'audit'])->name('admin.inventory.audit');
+Route::get('/admin/inventory/audit/{productId}', [AdminController::class, 'audit'])->name('admin.inventory.audit');
 Route::get('admin/inventory/add', [AdminController::class, 'addinven'])->name('admin.inventory.add');
 Route::post('admin/inventory/store', [AdminController::class, 'storeinven'])->name('admin.inventory.store');
 

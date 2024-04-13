@@ -60,8 +60,9 @@
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm mr-2">Delete</button>
                             </form>
-                            <a href="{{ route('admin.inventory.audit') }}" class="btn btn-primary btn-sm">Audit</a>
+                            <a href="{{ route('admin.inventory.audit', ['productId' => $item->id]) }}" class="btn btn-primary">Audit</a>
                         </td>
+                        
                         <td>{{ $item->expiration }}</td>
                         <td>{{ $item->upc }}</td>
                     </tr>
