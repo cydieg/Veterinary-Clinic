@@ -49,7 +49,6 @@ class ClientController extends Controller
     }
     
 
-
     public function store(Request $request)
     {
         $request->validate([
@@ -61,23 +60,35 @@ class ClientController extends Controller
             'description' => 'nullable|string',
             'service_type' => 'required|string',
         ]);
-
+    
         $status = 'pending';
-
+    
         $user = Auth::user();
-
+    
         if (!$user->firstName || !$user->lastName) {
             return redirect()->back()->with('error', 'Please update your profile with your first name and last name before making an appointment.');
         }
-
+    
+        // Check if the user already has an appointment on the selected date
+        $existingAppointment = $user->appointments()->where('appointment_date', $request->input('appointment_date'))->first();
+    
+        if ($existingAppointment) {
+            return redirect()->back()->with('error', 'You already have a reservation on this date.');
+        }
+    
         // Get the number of existing appointments for the selected branch and date
         $existingAppointmentsCount = Appointment::where('appointment_date', $request->input('appointment_date'))
             ->where('branch_id', $request->input('branch_id'))
             ->count();
-
+    
+        // Check if the total appointments for the selected branch and date exceeds the limit (10)
+        if ($existingAppointmentsCount >= 10) {
+            return redirect()->back()->with('error', 'Sorry, all reservation slots for this branch on this date are filled. Please select another date.');
+        }
+    
         // Calculate the slot number
         $slotNumber = $existingAppointmentsCount + 1;
-
+    
         $appointmentData = [
             'appointment_date' => $request->input('appointment_date'),
             'branch_id' => $request->input('branch_id'),
@@ -91,11 +102,13 @@ class ClientController extends Controller
             'service_type' => $request->input('service_type'),
             'appointment_slot' => 'Slot ' . $slotNumber,
         ];
-
+    
         // Additional logic to check reservation slot limit (10 slots per day) can be added here
-
+    
         $user->appointments()->create($appointmentData);
-
+    
         return redirect()->route('customer')->with('success', 'Appointment requested successfully. Please wait for a notification in your email.');
     }
+    
+
 }

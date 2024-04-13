@@ -26,5 +26,11 @@ class Inventory extends Model
     {
         return $this->belongsTo(Branch::class, 'branch_id');
     }
+    public static function expiringSoon($days = 7)
+    {
+        return self::where('expiration', '>=', now())
+                    ->where('expiration', '<=', now()->addDays($days))
+                    ->get();
+    }
     
 }

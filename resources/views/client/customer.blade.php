@@ -78,23 +78,7 @@
     </div>
 </div>
 
-<div class="col-md-5 col-lg-6 col-xl-4 mx-auto mt-4">
-    <div class="card">
-        <div class="card-body">
-            <h3 class="text-center">Remaining Slots</h3>
-            @foreach($futureAppointments as $date => $branchSlots)
-                <div class="border-bottom mb-3">
-                    <h5>{{ $date }}</h5>
-                    <ul class="list-unstyled">
-                        @foreach($branchSlots as $branchId => $remainingSlots)
-                            <li>{{ $branches->find($branchId)->name }}: {{ $remainingSlots }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endforeach
-        </div>
-    </div>
-</div>
+
 
 
 

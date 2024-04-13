@@ -75,4 +75,16 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
+        // Inside app/Console/Kernel.php
+
+     protected function schedule(Schedule $schedule)
+    {
+        // Run the command 'inventory:notify-expiring' one week before the expiration date
+        $schedule->command('inventory:notify-expiring')->dailyAt('9:00')->when(function () {
+            // Check if there are expiring products one week from now
+            return Inventory::where('expiration', '<=', now()->addWeek())
+                            ->where('expiration', '>=', now())
+                            ->exists();
+        });
+    }
 }
