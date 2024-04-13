@@ -124,41 +124,51 @@ class AdminController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
-
+    
         // Update user details
         $user->username = $request->input('username');
         $user->email = $request->input('email');
         $user->firstName = $request->input('firstName');
         $user->lastName = $request->input('lastName');
         $user->middleName = $request->input('middleName');
-        $user->region = $request->input('region_text');
-        $user->province = $request->input('province_text');
-        $user->city = $request->input('city_text');
-        $user->barangay = $request->input('barangay_text');
         $user->gender = $request->input('gender');
         $user->age = $request->input('age');
         $user->role = $request->input('role');
         $user->contact_number = $request->input('contact_number'); // Update contact number
-
-        // Concatenate address components
-        $addressComponents = [
-            $request->input('barangay_text'),
-            $request->input('city_text'),
-            $request->input('province_text'),
-            $request->input('region_text')
-        ];
-
-        $user->address = implode(', ', array_filter($addressComponents));
-
+    
+        // Check if any address field is not empty
+        if (
+            $request->filled('barangay_text') ||
+            $request->filled('city_text') ||
+            $request->filled('province_text') ||
+            $request->filled('region_text')
+        ) {
+            // Concatenate address components only if they are not empty
+            $addressComponents = array_filter([
+                $request->input('barangay_text'),
+                $request->input('city_text'),
+                $request->input('province_text'),
+                $request->input('region_text')
+            ]);
+    
+            $user->barangay = $request->input('barangay_text');
+            $user->city = $request->input('city_text');
+            $user->province = $request->input('province_text');
+            $user->region = $request->input('region_text');
+            $user->address = implode(', ', $addressComponents);
+        }
+    
         // Check if password field is not empty
         if ($request->filled('password')) {
             $user->password = bcrypt($request->input('password'));
         }
-
+    
         $user->save();
-
+    
         return redirect()->route('admin.users.index')->with('success', 'User updated successfully');
     }
+    
+    
     
 
     // Remove the specified user from storage
