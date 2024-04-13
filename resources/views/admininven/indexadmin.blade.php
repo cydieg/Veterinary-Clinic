@@ -65,13 +65,13 @@
                                     <td>{{ $item->upc }}</td>
                                     <td>
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#quantityModal{{ $item->id }}">Add Quantity</button>
+                                            <button type="button" class="btn btn-info btn-sm mb-2" data-toggle="modal" data-target="#quantityModal{{ $item->id }}">Add</button>
+                                            <a href="{{ route('admin.inventory.audit', ['productId' => $item->id]) }}" class="btn btn-warning btn-sm mb-2">Audit</a>
                                             <form method="POST" action="{{ route('admin.inventory.delete', $item->id) }}" onsubmit="return confirm('Are you sure you want to delete this product?');">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                                <button type="submit" class="btn btn-danger btn-sm mb-2">Delete</button>
                                             </form>
-                                            <a href="{{ route('admin.inventory.audit', ['productId' => $item->id]) }}" class="btn btn-warning btn-sm">Audit</a>
                                         </div>
                                     </td>
                                 </tr>

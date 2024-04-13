@@ -1,3 +1,6 @@
+@extends('back.layout.main-layout')
+@section('pageTitle', isset($pageTitle) ? $pageTitle : 'Page Title here')
+@section('content')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,24 +12,27 @@
     <style>
         .container {
             display: flex;
-            flex-wrap: wrap; /* Allow wrapping to the next line */
-            justify-content: space-between;
-            margin-bottom: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 50px;
         }
         .chart-container {
-            width: 48%; /* Adjusted width */
-            padding: 10px; /* Added padding */
-            border-radius: 10px; /* Added border radius */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added box shadow */
-            background-color: #fff; /* Added background color */
-            box-sizing: border-box; /* Added box sizing */
-            margin-bottom: 20px; /* Adjusted margin */
-        }
-        canvas {
-            width: 200px; /* Adjusted width */
+            width: 60%;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            box-sizing: border-box;
+            margin-bottom: 50px;
+            margin-top: 50px;
+            margin-left: 50px;
+            border: 2px solid #ccc; 
         }
         select {
-            margin-bottom: 10px; /* Adjusted margin */
+            margin-bottom: 10px;
+        }
+        canvas {
+            max-width: 100%;
+            height: 50;
         }
     </style>
 </head>
@@ -40,8 +46,7 @@
                 <option value="Monthly">Monthly</option>
                 <option value="Yearly">Yearly</option>
             </select>
-            <!-- Adjusted canvas size to make it super small -->
-            <canvas id="salesChart" width="200" height="10"></canvas>
+            <canvas id="salesChart"></canvas>
         </div>
         <!-- Add more divs with charts here -->
     </div>
@@ -100,10 +105,8 @@
                                 beginAtZero: true
                             }
                         },
-                        // Adjusted chart options to make it smaller
                         responsive: true,
-                        maintainAspectRatio: true,
-                        aspectRatio: 0.7
+                        maintainAspectRatio: true // Changed to false
                     }
                 });
             }
@@ -118,3 +121,4 @@
     </script>
 </body>
 </html>
+@endsection

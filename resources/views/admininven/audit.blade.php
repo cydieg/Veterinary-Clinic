@@ -1,4 +1,4 @@
-@extends('back.layout.superadmin-layout')
+@extends('back.layout.main-layout')
 @section('pageTitle', isset($pageTitle) ? $pageTitle : 'Vet')
 @section('content')
 <!DOCTYPE html>
