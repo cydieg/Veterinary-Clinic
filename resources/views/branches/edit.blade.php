@@ -54,11 +54,15 @@
 
                             <div class="form-group">
                                 <label for="status">Status:</label>
-                                <input type="text" class="form-control @error('status') is-invalid @enderror" id="status" name="status" value="{{ $branch->status }}">
+                                <select class="form-control @error('status') is-invalid @enderror" id="status" name="status">
+                                    <option value="active" {{ $branch->status == 'active' ? 'selected' : '' }}>Active</option>
+                                    <option value="inactive" {{ $branch->status == 'inactive' ? 'selected' : '' }}>Inactive</option>
+                                </select>
                                 @error('status')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+                            
                         </div>
                     </div>
 
