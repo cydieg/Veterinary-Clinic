@@ -30,7 +30,6 @@
                             <th>Location</th>
                             <th>Contact Number</th>
                             <th>Status</th>
-                            <th>Manager Name</th> <!-- Display Manager Name -->
                             <th>Action</th> <!-- New column for actions -->
                         </tr>
                     </thead>
@@ -41,7 +40,6 @@
                                 <td>{{ $branch->location }}</td>
                                 <td>{{ $branch->contact }}</td>
                                 <td>{{ $branch->status }}</td>
-                                <td>{{ $branch->manager_name }}</td> <!-- Display Manager Name -->
                                 <td>
                                     <div class="dropdown">
                                         <button class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" type="button" id="dropdownMenuButton{{ $branch->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -157,6 +157,11 @@
                         Please provide a valid password.
                     </div>
                 </div>
+                <!-- Password Confirmation -->
+                <div class="col-md-4 mb-3">
+                    <label for="password_confirmation">Confirm Password:</label>
+                    <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
+                </div>
 
             </div>
 
