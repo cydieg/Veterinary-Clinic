@@ -10,7 +10,7 @@
     
     <p>We are writing to inform you that your order for {{ $sale->product->name }} is currently being delivered.</p>
 
-    <p>The total amount for your order is: ${{ $sale->total_price }}</p> <!-- Assuming total_amount is the attribute containing the amount -->
+    <p>The total amount for your order is: ₱{{ $sale->total_price }}</p> <!-- Assuming total_amount is the attribute containing the amount -->
 
     <p>Please prepare the exact amount for the payment of the product. The delivery agent will collect the payment upon delivery.</p>
 
