@@ -200,15 +200,16 @@ class ShopController extends Controller
         // Retrieve the user's purchase history
         $user = Auth::user();
         
-        // Retrieve sales records for delivered and pending products that are not older than a day
+        // Retrieve sales records for delivered, pending, and canceled products that are not older than a day
         $sales = Sale::where('user_id', $user->id)
-                     ->whereIn('status', ['delivering','delivered', 'pending'])
+                     ->whereIn('status', ['delivering', 'delivered', 'pending', 'canceled'])
                      ->where('created_at', '>=', Carbon::now()->subDay())
                      ->get();
     
         // Pass the filtered purchase history to the view and render it
         return view('shop.history', compact('sales'));
     }
+    
     
     
 

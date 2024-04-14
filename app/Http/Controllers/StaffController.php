@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AppointmentAccepted;
 use App\Mail\AppointmentCancelled; 
+use App\Mail\FailedDeliveryNotification;
+use App\Mail\DeliveryNotification; 
 
 class StaffController extends Controller
 {
@@ -131,29 +133,33 @@ class StaffController extends Controller
    
        // Fetch sales related to the authenticated user's branch
        $sales = Sale::with('user', 'product', 'branch')
-                   ->whereHas('branch', function ($query) use ($branchId) {
-                       $query->where('id', $branchId);
-                   })
-                   ->where('status', '!=', 'delivered') // Exclude 'delivered' sales
-                   ->where('status', '!=', 'delivering') // Exclude 'delivering' sales
-                   ->get();
+                  ->whereHas('branch', function ($query) use ($branchId) {
+                      $query->where('id', $branchId);
+                  })
+                  ->where('status', '!=', 'delivered') // Exclude 'delivered' sales
+                  ->where('status', '!=', 'delivering') // Exclude 'delivering' sales
+                  ->where('status', '!=', 'canceled') // Exclude 'canceled' sales
+                  ->get();
    
        // Pass sales to the view
        return view('staff.productorder', compact('sales'));
    }
    
+    //ito na
+    public function deliverSale(Sale $sale, Request $request)
+    {
+        // Get the authenticated user's branch ID
+        $branchId = auth()->user()->branch_id;
 
-   public function deliverSale(Sale $sale, Request $request)
-   {
-      // Get the authenticated user's branch ID
-      $branchId = auth()->user()->branch_id;
-       
-       $sale->update(['status' => 'delivering']);
-   
-       
-       return redirect()->back()->with('success', 'Sale is being delivered');
-   }
-    
+        // Update sale status
+        $sale->update(['status' => 'delivering']);
+
+        // Send email notification
+        Mail::to($sale->user->email)->send(new DeliveryNotification($sale));
+
+        return redirect()->back()->with('success', 'Sale is being delivered');
+    }
+        
 
 
 
@@ -298,7 +304,24 @@ class StaffController extends Controller
             return back()->with('error', 'An error occurred while recording the purchase.');
         }
     }
+    public function failedDelivery(Sale $sale)
+    {
+        try {
+            // Update sale status to 'canceled'
+            $sale->update(['status' => 'canceled']);
     
+            // Pass necessary data to the mail constructor
+            $user = $sale->user;
+            $product = $sale->product; // Assuming you have a relationship defined in Sale model
+            // Pass $user, $product, and $sale to the FailedDeliveryNotification constructor
+            Mail::to($sale->user->email)->send(new FailedDeliveryNotification($user, $product, $sale));
+    
+            return redirect()->back()->with('success', 'Sale marked as failed delivery successfully. User notified.');
+        } catch (\Exception $e) {
+            // Log or handle the exception
+            return back()->with('error', 'An error occurred while marking the sale as failed delivery and notifying the user.');
+        }
+    }
     
 
 }

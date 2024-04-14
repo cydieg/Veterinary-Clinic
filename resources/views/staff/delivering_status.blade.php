@@ -66,6 +66,10 @@
                                     @csrf
                                     <button type="submit" class="btn btn-primary btn-sm">Mark as Delivered</button>
                                 </form>
+                                <form action="{{ route('failed-delivery', $sale->id) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger btn-sm">Failed Delivery</button>
+                                </form>                                
                             @else
                                 Delivered
                             @endif

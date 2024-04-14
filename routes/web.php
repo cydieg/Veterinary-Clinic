@@ -224,3 +224,4 @@ Route::get('/purchase-history', [ShopController::class, 'history'])->name('purch
 //mapping
 Route::get('/mapping', [MapingController::class, 'index'])->name('mapping.index');
 
+Route::post('sales/{sale}/failed-delivery', [StaffController::class, 'failedDelivery'])->name('failed-delivery');
