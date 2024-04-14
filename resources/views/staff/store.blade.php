@@ -102,7 +102,7 @@
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->description }}</td>
                     <td>{{ $item->quantity }}</td>
-                    <td>{{ $item->price }}</td>
+                    <td>₱{{ $item->price }}</td>
                     <td>
                         <button class="btn btn-success" onclick="openModal('{{ $item->name }}', {{ $item->id }}, {{ $item->price }})">Purchase</button>
                     </td>

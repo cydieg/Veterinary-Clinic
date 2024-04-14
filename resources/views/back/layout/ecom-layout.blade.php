@@ -125,6 +125,13 @@
 													<span>Purchase History</span>
 												</a>
 											</li>
+											<li>
+												<a href="{{ route('mapping.index') }}">
+													<i class="fas fa-shopping-cart"></i>
+													<span>Mapping</span>
+												</a>
+											</li>
+											
 											
 										
 											<li>

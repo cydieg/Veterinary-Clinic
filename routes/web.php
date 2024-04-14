@@ -15,6 +15,7 @@ use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\MapingController;
 
 
 
@@ -219,4 +220,7 @@ Route::get('/yearly-report', [SuperAdminController::class, 'yearlyReport'])->nam
 
 //history 
 Route::get('/purchase-history', [ShopController::class, 'history'])->name('purchase.history');
+
+//mapping
+Route::get('/mapping', [MapingController::class, 'index'])->name('mapping.index');
 
