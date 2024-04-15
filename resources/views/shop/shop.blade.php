@@ -124,7 +124,7 @@
     }
     .dropdown-menu {
         /* Existing styles */
-        background-color: transparent; /* Change background color to transparent */
+        background-color: white; /* Change background color to transparent */
     }
     </style>
 </head>
@@ -203,7 +203,6 @@
             <!-- NAV -->
             <ul class="navbar">
                 <li class="active"><a href="#">Home</a></li>
-                <li><a href="#">Hot Deals</a></li>
                 <li class="dropdown">
                     <a href="#" data-toggle="dropdown">Categories <i class="fa fa-angle-down"></i></a>
                     <ul class="dropdown-menu">

@@ -99,7 +99,7 @@
 
                                 <ul class="main-nav nav navbar-nav" style="margin-right: 80px;">
                                     <li class="active" style="margin-right: 80px;"><a href="#">Home</a></li>
-                                    <li><a href="#" style="margin-right: 80px;">Hot Deals</a></li>
+
                                     <li class="dropdown">
                                         <a href="#" data-toggle="dropdown" style="margin-right: 80px;">Categories <i class="fa fa-angle-down"></i></a>
                                         <ul class="dropdown-menu">
