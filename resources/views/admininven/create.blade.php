@@ -1,9 +1,14 @@
 @extends('back.layout.main-layout')
 @section('pageTitle', 'Add Product')
 @section('content')
-
+<style>
+    .custom-bg-color {
+        background-color: #BC7FCD;
+        font-size: 20px;
+    }
+</style>
+<div class="container p-3 my-3 custom-bg-color text-white">Add Product</div>
 <div class="container">
-    <h2>Add Product</h2>
     <form action="{{ route('admin.inventory.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
@@ -36,7 +41,12 @@
         </div>
         <!-- Hidden input field for creation date -->
         <input type="hidden" name="created_at" value="{{ now() }}">
-        <button type="submit" class="btn btn-primary">Submit</button>
+
+        <div class="row">
+            <div class="col-md-12 mb-3 text-right">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
     </form>
 </div>
 
