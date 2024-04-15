@@ -80,6 +80,8 @@
         </header>
                     <!-- NAVIGATION -->
                     <nav id="navigation">
+                    <a href="/" class="btn btn-secondary mt-3 back-button" style="background-color: transparent; padding-top: -30px; ;
+            padding-bottom: -30px"><i class="fas fa-arrow-left"></i></a>
                         <!-- container -->
                         <div class="container">
                             <!-- responsive-nav -->
