@@ -164,12 +164,14 @@ Route::post('/inventory/addquantity/{id}', [InventoryController::class, 'addQuan
 // Add the edit route
 Route::get('/inventory/{id}/edit', [InventoryController::class, 'edit'])->name('inventory.edit');
 Route::put('/inventory/{id}', [InventoryController::class, 'update'])->name('inventory.update');
-//admin in ventory
+//admin inventory
 Route::get('/admin/inventory', [InventoryController::class, 'indexadmin'])->name('admin.inventory.indexadmin');
 Route::delete('/admin/inventory/{id}', [InventoryController::class, 'destroy'])->name('admin.inventory.delete');
 Route::get('/admin/inventory/audit/{productId}', [AdminController::class, 'audit'])->name('admin.inventory.audit');
 Route::get('admin/inventory/add', [AdminController::class, 'addinven'])->name('admin.inventory.add');
 Route::post('admin/inventory/addQuantity/{productId}', [AdminController::class, 'addQuantity'])->name('admin.inventory.addQuantity');
+Route::post('/admin/inventory/store', [AdminController::class, 'storeinven'])->name('admin.inventory.store');
+
 //admin visualization
 Route::get('/visualize-sales', [AdminController::class, 'visualizeSales'])->name('visualize.sales');
 //addmin usermanagement

@@ -361,6 +361,7 @@ class AdminController extends Controller
         Inventory::create($validatedData);
 
         return redirect()->route('admin.inventory.indexadmin')->with('success', 'Product added successfully');
+
     }
 
    
