@@ -108,7 +108,7 @@
 											</li>
 											<li>
 												<a href="{{ route('shop.index') }}">
-													<i class="fas fa-bookmark"></i>
+													<i class="fas fa-store"></i>
 													<span>Shop</span>
 												</a>
 											</li>
@@ -121,13 +121,13 @@
 											</li>
 											<li>
 												<a href="{{ route('purchase.history') }}">
-													<i class="fas fa-shopping-cart"></i>
+													<i class="fas fa-history"></i>
 													<span>Purchase History</span>
 												</a>
 											</li>
 											<li>
 												<a href="{{ route('mapping.index') }}">
-													<i class="fas fa-shopping-cart"></i>
+													<i class="fas fa-map"></i>
 													<span>Mapping</span>
 												</a>
 											</li>

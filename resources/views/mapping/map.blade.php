@@ -1,3 +1,7 @@
+@extends('back.layout.ecom-layout')
+@section('pageTitle', isset($pageTitle) ? $pageTitle : 'Vet')
+
+@section('content')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,8 +16,8 @@
     <style>
         /* Adjust map container size */
         #map {
-            height: 400px;
-            width: 100%;
+            height: 600px;
+            width: 70%;
         }
     </style>
 </head>
@@ -51,3 +55,4 @@
     </script>
 </body>
 </html>
+@endsection
