@@ -27,18 +27,21 @@
                     <div class="card-header">Ratings</div>
 
                     <div class="card-body">
+                        <!-- Check if ratings are available -->
                         @if ($ratings->isEmpty())
                             <p>No ratings available for this product.</p>
                         @else
-                            @php $imageDisplayed = false; @endphp
+                            <!-- Loop through ratings -->
                             @foreach ($ratings as $index => $rating)
                                 <div class="mb-3">
-                                    @if (!$imageDisplayed)
+                                    <!-- Display product image and name once -->
+                                    @if ($index === 0)
                                         <img src="{{ asset('images/' . $rating->sale->product->image) }}" alt="{{ $rating->sale->product->name }}" style="max-width: 100px;">
                                         <br>
                                         <span>{{ $rating->sale->product->name }}</span>
                                         <br>
                                         <br>
+                                        <!-- Display total percentage rating -->
                                         Total Percentage: 
                                         <div class="star-ratings">
                                             @for ($i = 1; $i <= $totalPercentage / 20; $i++)
@@ -47,7 +50,6 @@
                                         </div>
                                         <span>{{ $totalPercentage }}%</span>
                                         <br>
-                                        @php $imageDisplayed = true; @endphp
                                     @endif
                                     
                                     <!-- Label for Comment Section, displayed only once -->
@@ -62,11 +64,13 @@
                                             <br>
                                             Rating: 
                                             <div class="star-ratings">
+                                                <!-- Display star ratings based on user's rating -->
                                                 @for ($i = 1; $i <= $rating->rating; $i++)
                                                     <span>&#9733;</span>
                                                 @endfor
                                             </div>
                                         </div>
+                                        <!-- Display user's comment if available -->
                                         @if ($rating->comment)
                                             <div>
                                                 Comment: {{ $rating->comment }}
