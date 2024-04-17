@@ -244,20 +244,19 @@ class ShopController extends Controller
         $ratings = Rating::whereHas('sale', function ($query) use ($itemId) {
             $query->where('product_id', $itemId);
         })->get();
-
+    
         // Calculate the total rating points and the total number of ratings
         $totalRatingPoints = $ratings->sum('rating');
         $totalRatings = $ratings->count();
-
+    
         // Calculate the average rating
         $averageRating = $totalRatings > 0 ? $totalRatingPoints / $totalRatings : 0;
-
+    
         // Convert the average rating into a percentage with two decimal places
         $totalPercentage = number_format($averageRating * 20, 2); // Since each star represents 20%
-
+    
         return view('shop.viewratings', compact('ratings', 'totalPercentage'));
     }
-    
     
     
     

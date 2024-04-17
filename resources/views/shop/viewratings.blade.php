@@ -8,6 +8,15 @@
         .star-ratings span {
             color: #ffd700;
         }
+        .user-comment-rating {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .comment-label {
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -22,34 +31,48 @@
                             <p>No ratings available for this product.</p>
                         @else
                             @php $imageDisplayed = false; @endphp
-                            @foreach ($ratings as $rating)
+                            @foreach ($ratings as $index => $rating)
                                 <div class="mb-3">
                                     @if (!$imageDisplayed)
                                         <img src="{{ asset('images/' . $rating->sale->product->image) }}" alt="{{ $rating->sale->product->name }}" style="max-width: 100px;">
                                         <br>
-                                        
+                                        <span>{{ $rating->sale->product->name }}</span>
                                         <br>
-                                        Total Percentage: {{ $totalPercentage }}%
                                         <br>
-                                        @php $imageDisplayed = true; @endphp
-                                   @endif
-                                
-                                    <hr>
-                                    <div>
-                                         {{ $rating->user->firstName }} {{ $rating->user->lastName }}
-                                        <br>
-                                        Rating: 
+                                        Total Percentage: 
                                         <div class="star-ratings">
-                                            @for ($i = 1; $i <= $rating->rating; $i++)
+                                            @for ($i = 1; $i <= $totalPercentage / 20; $i++)
                                                 <span>&#9733;</span>
                                             @endfor
                                         </div>
-                                    </div>
-                                    @if ($rating->comment)
-                                        <div>
-                                            Comment: {{ $rating->comment }}
-                                        </div>
+                                        <span>{{ $totalPercentage }}%</span>
+                                        <br>
+                                        @php $imageDisplayed = true; @endphp
                                     @endif
+                                    
+                                    <!-- Label for Comment Section, displayed only once -->
+                                    @if ($index === 0)
+                                        <div class="comment-label">Comment Section</div>
+                                    @endif
+                                    
+                                    <!-- User's Comment and Rating Section -->
+                                    <div class="user-comment-rating">
+                                        <div>
+                                            {{ $rating->user->firstName }} {{ $rating->user->lastName }}
+                                            <br>
+                                            Rating: 
+                                            <div class="star-ratings">
+                                                @for ($i = 1; $i <= $rating->rating; $i++)
+                                                    <span>&#9733;</span>
+                                                @endfor
+                                            </div>
+                                        </div>
+                                        @if ($rating->comment)
+                                            <div>
+                                                Comment: {{ $rating->comment }}
+                                            </div>
+                                        @endif
+                                    </div>
                                 </div>
                             @endforeach
                         @endif

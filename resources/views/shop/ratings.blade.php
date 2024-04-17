@@ -44,11 +44,11 @@
 <form action="{{ route('ratings.store') }}" method="POST">
     @csrf
     <input type="hidden" name="sale_id" value="{{ $sale->id }}">
-    <!-- Input for rating (1 to 6 stars) -->
+    <!-- Input for rating (1 to 5 stars) -->
     <div class="form-group">
         <label for="rating">Rating:</label>
         <div class="rating-container">
-            @for($i = 1; $i <= 6; $i++)
+            @for($i = 1; $i <= 5; $i++)
                 <i class="star far fa-star" data-rating="{{ $i }}"></i>
             @endfor
             <input type="hidden" name="rating" id="rating" value="0">

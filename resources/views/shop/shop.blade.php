@@ -261,7 +261,7 @@
                                                 <p class="card-text">{{ $hotItem->product->description }}</p>
                                                 <p class="card-text">Price: ₱ {{ $hotItem->product->price }}</p>
                                                 <!-- Add the "View Ratings" button -->
-                                                <button class="btn btn-outline-primary" onclick="viewRatings('{{ $hotItem->product->id }}')">View Ratings</button>
+                                                <button class="btn btn-secondary ml-2" onclick="window.location='{{ route("shop.viewratings", ['item' => $hotItem->product->id]) }}'">View Ratings</button>
                                                 <!-- End of "View Ratings" button -->
                                                 <button class="btn btn-primary" onclick="showProductModal('{{ $hotItem->product->name }}', '{{ $hotItem->product->description }}', {{ $hotItem->product->price }}, {{ $hotItem->product->quantity }}, '{{ $hotItem->product->id }}', '{{ $branchId }}')">Add to Cart</button>
                                                 <div class="hot-item-indicator">Hot Item!</div>
@@ -272,6 +272,7 @@
                             @else
                                 <p>No hot items available.</p>
                             @endif
+                        
                         
                         </div>
                     </div>
