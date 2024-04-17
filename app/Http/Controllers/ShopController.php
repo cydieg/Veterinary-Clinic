@@ -235,8 +235,8 @@ class ShopController extends Controller
         // Save the rating to the database
         $rating->save();
 
-        // Redirect back with a success message
-        return redirect()->back()->with('success', 'Rating submitted successfully!');
+        // Redirect to the home page with a thank you message
+        return redirect('/showDashboard')->with('success', 'Thank you for your response!');
     }
     
    

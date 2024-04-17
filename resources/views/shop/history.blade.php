@@ -94,10 +94,17 @@
                                     <td>{{ $sale->status }}</td>
                                     <td>
                                         @if($sale->status === 'delivered')
-                                            <a href="{{ route('ratings.create', ['sale' => $sale->id]) }}" class="btn btn-primary">Rate Us Now</a>
-                                         @endif
-                                    
+                                            @php
+                                                $existingRating = $sale->ratings()->where('user_id', auth()->id())->exists();
+                                            @endphp
+                                            @if(!$existingRating)
+                                                <a href="{{ route('ratings.create', ['sale' => $sale->id]) }}" class="btn btn-primary">Rate Us Now</a>
+                                            @else
+                                                <p class="text-success">Thank you for rating!</p>
+                                            @endif
+                                        @endif
                                     </td>
+                                    
                                 </tr>
                             @endforeach
                         </tbody>

@@ -26,7 +26,7 @@
 </head>
 <body>
 
-<h1>Rate Us</h1>
+<h1>Rate {{ $sale->product->name }}</h1>
 
 @if($errors->any())
     <div class="alert alert-danger">
@@ -37,6 +37,9 @@
         </ul>
     </div>
 @endif
+
+<!-- Display the product image -->
+<img src="{{ asset('images/' . $sale->product->image) }}" alt="{{ $sale->product->name }}">
 
 <form action="{{ route('ratings.store') }}" method="POST">
     @csrf

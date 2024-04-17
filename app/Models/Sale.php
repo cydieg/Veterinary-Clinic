@@ -35,5 +35,9 @@ class Sale extends Model
     {
         return $this->hasOne(Audit::class, 'sale_id');
     }
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
   
 }
