@@ -227,3 +227,11 @@ Route::get('/purchase-history', [ShopController::class, 'history'])->name('purch
 Route::get('/mapping', [MapingController::class, 'index'])->name('mapping.index');
 
 Route::post('sales/{sale}/failed-delivery', [StaffController::class, 'failedDelivery'])->name('failed-delivery');
+
+
+// Route for  a rating
+Route::get('sales/{sale}/ratings/create', [ShopController::class, 'create'])->name('ratings.create');
+// Route for storing ratings
+Route::post('ratings', [ShopController::class, 'store'])->name('ratings.store');
+
+

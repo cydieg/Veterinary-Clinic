@@ -13,6 +13,7 @@ use App\Mail\OrderProcessed;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Carbon\Carbon;
+use App\Models\Rating;
 
 
 class ShopController extends Controller
@@ -209,6 +210,36 @@ class ShopController extends Controller
         // Pass the filtered purchase history to the view and render it
         return view('shop.history', compact('sales'));
     }
+    public function create($sale_id)
+    {
+        $sale = Sale::findOrFail($sale_id);
+        return view('shop.ratings', compact('sale'));
+    }
+    public function store(Request $request)
+    {
+        // Validate the incoming request data
+        $request->validate([
+            'sale_id' => 'required|exists:sales,id',
+            'rating' => 'required|integer|min:1|max:6',
+            'comment' => 'nullable|string|max:255',
+        ]);
+
+        // Create a new rating instance
+        $rating = new Rating([
+            'sale_id' => $request->sale_id,
+            'user_id' => auth()->id(), // Assuming you are using authentication
+            'rating' => $request->rating,
+            'comment' => $request->comment,
+        ]);
+
+        // Save the rating to the database
+        $rating->save();
+
+        // Redirect back with a success message
+        return redirect()->back()->with('success', 'Rating submitted successfully!');
+    }
+    
+   
     
     
     

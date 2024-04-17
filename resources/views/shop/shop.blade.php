@@ -260,6 +260,9 @@
                                                 <h5 class="card-title">{{ $hotItem->product->name }}</h5>
                                                 <p class="card-text">{{ $hotItem->product->description }}</p>
                                                 <p class="card-text">Price: ₱ {{ $hotItem->product->price }}</p>
+                                                <!-- Add the "View Ratings" button -->
+                                                <button class="btn btn-outline-primary" onclick="viewRatings('{{ $hotItem->product->id }}')">View Ratings</button>
+                                                <!-- End of "View Ratings" button -->
                                                 <button class="btn btn-primary" onclick="showProductModal('{{ $hotItem->product->name }}', '{{ $hotItem->product->description }}', {{ $hotItem->product->price }}, {{ $hotItem->product->quantity }}, '{{ $hotItem->product->id }}', '{{ $branchId }}')">Add to Cart</button>
                                                 <div class="hot-item-indicator">Hot Item!</div>
                                             </div>
@@ -269,6 +272,7 @@
                             @else
                                 <p>No hot items available.</p>
                             @endif
+                        
                         </div>
                     </div>
                 </div>
@@ -290,6 +294,7 @@
                                             <p class="card-text">{{ $item->description }}</p>
                                             <p class="card-text">Price: ₱ {{ $item->price }}</p>
                                             <button class="btn btn-primary" onclick="showProductModal('{{ $item->name }}', '{{ $item->description }}', {{ $item->price }}, {{ $item->quantity }}, '{{ $item->id }}', '{{ $branchId }}')">Add to Cart</button>
+                                            <button class="btn btn-secondary ml-2" onclick="viewRatings('{{ $item->id }}')">View Ratings</button>
                                         </div>
                                     </div>
                                 </div>
@@ -473,6 +478,7 @@
                     </div>
                     <p>Total Price: ₱<span id="totalPrice"></span></p>
                     <button type="button" class="btn btn-primary" onclick="addToCart()">Add to Cart</button>
+                    
                 </form>
             </div>
             <div class="modal-footer">

@@ -67,37 +67,42 @@
     </style>
 </head>
 <body>
-<div class="col-md-7 col-lg-8 col-xl-9">
-    <div class="card">
-        <div class="card-body">
-            <div class="row">
-                <div class="container p-3 my-3 custom-bg-color text-white">Purchase History</div>
-                        @if($sales->isEmpty())
-                            <p>You haven't made any purchases yet.</p>
-                        @else
-                <table class="table mt-4 table-bordered table-striped">
-                    <thead>
-                    <thead>
-                                    <tr>
-                                        <th>Product</th>
-                                        <th>Quantity</th>
-                                        <th>Total Price</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($sales as $sale)
-                                        <tr>
-                                            <td>{{ $sale->product->name }}</td>
-                                            <td>{{ $sale->quantity }}</td>
-                                            <td>₱{{ $sale->total_price }}</td>
-                                            <td>{{ $sale->status }}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        @endif
-                    </div>
+    <div class="col-md-7 col-lg-8 col-xl-9">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="container p-3 my-3 custom-bg-color text-white">Purchase History</div>
+                            @if($sales->isEmpty())
+                                <p>You haven't made any purchases yet.</p>
+                            @else
+                    <table class="table mt-4 table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Total Price</th>
+                                <th>Status</th>
+                                <th>Action</th> <!-- New column for the action button -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($sales as $sale)
+                                <tr>
+                                    <td>{{ $sale->product->name }}</td>
+                                    <td>{{ $sale->quantity }}</td>
+                                    <td>₱{{ $sale->total_price }}</td>
+                                    <td>{{ $sale->status }}</td>
+                                    <td>
+                                        @if($sale->status === 'delivered')
+                                            <a href="{{ route('ratings.create', ['sale' => $sale->id]) }}" class="btn btn-primary">Rate Us Now</a>
+                                         @endif
+                                    
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    @endif
                 </div>
             </div>
         </div>
