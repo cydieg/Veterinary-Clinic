@@ -294,7 +294,8 @@
                                             <p class="card-text">{{ $item->description }}</p>
                                             <p class="card-text">Price: ₱ {{ $item->price }}</p>
                                             <button class="btn btn-primary" onclick="showProductModal('{{ $item->name }}', '{{ $item->description }}', {{ $item->price }}, {{ $item->quantity }}, '{{ $item->id }}', '{{ $branchId }}')">Add to Cart</button>
-                                            <button class="btn btn-secondary ml-2" onclick="viewRatings('{{ $item->id }}')">View Ratings</button>
+                                            <button class="btn btn-secondary ml-2" onclick="window.location='{{ route("shop.viewratings", $item->id) }}'">View Ratings</button>
+
                                         </div>
                                     </div>
                                 </div>

@@ -233,5 +233,8 @@ Route::post('sales/{sale}/failed-delivery', [StaffController::class, 'failedDeli
 Route::get('sales/{sale}/ratings/create', [ShopController::class, 'create'])->name('ratings.create');
 // Route for storing ratings
 Route::post('ratings', [ShopController::class, 'store'])->name('ratings.store');
+// Route for viewing ratings
+Route::get('/shop/viewratings/{item}', [ShopController::class, 'viewRatings'])->name('shop.viewratings');
+
 
 
