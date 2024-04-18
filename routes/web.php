@@ -215,10 +215,17 @@ Route::get('/superadmin/report', [SuperAdminController::class, 'report'])->name(
 Route::get('/generate_report', [SuperAdminController::class, 'report'])->name('generate_report');
 Route::get('/report', [SuperAdminController::class, 'report'])->name('report');
 Route::get('/monthly-report-pdf', [SuperAdminController::class, 'generatePDF'])->name('monthly.report.pdf');
+Route::get('/daily-sales-pdf', [SuperAdminController::class, 'generateDailySalesPDF'])->name('daily.sales.pdf');
+Route::get('/weekly-report-pdf', [SuperAdminController::class, 'generateWeeklyReportPDF'])->name('weekly.report.pdf');
+Route::get('/yearly-report-pdf', [SuperAdminController::class, 'generateYearlyReportPDF'])->name('yearly.report.pdf');
+
+
+
 // Weekly sales report
 Route::get('/weekly-report', [SuperAdminController::class, 'weeklyReport'])->name('weekly.report');
 Route::get('/monthly-report', [SuperAdminController::class, 'monthlyReport'])->name('monthly.report');
 Route::get('/yearly-report', [SuperAdminController::class, 'yearlyReport'])->name('yearly.report');
+
 
 
 //history 

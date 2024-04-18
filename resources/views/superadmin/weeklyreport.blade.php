@@ -81,6 +81,9 @@
                 </tr>
             </tbody>
         </table>
+
+        <!-- Button to download the PDF -->
+        <a href="{{ route('weekly.report.pdf', ['branch' => request('branch')]) }}" class="btn btn-primary">Download Weekly Report PDF</a>
     </div>
 </body>
 </html>

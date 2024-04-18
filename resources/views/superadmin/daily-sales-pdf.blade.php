@@ -1,13 +1,15 @@
-@extends('back.layout.superadmin-layout')
-@section('pageTitle', isset($pageTitle) ? $pageTitle : 'Create New User')
-@section('content')
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <div class="container p-3 my-3 custom-bg-color text-white">Daily Sales Report</div>
+    <title>Daily Sales Report</title>
     <style>
+        /* Define your styles for the PDF report */
+        /* Example: */
+        body {
+            font-family: Arial, sans-serif;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -25,29 +27,17 @@
         }
         .custom-bg-color {
             background-color: #BC7FCD;
+            color: white;
             font-size: 20px;
+            padding: 10px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Branch selection dropdown -->
-        <form action="{{ route('report') }}" method="GET">
-            <select name="branch_id">
-                <option value="">All Branches</option>
-                @foreach ($branches as $branch)
-                    <option value="{{ $branch->id }}" @if(request('branch_id') == $branch->id) selected @endif>{{ $branch->name }}</option>
-                @endforeach
-            </select>
-            <button type="submit">Filter</button>
-        </form>
-
-        <!-- Button to navigate to the daily sales PDF view -->
-        <a href="{{ route('daily.sales.pdf') }}" class="btn btn-primary">Generate Daily Sales PDF</a>
-        
+        <div class="custom-bg-color">Daily Sales Report - {{ \Carbon\Carbon::today()->toFormattedDateString() }}</div>
         <table>
             <thead>
-                <p>Daily Total Sales ${{ $totalSales }}</p>
                 <tr>
                     <th>Product Name</th>
                     <th>Quantity</th>
@@ -71,4 +61,3 @@
     </div>
 </body>
 </html>
-@endsection

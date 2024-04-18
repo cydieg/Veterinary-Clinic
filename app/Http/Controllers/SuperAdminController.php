@@ -226,6 +226,7 @@ public function yearlyReport(Request $request)
     // Calculate total sales for the current year
     $totalSalesForCurrentYear = $salesForCurrentYear->sum('total_price');
 
+    // Pass the data to the view
     return view('superadmin.yearlyreport', compact('salesForCurrentYear', 'totalSalesForCurrentYear', 'currentYear', 'branches'));
 }
 public function generatePDF(Request $request)
@@ -281,7 +282,180 @@ private function getMonthlySales(Request $request)
 
         return $monthlySales;
     }
+    public function generateDailySalesPDF(Request $request)
+    {
+        // Get the delivered sales data for the current date
+        $deliveredSales = $this->getDeliveredSalesForCurrentDate($request);
 
+        // Load the view for the daily sales report into a variable
+        $pdfView = view('superadmin.daily-sales-pdf', compact('deliveredSales'))->render();
+
+        // Create a new instance of Dompdf
+        $dompdf = new Dompdf();
+
+        // Load HTML content into Dompdf
+        $dompdf->loadHtml($pdfView);
+
+        // (Optional) Set paper size and orientation
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF (inline or download)
+        return $dompdf->stream('daily_sales_report.pdf');
+    }
+    private function getDeliveredSalesForCurrentDate(Request $request)
+    {
+        // Get the current date
+        $currentDate = Carbon::today();
+
+        // Get branch ID from the request, if any
+        $branchId = $request->input('branch_id');
+
+        // Query delivered sales for the current date
+        $query = Sale::with(['product'])
+            ->where('status', 'delivered')
+            ->whereDate('created_at', $currentDate);
+
+        // Filter by branch if a specific branch is selected
+        if ($branchId !== null) {
+            $query->where('branch_id', $branchId);
+        }
+
+        // Retrieve delivered sales data
+        return $query->get();
+    }
+    public function generateWeeklyReportPDF(Request $request)
+    {
+        // Calculate the start and end dates for the current week (Monday to Sunday)
+        $startDate = Carbon::now()->startOfWeek();
+        $endDate = Carbon::now()->endOfWeek();
+
+        // Get the weekly sales data
+        $salesWithinWeek = $this->getWeeklySales($request, $startDate, $endDate);
+        
+        // Calculate total sales within the week
+        $totalSalesWithinWeek = $salesWithinWeek->sum('total_price');
+
+        // Get branches for the dropdown
+        $branches = Branch::all();
+
+        // Load the view for the weekly report PDF
+        $pdfView = view('superadmin.weeklyreport-pdf', [
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+            'salesWithinWeek' => $salesWithinWeek,
+            'totalSalesWithinWeek' => $totalSalesWithinWeek,
+            'branches' => $branches
+        ])->render();
+
+        // Create a new instance of Dompdf
+        $dompdf = new Dompdf();
+
+        // Load HTML content into Dompdf
+        $dompdf->loadHtml($pdfView);
+
+        // (Optional) Set paper size and orientation
+        $dompdf->setPaper('A4', 'landscape');
+
+        // Render HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF (inline or download)
+        return $dompdf->stream('weekly_sales_report.pdf');
+    }
+    private function getWeeklySales(Request $request, $startDate, $endDate)
+    {
+        // Get branch ID from the request
+        $branchId = $request->input('branch');
+
+        // Query for sales based on branch selection
+        $salesQuery = Sale::where('status', 'delivered');
+
+        if ($branchId) {
+            $salesQuery->where('branch_id', $branchId);
+        }
+
+        // Fetch delivered sales within the current week
+        return $salesQuery->whereBetween('created_at', [$startDate, $endDate])->get();
+    }
+
+    public function generateYearlyReportPDF(Request $request)
+{
+    // Get the yearly sales data
+    $yearlySales = $this->getYearlySales($request);
+
+    // Filter out months with no sales
+    $yearlySales = array_filter($yearlySales, function ($monthData) {
+        return $monthData['total_sales'] > 0;
+    });
+
+    // Get the current year
+    $currentYear = Carbon::now()->year;
+
+    // Load the view for the yearly report PDF
+    $pdfView = view('superadmin.yearlyreport-pdf', compact('yearlySales', 'currentYear'))->render();
+
+    // Create a new instance of Dompdf
+    $dompdf = new Dompdf();
+
+    // Load HTML content into Dompdf
+    $dompdf->loadHtml($pdfView);
+
+    // (Optional) Set paper size and orientation
+    $dompdf->setPaper('A4', 'portrait');
+
+    // Render HTML as PDF
+    $dompdf->render();
+
+    // Output the generated PDF (inline or download)
+    return $dompdf->stream('yearly_sales_report.pdf');
+}
+
+    
+    private function getYearlySales(Request $request)
+{
+    $yearlySales = [];
+
+    // Get the current year
+    $currentYear = Carbon::now()->year;
+
+    // Get selected branch ID from the request
+    $branchId = $request->input('branch');
+
+    // Loop through each month of the year
+    for ($month = 1; $month <= 12; $month++) {
+        // Calculate the start and end dates of the current month
+        $startDate = Carbon::create(null, $month, 1)->startOfMonth();
+        $endDate = Carbon::create(null, $month, 1)->endOfMonth();
+
+        // Query for sales based on branch selection
+        $salesQuery = Sale::where('status', 'delivered')
+                         ->whereBetween('created_at', [$startDate, $endDate]);
+
+        if ($branchId) {
+            $salesQuery->where('branch_id', $branchId);
+        }
+
+        // Fetch delivered sales within the current month
+        $salesWithinMonth = $salesQuery->get();
+
+        // Calculate total sales within the month
+        $totalSalesWithinMonth = $salesWithinMonth->sum('total_price');
+
+        // Store monthly sales data
+        $yearlySales[$month] = [
+            'month_name' => $startDate->format('F'),
+            'total_sales' => $totalSalesWithinMonth,
+            'sales_data' => $salesWithinMonth
+        ];
+    }
+
+    return $yearlySales;
+}
+
+    
         
 
 }
