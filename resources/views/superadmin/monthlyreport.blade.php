@@ -56,6 +56,10 @@
     </style>
 </head>
 <body>
+    <form action="{{ route('monthly.report.pdf') }}" method="get">
+        <button type="submit">Download as PDF</button>
+    </form>
+    
     <div class="container p-3 my-3 custom-bg-color text-white">Monthly Sales Report</div>
         <!-- Add branch filter form -->
         <form action="{{ route('monthly.report') }}" method="get">

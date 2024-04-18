@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class SuperAdminController extends Controller
 {
@@ -158,6 +160,7 @@ class SuperAdminController extends Controller
 }
 public function monthlyReport(Request $request)
 {
+    $monthlySales = $this->getMonthlySales($request);
     // Initialize an array to store monthly sales data
     $monthlySales = [];
 
@@ -225,6 +228,59 @@ public function yearlyReport(Request $request)
 
     return view('superadmin.yearlyreport', compact('salesForCurrentYear', 'totalSalesForCurrentYear', 'currentYear', 'branches'));
 }
+public function generatePDF(Request $request)
+{
+    // Get the monthly sales data
+    $monthlySales = $this->getMonthlySales($request);
+
+    // Load the view into a variable
+    $pdfView = view('superadmin.monthlyreport-pdf', compact('monthlySales'))->render();
+
+    // Create a new instance of Dompdf
+    $dompdf = new Dompdf();
+
+    // Load HTML content
+    $dompdf->loadHtml($pdfView);
+
+    // (Optional) Set paper size and orientation
+    $dompdf->setPaper('A4', 'landscape');
+
+    // Render the HTML as PDF
+    $dompdf->render();
+
+    // Output the generated PDF (inline or download)
+    return $dompdf->stream('monthly_sales_report.pdf');
+}
+private function getMonthlySales(Request $request)
+    {
+        $monthlySales = [];
+
+        for ($month = 1; $month <= 12; $month++) {
+            $startDate = Carbon::create(null, $month, 1)->startOfMonth();
+            $endDate = Carbon::create(null, $month, 1)->endOfMonth();
+
+            $branchId = $request->input('branch');
+
+            $salesQuery = Sale::where('status', 'delivered')
+                             ->whereBetween('created_at', [$startDate, $endDate]);
+
+            if ($branchId) {
+                $salesQuery->where('branch_id', $branchId);
+            }
+
+            $salesWithinMonth = $salesQuery->get();
+
+            $totalSalesWithinMonth = $salesWithinMonth->sum('total_price');
+
+            $monthlySales[$month] = [
+                'month_name' => $startDate->format('F'),
+                'total_sales' => $totalSalesWithinMonth,
+                'sales_data' => $salesWithinMonth
+            ];
+        }
+
+        return $monthlySales;
+    }
 
         
 
