@@ -35,7 +35,7 @@
     <div class="container p-3 my-3 custom-bg-color text-white">Weekly Sales Report ({{ $startDate->format('M d, Y') }} to {{ $endDate->format('M d, Y') }})</div>
         <!-- Filter form -->
         <form action="{{ route('weekly.report') }}" method="get">
-            <label for="branch">Select Branch:</label>
+            &nbsp &nbsp<label for="branch">Select Branch:</label>
             <select name="branch" id="branch">
                 <option value="">All Branches</option>
                 @foreach($branches as $branch)

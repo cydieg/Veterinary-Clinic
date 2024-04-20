@@ -60,7 +60,7 @@
     <div class="container p-3 my-3 custom-bg-color text-white">Monthly Sales Report</div>
         <!-- Add branch filter form -->
         <form action="{{ route('monthly.report') }}" method="get">
-            <label for="branch">Select Branch:</label>
+        &nbsp &nbsp<label for="branch">Select Branch:</label>
             <select name="branch" id="branch">
                 <option value="">All Branches</option>
                 @foreach($branches as $branch)
