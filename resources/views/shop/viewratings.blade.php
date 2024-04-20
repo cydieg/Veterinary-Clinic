@@ -16,7 +16,7 @@
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         }
         .card-header {
-            background-color: #007bff;
+            background-color: #BC7FCD;
             color: #fff;
             border-radius: 10px 10px 0 0;
             font-weight: bold;
