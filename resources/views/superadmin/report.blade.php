@@ -40,10 +40,13 @@
                 @endforeach
             </select>
             <button type="submit">Filter</button>
-        </form>
 
-        <!-- Button to navigate to the daily sales PDF view -->
-        <a href="{{ route('daily.sales.pdf') }}" class="btn btn-primary">Generate Daily Sales PDF</a>
+            <div class="row">
+                <div class="col-md-12 mb-2 text-right">
+                    <a href="{{ route('daily.sales.pdf') }}" class="btn btn-info btn-sm" style="text-align: left;">Download Daily Sales Report</a>
+                </div>
+            </div>
+        </form>
         
         <table>
             <thead>
