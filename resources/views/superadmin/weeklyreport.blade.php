@@ -43,6 +43,11 @@
                 @endforeach
             </select>
             <button type="submit">Filter</button>
+            <div class="row">
+                <div class="col-md-12 mb-2 text-right">
+                <a href="{{ route('weekly.report.pdf', ['branch' => request('branch')]) }}" class="btn btn-info btn-sm" style="text-align: left;">Download Weekly Sales Report</a>&nbsp &nbsp
+                </div>
+            </div>
         </form>
 
         <!-- Display selected branch name if filtered -->
@@ -81,9 +86,6 @@
                 </tr>
             </tbody>
         </table>
-
-        <!-- Button to download the PDF -->
-        <a href="{{ route('weekly.report.pdf', ['branch' => request('branch')]) }}" class="btn btn-primary">Download Weekly Report PDF</a>
     </div>
 </body>
 </html>

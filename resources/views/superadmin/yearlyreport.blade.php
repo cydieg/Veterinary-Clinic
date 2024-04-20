@@ -64,9 +64,6 @@
 </head>
 <body>
     <div class="container p-3 my-3 custom-bg-color text-white">Yearly Sales Report ({{ $currentYear }})</div>
-    <form action="{{ route('yearly.report.pdf') }}" method="get">
-        <button type="submit">Download Yearly Sales Report PDF</button>
-    </form>
         <!-- Add branch filter form -->
         <form action="{{ route('yearly.report') }}" method="get">
             <label for="branch">Select Branch:</label>
@@ -77,6 +74,11 @@
                 @endforeach
             </select>
             <button type="submit">Filter</button>
+            <div class="row">
+                <div class="col-md-12 mb-2 text-right">
+                <a href="{{ route('yearly.report.pdf') }}" method="get" class="btn btn-info btn-sm" style="text-align: left;">Download Yearly Sales Report</a>&nbsp &nbsp
+                </div>
+            </div>
         </form>
 
         <!-- Display selected branch name -->
