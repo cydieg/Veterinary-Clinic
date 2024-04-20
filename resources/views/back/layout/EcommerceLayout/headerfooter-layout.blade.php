@@ -74,9 +74,6 @@
                   <a class="nav-link" href="{{ route('contactUs') }}">Our Location</a>
                 </li>
               </ul>
-              <form class="form-inline my-2 my-lg-0 ml-0 ml-lg-4 mb-3 mb-lg-0">
-                <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit"></button>
-              </form>
             </div>
             <div class="quote_btn-container  d-flex justify-content-center">
               <button class="btn light-blue-btn" onclick="location.href='{{ route('login') }}'">Login</button>
