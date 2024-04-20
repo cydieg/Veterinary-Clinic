@@ -250,7 +250,7 @@
                 <h2>HOT ITEMS</h2>
                 <div class="content">
                     <div class="container-fluid">
-                        <div class="row">
+                    <div class="row">
                             @if($hotItems->isNotEmpty()) <!-- Check if there are any hot items -->
                                 @foreach($hotItems as $hotItem)
                                     <div class="col-lg-3 mb-4">
@@ -260,10 +260,12 @@
                                                 <h5 class="card-title">{{ $hotItem->product->name }}</h5>
                                                 <p class="card-text">{{ $hotItem->product->description }}</p>
                                                 <p class="card-text">Price: ₱ {{ $hotItem->product->price }}</p>
-                                                <!-- Add the "View Ratings" button -->
-                                                <button class="btn btn-secondary ml-2" onclick="window.location='{{ route("shop.viewratings", ['item' => $hotItem->product->id]) }}'">View Ratings</button>
-                                                <!-- End of "View Ratings" button -->
-                                                <button class="btn btn-primary" onclick="showProductModal('{{ $hotItem->product->name }}', '{{ $hotItem->product->description }}', {{ $hotItem->product->price }}, {{ $hotItem->product->quantity }}, '{{ $hotItem->product->id }}', '{{ $branchId }}')">Add to Cart</button>
+                                                <div class="d-flex align-items-center">
+                                                    <!-- "Add to Cart" button -->
+                                                    <button class="btn btn-sm btn-primary" onclick="showProductModal('{{ $hotItem->product->name }}', '{{ $hotItem->product->description }}', {{ $hotItem->product->price }}, {{ $hotItem->product->quantity }}, '{{ $hotItem->product->id }}', '{{ $branchId }}')">Add to Cart</button>&nbsp
+                                                    <!-- "View Ratings" button -->
+                                                    <button class="btn btn-sm btn-secondary mr-2" onclick="window.location='{{ route("shop.viewratings", ['item' => $hotItem->product->id]) }}'">View Ratings</button>
+                                                </div>
                                                 <div class="hot-item-indicator">Hot Item!</div>
                                             </div>
                                         </div>
@@ -272,9 +274,8 @@
                             @else
                                 <p>No hot items available.</p>
                             @endif
-                        
-                        
                         </div>
+
                     </div>
                 </div>
                 @endif
@@ -285,23 +286,25 @@
                 <h2>Other Items</h2>
                 <div class="content">
                     <div class="container-fluid">
-                        <div class="row">
-                            @foreach($inventoryItems as $item)
-                                <div class="col-lg-3 mb-4">
-                                    <div class="card">
-                                        <img src="{{ asset('images/' . $item->image) }}" class="card-img-top" alt="{{ $item->name }}">
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{ $item->name }}</h5>
-                                            <p class="card-text">{{ $item->description }}</p>
-                                            <p class="card-text">Price: ₱ {{ $item->price }}</p>
-                                            <button class="btn btn-primary" onclick="showProductModal('{{ $item->name }}', '{{ $item->description }}', {{ $item->price }}, {{ $item->quantity }}, '{{ $item->id }}', '{{ $branchId }}')">Add to Cart</button>
-                                            <button class="btn btn-secondary ml-2" onclick="window.location='{{ route("shop.viewratings", $item->id) }}'">View Ratings</button>
-
+                    <div class="row">
+                        @foreach($inventoryItems as $item)
+                            <div class="col-lg-3 mb-4">
+                                <div class="card">
+                                    <img src="{{ asset('images/' . $item->image) }}" class="card-img-top" alt="{{ $item->name }}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ $item->name }}</h5>
+                                        <p class="card-text">{{ $item->description }}</p>
+                                        <p class="card-text">Price: ₱ {{ $item->price }}</p>
+                                        <div class="d-flex align-items-center">
+                                            <button class="btn btn-sm btn-primary mr-2" onclick="showProductModal('{{ $item->name }}', '{{ $item->description }}', {{ $item->price }}, {{ $item->quantity }}, '{{ $item->id }}', '{{ $branchId }}')">Add to Cart</button>
+                                            <button class="btn btn-sm btn-secondary" onclick="window.location='{{ route("shop.viewratings", $item->id) }}'">View Ratings</button>
                                         </div>
                                     </div>
                                 </div>
-                            @endforeach
-                        </div>
+                            </div>
+                        @endforeach
+                    </div>
+
                         <!-- Pagination links -->
                         <div class="row">
                             <div class="col-12">
