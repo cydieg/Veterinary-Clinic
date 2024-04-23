@@ -64,7 +64,7 @@ class SuperAdminController extends Controller
         })->map->count();
 
         // Get the number of users registered to each branch
-        $usersPerBranch = User::select('branch_id', \DB::raw('count(*) as total'))
+        $usersPerBranch = User::select('branch_id', DB::raw('count(*) as total'))
                             ->groupBy('branch_id')
                             ->get();
 

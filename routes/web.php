@@ -21,6 +21,7 @@ use App\Http\Controllers\MapingController;
 
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -66,17 +67,7 @@ Route::get('/visualization', [SuperAdminController::class, 'visualization'])->na
 Route::get('/customer', [ClientController::class, 'customer'])->name('customer')->middleware('auth');
 
 
-//User Management rout//
 
-Route::group(['prefix' => 'user'], function () {
-    Route::get('table', [UserManagmentController::class, 'index'])->name('userTable')->middleware('auth');
-    Route::get('edit/{id}', [UserManagmentController::class, 'editUser'])->name('editUser')->middleware('auth');
-    Route::post('update/{id}', [UserManagmentController::class, 'updateUser'])->name('updateUser')->middleware('auth');
-    Route::get('archive/{id}', [UserManagmentController::class, 'archiveUser'])->name('archiveUser')->middleware('auth');
-    Route::get('add-user-form', [UserManagmentController::class, 'showAddUserForm'])->name('addUserForm')->middleware('auth'); // Add this line
-    Route::post('store-user', [UserManagmentController::class, 'storeUser'])->name('storeUser')->middleware('auth');
-    Route::get('/user/details/{id}', [UserManagmentController::class, 'getUserDetails'])->name('getUserDetails')->middleware('auth');
-});
 
 
 // Branch routes
