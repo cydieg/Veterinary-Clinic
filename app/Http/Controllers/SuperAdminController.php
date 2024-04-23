@@ -160,15 +160,22 @@ class SuperAdminController extends Controller
 }
 public function monthlyReport(Request $request)
 {
-    $monthlySales = $this->getMonthlySales($request);
-    // Initialize an array to store monthly sales data
-    $monthlySales = [];
-
     // Get branches for the dropdown
     $branches = Branch::all();
 
+    // Initialize an array to store monthly sales data
+    $monthlySales = [];
+
+    // Get selected month from the request
+    $selectedMonth = $request->input('month');
+
     // Loop through each month of the year
     for ($month = 1; $month <= 12; $month++) {
+        // If a specific month is selected and it doesn't match the current iteration, skip to the next iteration
+        if ($selectedMonth && $selectedMonth != $month) {
+            continue;
+        }
+
         // Calculate the start and end dates of the current month
         $startDate = Carbon::create(null, $month, 1)->startOfMonth();
         $endDate = Carbon::create(null, $month, 1)->endOfMonth();
@@ -192,14 +199,21 @@ public function monthlyReport(Request $request)
 
         // Store monthly sales data
         $monthlySales[$month] = [
+            'month_number' => $month, // Add the 'month_number' key
             'month_name' => $startDate->format('F'),
             'total_sales' => $totalSalesWithinMonth,
             'sales_data' => $salesWithinMonth
         ];
+
+        // If a specific month is selected, break the loop after fetching data for that month
+        if ($selectedMonth) {
+            break;
+        }
     }
 
     return view('superadmin.monthlyreport', compact('monthlySales', 'branches'));
 }
+
 
 public function yearlyReport(Request $request)
 {

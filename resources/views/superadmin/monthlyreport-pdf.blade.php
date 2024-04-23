@@ -38,7 +38,7 @@
     <!-- Add your PDF content here -->
     @foreach ($monthlySales as $monthData)
         <h2>{{ $monthData['month_name'] }}</h2>
-        <p>Total Sales: ${{ number_format($monthData['total_sales'], 2) }}</p>
+        <p>Total Sales: ₱{{ number_format($monthData['total_sales'], 2) }}</p>
         <table>
             <thead>
                 <tr>
@@ -54,12 +54,12 @@
                         <td>{{ $sale->created_at->format('M d, Y') }}</td>
                         <td>{{ $sale->product->name }}</td>
                         <td>{{ $sale->quantity }}</td>
-                        <td>${{ number_format($sale->total_price, 2) }}</td>
+                        <td>₱{{ number_format($sale->total_price, 2) }}</td>
                     </tr>
                 @endforeach
                 <tr>
                     <td class="total-column" colspan="3">Total Sales:</td>
-                    <td class="total-column">${{ number_format($monthData['total_sales'], 2) }}</td>
+                    <td class="total-column">₱{{ number_format($monthData['total_sales'], 2) }}</td>
                 </tr>
             </tbody>
         </table>

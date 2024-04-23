@@ -50,7 +50,7 @@
         
         <table>
             <thead>
-                <p>Daily Total Sales ${{ $totalSales }}</p>
+                <p>Daily Total Sales ₱{{ $totalSales }}</p>
                 <tr>
                     <th>Product Name</th>
                     <th>Quantity</th>
@@ -64,7 +64,7 @@
                     <tr>
                         <td>{{ $sale->product->name }}</td>
                         <td>{{ $sale->quantity }}</td>
-                        <td>${{ $sale->total_price }}</td>
+                        <td>₱{{ $sale->total_price }}</td>
                         <td>{{ $sale->branch_id }}</td>
                         <td>{{ $sale->created_at->toDateString() }}</td>
                     </tr>

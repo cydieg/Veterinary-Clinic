@@ -58,9 +58,21 @@
 <body>
     
     <div class="container p-3 my-3 custom-bg-color text-white">Monthly Sales Report</div>
+        <!-- Add month filter form -->
+        <form action="{{ route('monthly.report') }}" method="get">
+            <label for="month">Select Month:</label>
+            <select name="month" id="month">
+                <option value="">All Months</option>
+                @for ($i = 1; $i <= 12; $i++)
+                    <option value="{{ $i }}" {{ request('month') == $i ? 'selected' : '' }}>{{ date('F', mktime(0, 0, 0, $i, 1)) }}</option>
+                @endfor
+            </select>
+            <button type="submit">Filter</button>
+        </form>
+
         <!-- Add branch filter form -->
         <form action="{{ route('monthly.report') }}" method="get">
-        &nbsp &nbsp<label for="branch">Select Branch:</label>
+            <label for="branch">Select Branch:</label>
             <select name="branch" id="branch">
                 <option value="">All Branches</option>
                 @foreach($branches as $branch)
@@ -68,11 +80,6 @@
                 @endforeach
             </select>
             <button type="submit">Filter</button>
-            <div class="row">
-                <div class="col-md-12 mb-2 text-right">
-                <a href="{{ route('monthly.report.pdf') }}" method="get" class="btn btn-info btn-sm" style="text-align: left;">Download Monthly Sales Report</a>&nbsp &nbsp
-                </div>
-            </div>
         </form>
 
         <!-- Display selected branch name -->
@@ -81,32 +88,34 @@
         @endif
 
         @foreach ($monthlySales as $monthData)
-            <h2>{{ $monthData['month_name'] }}</h2>
-            <p>Total Sales: ${{ number_format($monthData['total_sales'], 2) }}</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Product</th>
-                        <th>Quantity</th>
-                        <th>Total Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($monthData['sales_data'] as $sale)
+            @if (!request('month') || $monthData['month_number'] == request('month'))
+                <h2>{{ $monthData['month_name'] }}</h2>
+                <p>Total Sales: ₱{{ number_format($monthData['total_sales'], 2) }}</p>
+                <table>
+                    <thead>
                         <tr>
-                            <td>{{ $sale->created_at->format('M d, Y') }}</td>
-                            <td>{{ $sale->product->name }}</td>
-                            <td>{{ $sale->quantity }}</td>
-                            <td>${{ number_format($sale->total_price, 2) }}</td>
+                            <th>Date</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Total Price</th>
                         </tr>
-                    @endforeach
-                    <tr>
-                        <td class="total-column" colspan="3">Total Sales:</td>
-                        <td class="total-column">${{ number_format($monthData['total_sales'], 2) }}</td>
-                    </tr>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach ($monthData['sales_data'] as $sale)
+                            <tr>
+                                <td>{{ $sale->created_at->format('M d, Y') }}</td>
+                                <td>{{ $sale->product->name }}</td>
+                                <td>{{ $sale->quantity }}</td>
+                                <td>₱{{ number_format($sale->total_price, 2) }}</td>
+                            </tr>
+                        @endforeach
+                        <tr>
+                            <td class="total-column" colspan="3">Total Sales:</td>
+                            <td class="total-column">₱{{ number_format($monthData['total_sales'], 2) }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            @endif
         @endforeach
     </div>
 </body>

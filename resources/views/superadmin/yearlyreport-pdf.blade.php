@@ -62,14 +62,14 @@
                     <tr>
                         <td>{{ $sale->product->name }}</td>
                         <td>{{ $sale->quantity }}</td>
-                        <td>${{ number_format($sale->product->price, 2) }}</td>
-                        <td>${{ number_format($sale->total_price, 2) }}</td>
+                        <td>₱{{ number_format($sale->product->price, 2) }}</td>
+                        <td>₱{{ number_format($sale->total_price, 2) }}</td>
                     </tr>
                 @endforeach
                 <!-- Display total sales for the month -->
                 <tr>
                     <td colspan="3" class="total-column">Total:</td>
-                    <td class="total-column">${{ number_format($monthData['total_sales'], 2) }}</td>
+                    <td class="total-column">₱{{ number_format($monthData['total_sales'], 2) }}</td>
                 </tr>
             </tbody>
         </table>

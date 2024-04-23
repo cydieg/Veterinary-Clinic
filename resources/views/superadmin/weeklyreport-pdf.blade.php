@@ -49,7 +49,7 @@
                 <td>{{ $sale->created_at->format('M d, Y') }}</td>
                 <td>{{ $sale->product->name }}</td>
                 <td>{{ $sale->quantity }}</td>
-                <td>${{ number_format($sale->total_price, 2) }}</td>
+                <td>₱{{ number_format($sale->total_price, 2) }}</td>
             </tr>
             @php
                 $totalSales += $sale->total_price;
@@ -57,7 +57,7 @@
             @endforeach
             <tr>
                 <td class="total-column" colspan="3">Total Sales:</td>
-                <td class="total-column">${{ number_format($totalSales, 2) }}</td>
+                <td class="total-column">₱{{ number_format($totalSales, 2) }}</td>
             </tr>
         </tbody>
     </table>

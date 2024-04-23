@@ -108,8 +108,8 @@
                         <tr>
                             <td>{{ $sale->product->name }}</td>
                             <td>{{ $sale->quantity }}</td>
-                            <td>${{ number_format($sale->product->price, 2) }}</td>
-                            <td>${{ number_format($sale->total_price, 2) }}</td>
+                            <td>₱{{ number_format($sale->product->price, 2) }}</td>
+                            <td>₱{{ number_format($sale->total_price, 2) }}</td>
                         </tr>
                         @php
                             $monthlyTotalPrice += $sale->total_price;
@@ -117,7 +117,7 @@
                     @endforeach
                     <tr>
                         <td colspan="3" class="total-column">Total:</td>
-                        <td class="total-column">${{ number_format($monthlyTotalPrice, 2) }}</td>
+                        <td class="total-column">₱{{ number_format($monthlyTotalPrice, 2) }}</td>
                     </tr>
                 </tbody>
             </table>

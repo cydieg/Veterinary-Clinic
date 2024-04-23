@@ -54,7 +54,6 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">Ratings</div>
-
                     <div class="card-body">
                         <!-- Check if ratings are available -->
                         @if ($ratings->isEmpty())
@@ -71,14 +70,14 @@
                                             <span>{{ $rating->sale->product->name }}</span>
                                             <br>
                                             <br>
-                                            <!-- Display total percentage rating -->
-                                            Total Percentage: 
+                                            <!-- Calculate and display average star rating -->
+                                            Average Rating: 
                                             <div class="star-ratings">
-                                                @for ($i = 1; $i <= $totalPercentage / 20; $i++)
+                                                @for ($i = 1; $i <= round($averageRating); $i++)
                                                     <span>&#9733;</span>
                                                 @endfor
                                             </div>
-                                            <span>{{ $totalPercentage }}%</span>
+                                            <span>{{ $averageRating }}</span>
                                             <br>
                                         </div>
                                     @endif
@@ -116,5 +115,6 @@
             </div>
         </div>
     </div>
+    
 </body>
 </html>
