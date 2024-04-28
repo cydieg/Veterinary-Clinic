@@ -35,15 +35,15 @@ class SuperAdminController extends Controller
         $salesByDay = $completedSales->groupBy(function ($sale) {
             return Carbon::parse($sale->created_at)->format('Y-m-d');
         })->map->sum('total_price');
-    
+
         $salesByWeek = $completedSales->groupBy(function ($sale) {
             return Carbon::parse($sale->created_at)->format('Y-W');
         })->map->sum('total_price');
-    
+
         $salesByMonth = $completedSales->groupBy(function ($sale) {
             return Carbon::parse($sale->created_at)->format('Y-m');
         })->map->sum('total_price');
-    
+
         $salesByYear = $completedSales->groupBy(function ($sale) {
             return Carbon::parse($sale->created_at)->format('Y');
         })->map->sum('total_price');
@@ -65,30 +65,34 @@ class SuperAdminController extends Controller
 
         // Get the number of users registered to each branch
         $usersPerBranch = User::select('branch_id', DB::raw('count(*) as total'))
-                            ->groupBy('branch_id')
-                            ->get();
+            ->groupBy('branch_id')
+            ->get();
 
         // Get all delivered sales with the associated user's address
-        $salesWithUserAddress = Sale::with(['user' => function ($query) {
-                                        // Include necessary address-related fields
-                                        $query->select('id', 'region', 'province', 'city', 'barangay', 'address');
-                                    }])
-                                    ->whereHas('user', function ($query) {
-                                        // Filter by users whose sales have been delivered
-                                        $query->where('status', 'delivered');
-                                    })
-                                    ->get();
+        $salesWithUserAddress = Sale::with([
+            'user' => function ($query) {
+                // Include necessary address-related fields
+                $query->select('id', 'region', 'province', 'city', 'barangay', 'address');
+            }
+        ])
+            ->whereHas('user', function ($query) {
+                // Filter by users whose sales have been delivered
+                $query->where('status', 'delivered');
+            })
+            ->get();
 
         // Get all branches with their respective sales count
-        $branchesWithSalesCount = Branch::withCount(['sales' => function ($query) {
-                                            // Filter by sales that have been delivered
-                                            $query->where('status', 'delivered');
-                                        }])
-                                        ->get();
+        $branchesWithSalesCount = Branch::withCount([
+            'sales' => function ($query) {
+                // Filter by sales that have been delivered
+                $query->where('status', 'delivered');
+            }
+        ])
+            ->get();
 
-        return view('superadmin.visualization.visualization', compact('branchesWithSalesCount', 'usersPerBranch', 'salesWithUserAddress', 'appointmentsByDay', 'appointmentsByMonth', 'appointmentsByYear','salesByDay', 'salesByWeek', 'salesByMonth', 'salesByYear'));
-    } 
-    
+        return view('superadmin.visualization.visualization', compact('branchesWithSalesCount', 'usersPerBranch', 'salesWithUserAddress', 'appointmentsByDay', 'appointmentsByMonth', 'appointmentsByYear', 'salesByDay', 'salesByWeek', 'salesByMonth', 'salesByYear'));
+    }
+
     public function report(Request $request)
     {
         // Get branch ID from the request, or use null if "All Branches" is selected
@@ -118,155 +122,155 @@ class SuperAdminController extends Controller
     }
 
 
-  
+
     public function dashboard()
     {
         return view('superadmin.dashboard');
     }
     public function weeklyReport(Request $request)
-{
-    // Calculate the start and end dates for the current week (Monday to Sunday)
-    $startDate = Carbon::now()->startOfWeek();
-    $endDate = Carbon::now()->endOfWeek();
+    {
+        // Calculate the start and end dates for the current week (Monday to Sunday)
+        $startDate = Carbon::now()->startOfWeek();
+        $endDate = Carbon::now()->endOfWeek();
 
-    // Get branches for the dropdown
-    $branches = Branch::all();
+        // Get branches for the dropdown
+        $branches = Branch::all();
 
-    // Get selected branch ID from the request
-    $branchId = $request->input('branch');
+        // Get selected branch ID from the request
+        $branchId = $request->input('branch');
 
-    // Query for sales based on branch selection
-    $salesQuery = Sale::where('status', 'delivered');
+        // Query for sales based on branch selection
+        $salesQuery = Sale::where('status', 'delivered');
 
-    if ($branchId) {
-        $salesQuery->where('branch_id', $branchId);
-    }
-
-    // Fetch delivered sales within the current week
-    $salesWithinWeek = $salesQuery->whereBetween('created_at', [$startDate, $endDate])
-                                    ->get();
-
-    // Calculate total sales within the week
-    $totalSalesWithinWeek = $salesWithinWeek->sum('total_price');
-
-    // Pass the data to the view
-    return view('superadmin.weeklyreport', [
-        'startDate' => $startDate,
-        'endDate' => $endDate,
-        'salesWithinWeek' => $salesWithinWeek,
-        'totalSalesWithinWeek' => $totalSalesWithinWeek,
-        'branches' => $branches
-    ]);
-}
-public function monthlyReport(Request $request)
-{
-    // Get branches for the dropdown
-    $branches = Branch::all();
-
-    // Initialize an array to store monthly sales data
-    $monthlySales = [];
-
-    // Get selected month from the request
-    $selectedMonth = $request->input('month');
-
-    // Loop through each month of the year
-    for ($month = 1; $month <= 12; $month++) {
-        // If a specific month is selected and it doesn't match the current iteration, skip to the next iteration
-        if ($selectedMonth && $selectedMonth != $month) {
-            continue;
+        if ($branchId) {
+            $salesQuery->where('branch_id', $branchId);
         }
 
-        // Calculate the start and end dates of the current month
-        $startDate = Carbon::create(null, $month, 1)->startOfMonth();
-        $endDate = Carbon::create(null, $month, 1)->endOfMonth();
+        // Fetch delivered sales within the current week
+        $salesWithinWeek = $salesQuery->whereBetween('created_at', [$startDate, $endDate])
+            ->get();
+
+        // Calculate total sales within the week
+        $totalSalesWithinWeek = $salesWithinWeek->sum('total_price');
+
+        // Pass the data to the view
+        return view('superadmin.weeklyreport', [
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+            'salesWithinWeek' => $salesWithinWeek,
+            'totalSalesWithinWeek' => $totalSalesWithinWeek,
+            'branches' => $branches
+        ]);
+    }
+    public function monthlyReport(Request $request)
+    {
+        // Get branches for the dropdown
+        $branches = Branch::all();
+
+        // Initialize an array to store monthly sales data
+        $monthlySales = [];
+
+        // Get selected month from the request
+        $selectedMonth = $request->input('month');
+
+        // Loop through each month of the year
+        for ($month = 1; $month <= 12; $month++) {
+            // If a specific month is selected and it doesn't match the current iteration, skip to the next iteration
+            if ($selectedMonth && $selectedMonth != $month) {
+                continue;
+            }
+
+            // Calculate the start and end dates of the current month
+            $startDate = Carbon::create(null, $month, 1)->startOfMonth();
+            $endDate = Carbon::create(null, $month, 1)->endOfMonth();
+
+            // Get selected branch ID from the request
+            $branchId = $request->input('branch');
+
+            // Query for sales based on branch selection
+            $salesQuery = Sale::where('status', 'delivered')
+                ->whereBetween('created_at', [$startDate, $endDate]);
+
+            if ($branchId) {
+                $salesQuery->where('branch_id', $branchId);
+            }
+
+            // Fetch delivered sales within the current month
+            $salesWithinMonth = $salesQuery->get();
+
+            // Calculate total sales within the month
+            $totalSalesWithinMonth = $salesWithinMonth->sum('total_price');
+
+            // Store monthly sales data
+            $monthlySales[$month] = [
+                'month_number' => $month, // Add the 'month_number' key
+                'month_name' => $startDate->format('F'),
+                'total_sales' => $totalSalesWithinMonth,
+                'sales_data' => $salesWithinMonth
+            ];
+
+            // If a specific month is selected, break the loop after fetching data for that month
+            if ($selectedMonth) {
+                break;
+            }
+        }
+
+        return view('superadmin.monthlyreport', compact('monthlySales', 'branches'));
+    }
+
+
+    public function yearlyReport(Request $request)
+    {
+        // Get the current year
+        $currentYear = Carbon::now()->year;
+
+        // Get branches for the dropdown
+        $branches = Branch::all();
 
         // Get selected branch ID from the request
         $branchId = $request->input('branch');
 
         // Query for sales based on branch selection
         $salesQuery = Sale::where('status', 'delivered')
-                         ->whereBetween('created_at', [$startDate, $endDate]);
+            ->whereYear('created_at', $currentYear);
 
         if ($branchId) {
             $salesQuery->where('branch_id', $branchId);
         }
 
-        // Fetch delivered sales within the current month
-        $salesWithinMonth = $salesQuery->get();
+        // Fetch delivered sales for the current year
+        $salesForCurrentYear = $salesQuery->get();
 
-        // Calculate total sales within the month
-        $totalSalesWithinMonth = $salesWithinMonth->sum('total_price');
+        // Calculate total sales for the current year
+        $totalSalesForCurrentYear = $salesForCurrentYear->sum('total_price');
 
-        // Store monthly sales data
-        $monthlySales[$month] = [
-            'month_number' => $month, // Add the 'month_number' key
-            'month_name' => $startDate->format('F'),
-            'total_sales' => $totalSalesWithinMonth,
-            'sales_data' => $salesWithinMonth
-        ];
-
-        // If a specific month is selected, break the loop after fetching data for that month
-        if ($selectedMonth) {
-            break;
-        }
+        // Pass the data to the view
+        return view('superadmin.yearlyreport', compact('salesForCurrentYear', 'totalSalesForCurrentYear', 'currentYear', 'branches'));
     }
+    public function generatePDF(Request $request)
+    {
+        // Get the monthly sales data
+        $monthlySales = $this->getMonthlySales($request);
 
-    return view('superadmin.monthlyreport', compact('monthlySales', 'branches'));
-}
+        // Load the view into a variable
+        $pdfView = view('superadmin.monthlyreport-pdf', compact('monthlySales'))->render();
 
+        // Create a new instance of Dompdf
+        $dompdf = new Dompdf();
 
-public function yearlyReport(Request $request)
-{
-    // Get the current year
-    $currentYear = Carbon::now()->year;
+        // Load HTML content
+        $dompdf->loadHtml($pdfView);
 
-    // Get branches for the dropdown
-    $branches = Branch::all();
+        // (Optional) Set paper size and orientation
+        $dompdf->setPaper('A4', 'landscape');
 
-    // Get selected branch ID from the request
-    $branchId = $request->input('branch');
+        // Render the HTML as PDF
+        $dompdf->render();
 
-    // Query for sales based on branch selection
-    $salesQuery = Sale::where('status', 'delivered')
-                     ->whereYear('created_at', $currentYear);
-
-    if ($branchId) {
-        $salesQuery->where('branch_id', $branchId);
+        // Output the generated PDF (inline or download)
+        return $dompdf->stream('monthly_sales_report.pdf');
     }
-
-    // Fetch delivered sales for the current year
-    $salesForCurrentYear = $salesQuery->get();
-
-    // Calculate total sales for the current year
-    $totalSalesForCurrentYear = $salesForCurrentYear->sum('total_price');
-
-    // Pass the data to the view
-    return view('superadmin.yearlyreport', compact('salesForCurrentYear', 'totalSalesForCurrentYear', 'currentYear', 'branches'));
-}
-public function generatePDF(Request $request)
-{
-    // Get the monthly sales data
-    $monthlySales = $this->getMonthlySales($request);
-
-    // Load the view into a variable
-    $pdfView = view('superadmin.monthlyreport-pdf', compact('monthlySales'))->render();
-
-    // Create a new instance of Dompdf
-    $dompdf = new Dompdf();
-
-    // Load HTML content
-    $dompdf->loadHtml($pdfView);
-
-    // (Optional) Set paper size and orientation
-    $dompdf->setPaper('A4', 'landscape');
-
-    // Render the HTML as PDF
-    $dompdf->render();
-
-    // Output the generated PDF (inline or download)
-    return $dompdf->stream('monthly_sales_report.pdf');
-}
-private function getMonthlySales(Request $request)
+    private function getMonthlySales(Request $request)
     {
         $monthlySales = [];
 
@@ -277,7 +281,7 @@ private function getMonthlySales(Request $request)
             $branchId = $request->input('branch');
 
             $salesQuery = Sale::where('status', 'delivered')
-                             ->whereBetween('created_at', [$startDate, $endDate]);
+                ->whereBetween('created_at', [$startDate, $endDate]);
 
             if ($branchId) {
                 $salesQuery->where('branch_id', $branchId);
@@ -348,7 +352,7 @@ private function getMonthlySales(Request $request)
 
         // Get the weekly sales data
         $salesWithinWeek = $this->getWeeklySales($request, $startDate, $endDate);
-        
+
         // Calculate total sales within the week
         $totalSalesWithinWeek = $salesWithinWeek->sum('total_price');
 
@@ -396,80 +400,80 @@ private function getMonthlySales(Request $request)
     }
 
     public function generateYearlyReportPDF(Request $request)
-{
-    // Get the yearly sales data
-    $yearlySales = $this->getYearlySales($request);
+    {
+        // Get the yearly sales data
+        $yearlySales = $this->getYearlySales($request);
 
-    // Filter out months with no sales
-    $yearlySales = array_filter($yearlySales, function ($monthData) {
-        return $monthData['total_sales'] > 0;
-    });
+        // Filter out months with no sales
+        $yearlySales = array_filter($yearlySales, function ($monthData) {
+            return $monthData['total_sales'] > 0;
+        });
 
-    // Get the current year
-    $currentYear = Carbon::now()->year;
+        // Get the current year
+        $currentYear = Carbon::now()->year;
 
-    // Load the view for the yearly report PDF
-    $pdfView = view('superadmin.yearlyreport-pdf', compact('yearlySales', 'currentYear'))->render();
+        // Load the view for the yearly report PDF
+        $pdfView = view('superadmin.yearlyreport-pdf', compact('yearlySales', 'currentYear'))->render();
 
-    // Create a new instance of Dompdf
-    $dompdf = new Dompdf();
+        // Create a new instance of Dompdf
+        $dompdf = new Dompdf();
 
-    // Load HTML content into Dompdf
-    $dompdf->loadHtml($pdfView);
+        // Load HTML content into Dompdf
+        $dompdf->loadHtml($pdfView);
 
-    // (Optional) Set paper size and orientation
-    $dompdf->setPaper('A4', 'portrait');
+        // (Optional) Set paper size and orientation
+        $dompdf->setPaper('A4', 'portrait');
 
-    // Render HTML as PDF
-    $dompdf->render();
+        // Render HTML as PDF
+        $dompdf->render();
 
-    // Output the generated PDF (inline or download)
-    return $dompdf->stream('yearly_sales_report.pdf');
-}
-
-    
-    private function getYearlySales(Request $request)
-{
-    $yearlySales = [];
-
-    // Get the current year
-    $currentYear = Carbon::now()->year;
-
-    // Get selected branch ID from the request
-    $branchId = $request->input('branch');
-
-    // Loop through each month of the year
-    for ($month = 1; $month <= 12; $month++) {
-        // Calculate the start and end dates of the current month
-        $startDate = Carbon::create(null, $month, 1)->startOfMonth();
-        $endDate = Carbon::create(null, $month, 1)->endOfMonth();
-
-        // Query for sales based on branch selection
-        $salesQuery = Sale::where('status', 'delivered')
-                         ->whereBetween('created_at', [$startDate, $endDate]);
-
-        if ($branchId) {
-            $salesQuery->where('branch_id', $branchId);
-        }
-
-        // Fetch delivered sales within the current month
-        $salesWithinMonth = $salesQuery->get();
-
-        // Calculate total sales within the month
-        $totalSalesWithinMonth = $salesWithinMonth->sum('total_price');
-
-        // Store monthly sales data
-        $yearlySales[$month] = [
-            'month_name' => $startDate->format('F'),
-            'total_sales' => $totalSalesWithinMonth,
-            'sales_data' => $salesWithinMonth
-        ];
+        // Output the generated PDF (inline or download)
+        return $dompdf->stream('yearly_sales_report.pdf');
     }
 
-    return $yearlySales;
-}
 
-    
-        
+    private function getYearlySales(Request $request)
+    {
+        $yearlySales = [];
+
+        // Get the current year
+        $currentYear = Carbon::now()->year;
+
+        // Get selected branch ID from the request
+        $branchId = $request->input('branch');
+
+        // Loop through each month of the year
+        for ($month = 1; $month <= 12; $month++) {
+            // Calculate the start and end dates of the current month
+            $startDate = Carbon::create(null, $month, 1)->startOfMonth();
+            $endDate = Carbon::create(null, $month, 1)->endOfMonth();
+
+            // Query for sales based on branch selection
+            $salesQuery = Sale::where('status', 'delivered')
+                ->whereBetween('created_at', [$startDate, $endDate]);
+
+            if ($branchId) {
+                $salesQuery->where('branch_id', $branchId);
+            }
+
+            // Fetch delivered sales within the current month
+            $salesWithinMonth = $salesQuery->get();
+
+            // Calculate total sales within the month
+            $totalSalesWithinMonth = $salesWithinMonth->sum('total_price');
+
+            // Store monthly sales data
+            $yearlySales[$month] = [
+                'month_name' => $startDate->format('F'),
+                'total_sales' => $totalSalesWithinMonth,
+                'sales_data' => $salesWithinMonth
+            ];
+        }
+
+        return $yearlySales;
+    }
+
+
+
 
 }
