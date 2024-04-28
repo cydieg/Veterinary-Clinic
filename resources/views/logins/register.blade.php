@@ -122,6 +122,11 @@
             </div>
         </div>
 
+        <!-- Add a message for email verification -->
+        <div class="alert alert-info" role="alert">
+            Please note that you need to verify your email address before logging in. A verification link will be sent to your email after registration.
+        </div>
+
         <div class="text-center mt-2">
             <p>Already have an account? <a href="{{ route('login') }}" class="text-primary">Login</a></p>
         </div>

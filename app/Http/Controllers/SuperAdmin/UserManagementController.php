@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Branch;
+use Illuminate\Support\Facades\Hash;
 
 class UserManagementController extends Controller
 {
@@ -19,9 +20,7 @@ class UserManagementController extends Controller
     // Inside your controller method, where you are rendering the view
     public function edit($id)
     {
-        $user = User::findOrFail($id); // Find user by ID
-        
-        // Fetch unique address components from existing users
+        $user = User::findOrFail($id);
         $addresses = [
             'regions' => User::distinct()->pluck('region')->filter()->toArray(),
             'provinces' => User::distinct()->pluck('province')->filter()->toArray(),
@@ -31,6 +30,7 @@ class UserManagementController extends Controller
 
         return view('superadmin.user.edit', compact('user', 'addresses'));
     }
+
 
     // Update user for super admin
     public function update(Request $request, $id)
@@ -52,6 +52,7 @@ class UserManagementController extends Controller
             'city' => 'nullable|string',
             'barangay' => 'nullable|string',
             'password' => 'nullable|string|min:6|confirmed',
+            'status' => 'required|in:verified,pending',
         ]);
     
         $user = User::findOrFail($id);
@@ -68,8 +69,11 @@ class UserManagementController extends Controller
             'role',
             'branch_id',
             'contact_number',
+            'status',
         ]);
-    
+        $user = User::findOrFail($id);
+
+      
         // Update address fields with actual names
         $userData['region'] = $request->input('region_text');
         $userData['province'] = $request->input('province_text');
@@ -97,70 +101,67 @@ class UserManagementController extends Controller
     }
 
     public function store(Request $request)
-{
-    // Validate the form data
-    $validatedData = $request->validate([
-        'username' => 'required|string|max:50',
-        'firstName' => 'required|string|max:50',
-        'lastName' => 'required|string|max:50',
-        'middleName' => 'nullable|string|max:50',
-        'gender' => 'required|in:male,female,other',
-        'age' => 'required|integer',
-        'email' => 'required|email|max:50',
-        'role' => 'required|in:super_admin,admin,staff,patient',
-        'password' => 'required|string|max:255',
-        'branch_id' => $request->role === 'patient' ? 'nullable' : 'required|exists:branches,id',
-        'contact_number' => 'nullable|string|max:20',
-        'region' => 'required|string|max:255',
-        'province' => 'required|string|max:255',
-        'city' => 'required|string|max:255',
-        'barangay' => 'required|string|max:255',
-        'region_text' => 'nullable|string|max:255',
-        'province_text' => 'nullable|string|max:255',
-        'city_text' => 'nullable|string|max:255',
-        'barangay_text' => 'nullable|string|max:255',
-    ]);
+    {
+        $validatedData = $request->validate([
+            'username' => 'required|string|max:50',
+            'firstName' => 'required|string|max:50',
+            'lastName' => 'required|string|max:50',
+            'middleName' => 'nullable|string|max:50',
+            'gender' => 'required|in:male,female,other',
+            'age' => 'required|integer',
+            'email' => 'required|email|max:50',
+            'role' => 'required|in:super_admin,admin,staff,patient',
+            'password' => 'required|string|max:255',
+            'branch_id' => $request->role === 'patient' ? 'nullable' : 'required|exists:branches,id',
+            'contact_number' => 'nullable|string|max:20',
+            'region' => 'required|string|max:255',
+            'province' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'barangay' => 'required|string|max:255',
+            'region_text' => 'nullable|string|max:255',
+            'province_text' => 'nullable|string|max:255',
+            'city_text' => 'nullable|string|max:255',
+            'barangay_text' => 'nullable|string|max:255',
+            'status' => 'required|in:verified,pending', // Add status validation
+        ]);
 
-    // Hash the password
-    $validatedData['password'] = bcrypt($validatedData['password']);
+        $validatedData['password'] = bcrypt($validatedData['password']);
 
-    // Concatenate the address components into a single string
-    $addressComponents = [];
-    if ($request->has('region')) {
-        $addressComponents[] = $request->region;
-    } else {
-        $addressComponents[] = $request->region_text;
+        $addressComponents = [];
+        if ($request->has('region')) {
+            $addressComponents[] = $request->region;
+        } else {
+            $addressComponents[] = $request->region_text;
+        }
+        if ($request->has('province')) {
+            $addressComponents[] = $request->province;
+        } else {
+            $addressComponents[] = $request->province_text;
+        }
+        if ($request->has('city')) {
+            $addressComponents[] = $request->city;
+        } else {
+            $addressComponents[] = $request->city_text;
+        }
+        if ($request->has('barangay')) {
+            $addressComponents[] = $request->barangay;
+        } else {
+            $addressComponents[] = $request->barangay_text;
+        }
+        $address = implode(', ', $addressComponents);
+
+        $validatedData['address'] = $address;
+        $validatedData['region'] = $request->region_text;
+        $validatedData['province'] = $request->province_text;
+        $validatedData['city'] = $request->city_text;
+        $validatedData['barangay'] = $request->barangay_text;
+
+        $user = User::create($validatedData);
+
+      
+
+        return redirect()->route('superadmin.user.index')->with('success', 'User created successfully');
     }
-    if ($request->has('province')) {
-        $addressComponents[] = $request->province;
-    } else {
-        $addressComponents[] = $request->province_text;
-    }
-    if ($request->has('city')) {
-        $addressComponents[] = $request->city;
-    } else {
-        $addressComponents[] = $request->city_text;
-    }
-    if ($request->has('barangay')) {
-        $addressComponents[] = $request->barangay;
-    } else {
-        $addressComponents[] = $request->barangay_text;
-    }
-    $address = implode(', ', $addressComponents);
-
-    // Add the concatenated address and actual names to validated data
-    $validatedData['address'] = $address;
-    $validatedData['region'] = $request->region_text;
-    $validatedData['province'] = $request->province_text;
-    $validatedData['city'] = $request->city_text;
-    $validatedData['barangay'] = $request->barangay_text;
-
-    // Create the user
-    $user = User::create($validatedData);
-
-    return redirect()->route('superadmin.user.index')->with('success', 'User created successfully');
-}
-
     // Show user details for super admin
     public function show($id)
     {

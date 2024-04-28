@@ -7,7 +7,7 @@ use App\Http\Controllers\UserManagmentController;
 use App\Http\Controllers\CashierController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LandingPageController;
-use App\Http\Controllers\ClientController;  
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\SuperAdmin\UserManagementController;
@@ -41,7 +41,7 @@ Route::middleware(['auth.manual'])->group(function () {
     Route::get('/back-home', function () {
         return view('back.home');
     })->name('admin.home');
-    
+
 });
 
 
@@ -173,16 +173,12 @@ Route::prefix('admin')->group(function () {
     Route::post('/users', [AdminController::class, 'store'])->name('admin.users.store');
     Route::get('/users/{user}', [AdminController::class, 'show'])->name('admin.users.show');
     Route::get('/users/{user}/edit', [AdminController::class, 'edit'])->name('admin.users.edit');
-    Route::put('/users/{user}', [AdminController::class, 'update'])->name('admin.users.update');
+    Route::put('/users/{user}', [AdminController::class, 'update'])->name('admin.users.update'); // Add this line for the update functionality
     Route::delete('/users/{user}', [AdminController::class, 'destroy'])->name('admin.users.destroy');
     Route::get('/reports/daily', [AdminController::class, 'dailyReports'])->name('admin.reports.daily');
     Route::get('/reports/weekly', [AdminController::class, 'weeklyReports'])->name('admin.reports.weekly');
     Route::get('/reports/monthly', [AdminController::class, 'monthlyReports'])->name('admin.reports.monthly');
     Route::get('/reports/yearly', [AdminController::class, 'yearlyReports'])->name('admin.reports.yearly');
-
-
-
-    
 });
 
 // ecom routes
@@ -234,6 +230,5 @@ Route::get('sales/{sale}/ratings/create', [ShopController::class, 'create'])->na
 Route::post('ratings', [ShopController::class, 'store'])->name('ratings.store');
 // Route for viewing ratings
 Route::get('/shop/viewratings/{item}', [ShopController::class, 'viewRatings'])->name('shop.viewratings');
-
-
-
+//verify
+Route::get('verify/{id}', [AuthController::class, 'verifyEmail'])->name('verification.verify');

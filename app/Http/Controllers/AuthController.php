@@ -11,13 +11,14 @@ use Illuminate\Http\Request;
 use App\Models\Branch; // Update namespace
 use Illuminate\Support\Facades\Mail;
 use App\Mail\UserRegistered;
+use Illuminate\Support\Facades\URL;
 
 
 
 
 class AuthController extends Controller
 {
-    
+
     public function showRegistrationForm()
     {
         // Fetch all branches from the database
@@ -26,9 +27,8 @@ class AuthController extends Controller
         return view('logins.register', compact('branches')); // Update the variable name
     }
 
-   public function register(Request $request)
+    public function register(Request $request)
     {
-        // Validate the form data
         $validatedData = $request->validate([
             'username' => 'required|string|max:50',
             'firstName' => 'required|string|max:50',
@@ -47,17 +47,13 @@ class AuthController extends Controller
             'barangay' => 'required|string|max:255',
         ]);
 
-        // Hash the password
         $validatedData['password'] = bcrypt($validatedData['password']);
 
+        $validatedData['region'] = $request->region_text;
+        $validatedData['province'] = $request->province_text;
+        $validatedData['city'] = $request->city_text;
+        $validatedData['barangay'] = $request->barangay_text;
 
-         // Add the actual names of region, province, city, and barangay
-            $validatedData['region'] = $request->region_text;
-            $validatedData['province'] = $request->province_text;
-            $validatedData['city'] = $request->city_text;
-            $validatedData['barangay'] = $request->barangay_text;
-
-        // Construct the address from individual components
         $addressComponents = [
             'region' => $request->region_text,
             'province' => $request->province_text,
@@ -65,23 +61,28 @@ class AuthController extends Controller
             'barangay' => $request->barangay_text,
         ];
 
-        // Concatenate the address components into a single string
         $address = implode(', ', $addressComponents);
 
-        // Add the concatenated address to validated data
         $validatedData['address'] = $address;
 
-        // Create the user
+        $validatedData['status'] = 'pending';
+
         $user = User::create($validatedData);
 
-        // Send registration email
-        Mail::to($user->email)->send(new UserRegistered($user));
+        // Generate verification URL
+        $verificationUrl = URL::temporarySignedRoute(
+            'verification.verify',
+            now()->addMinutes(60),
+            ['id' => $user->id]
+        );
 
-        return redirect()->route('login.form');
+        Mail::to($user->email)->send(new UserRegistered($user, $verificationUrl));
+
+        return redirect()->route('login.form')->with('success', 'Registration successful. Please check your email for verification instructions.');
     }
 
 
-    
+
 
     public function showLoginForm()
     {
@@ -98,30 +99,31 @@ class AuthController extends Controller
         $user = User::where('email', $credentials['email'])->first();
 
         if ($user && Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
-            // Check if the user has access to the current branch
-            if ($user->branch_id === auth()->user()->branch_id) { // Update field name
-                // Redirect based on the user's role
-                switch ($user->role) {
-                    case 'super_admin':
-                        return redirect()->route('super_admin.dashboard');
+            if ($user->status === 'verified') {
+                if ($user->branch_id === auth()->user()->branch_id) {
+                    switch ($user->role) {
+                        case 'super_admin':
+                            return redirect()->route('super_admin.dashboard');
 
-                    case 'admin':
-                        return redirect()->route('admin.home');
-                    case 'staff':
-                        return redirect('/staff');
-                    case 'patient':
-                        return redirect()->route('showDashboard');
-                    default:
-                        return redirect()->route('dashboard');
+                        case 'admin':
+                            return redirect()->route('admin.home');
+                        case 'staff':
+                            return redirect('/staff');
+                        case 'patient':
+                            return redirect()->route('showDashboard');
+                        default:
+                            return redirect()->route('dashboard');
+                    }
+                } else {
+                    Auth::logout();
+                    return redirect()->route('login.form')->with('error', 'You do not have access to this branch.');
                 }
             } else {
-                // User does not have access to the current branch
                 Auth::logout();
-                return redirect()->route('login.form')->with('error', 'You do not have access to this branch.'); // Update message
+                return redirect()->route('login.form')->with('error', 'Your account is not verified. Please check your email for verification instructions.');
             }
         }
 
-        // Redirect back to the login form if authentication fails
         return redirect()->route('login.form')->with('error', 'Invalid credentials');
     }
 
@@ -145,4 +147,21 @@ class AuthController extends Controller
         // If the user is not logged in, simply redirect to the login form
         return redirect()->route('login.form');
     }
+    public function verifyEmail(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        // Check if the user's status is pending
+        if ($user->status === 'pending') {
+            // Update the user's status to verified
+            $user->status = 'verified';
+            $user->save();
+
+            return redirect()->route('login.form')->with('success', 'Email verification successful. You can now login.');
+        }
+
+        // If the user's status is already verified, redirect with a message
+        return redirect()->route('login.form')->with('info', 'Your email is already verified.');
+    }
+
 }

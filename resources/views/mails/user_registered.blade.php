@@ -3,8 +3,12 @@
 
 Hi {{ $user->firstName }},
 
-Thank you for registering with us.
+Thank you for registering with us. Please click the button below to verify your account:
+
+@component('mail::button', ['url' => $verificationUrl])
+Verify Account
+@endcomponent
 
 Regards,<br>
-<p>Dr. Wendell Cabrera</p>
+Dr. Wendell Cabrera
 @endcomponent

@@ -84,7 +84,9 @@
 														@endphp
 														<h5><i class="fas fa-birthday-cake"></i> {{ $birthDate->format('d M Y') }}, {{ $age }} years</h5>
 													@endif
-													<h5 class="mb-0"><i class="fas fa-map-marker-alt"></i> {{ Auth::user()->address }}</h5>
+														<h5 class="mb-0"><i class="fas fa-map-marker-alt"></i> {{ Auth::user()->province }}, {{ Auth::user()->barangay }}, {{ Auth::user()->city }}</h5>
+
+
 												</div>
 											</div>
 										@endif

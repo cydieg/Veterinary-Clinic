@@ -12,15 +12,17 @@ class UserRegistered extends Mailable
     use Queueable, SerializesModels;
 
     public $user;
+    public $verificationUrl;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($user, $verificationUrl)
     {
         $this->user = $user;
+        $this->verificationUrl = $verificationUrl;
     }
 
     /**

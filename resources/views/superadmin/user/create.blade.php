@@ -156,6 +156,17 @@
             </div>
         </div>
 
+        <!-- Status -->
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="status">Status:</label>
+                <select class="form-control" id="status" name="status" required>
+                    <option value="verified">Verified</option>
+                    <option value="pending">Pending</option>
+                </select>
+            </div>
+        </div>
+
         <!-- Submit Button -->
         <div class="row">
             <div class="col-md-12 mb-3 text-right">
@@ -181,6 +192,5 @@
         }
     });
 </script>
-
 
 @endsection

@@ -97,6 +97,14 @@
                         <option value="super_admin" @if($user->role == 'super_admin') selected @endif>Super Admin</option>
                     </select>
                 </div>
+                <!-- Status -->
+                <div class="col-md-4 mb-3">
+                    <label for="status">Status:</label>
+                    <select class="form-control" id="status" name="status" required>
+                        <option value="verified" @if($user->status == 'verified') selected @endif>Verified</option>
+                        <option value="pending" @if($user->status == 'pending') selected @endif>Pending</option>
+                    </select>
+                </div>
                 
             </div>
             

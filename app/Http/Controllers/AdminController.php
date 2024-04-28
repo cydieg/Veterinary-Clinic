@@ -47,60 +47,61 @@ class AdminController extends Controller
     }
 
     public function store(Request $request)
-{
-    // Check if role is "patient"
-    if ($request->role === 'patient') {
-        // If role is "patient", set branch_id to null
-        $request->merge(['branch_id' => null]);
+    {
+        // Check if role is "patient"
+        if ($request->role === 'patient') {
+            // If role is "patient", set branch_id to null
+            $request->merge(['branch_id' => null]);
+        }
+    
+        $validatedData = $request->validate([
+            'username' => 'required|string|max:50',
+            'firstName' => 'required|string|max:50',
+            'lastName' => 'required|string|max:50',
+            'middleName' => 'nullable|string|max:50',
+            'gender' => 'required|in:male,female,other',
+            'age' => 'required|integer',
+            'email' => 'required|email|max:50',
+            'role' => 'required|in:super_admin,admin,staff,patient',
+            'password' => 'required|string|max:255',
+            'branch_id' => 'nullable|exists:branches,id',
+            'contact_number' => 'nullable|string|max:20',
+            'region' => 'required|string|max:255',
+            'province' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'barangay' => 'required|string|max:255',
+            'status' => 'required|in:verified,pending', // Add status validation
+        ]);
+    
+        // Hash the password
+        $validatedData['password'] = bcrypt($validatedData['password']);
+    
+        // Add the actual names of region, province, city, and barangay
+        $validatedData['region'] = $request->region_text;
+        $validatedData['province'] = $request->province_text;
+        $validatedData['city'] = $request->city_text;
+        $validatedData['barangay'] = $request->barangay_text;
+    
+        // Construct the address from individual components
+        $addressComponents = [
+            'region' => $request->region_text,
+            'province' => $request->province_text,
+            'city' => $request->city_text,
+            'barangay' => $request->barangay_text,
+        ];
+    
+        // Concatenate the address components into a single string
+        $address = implode(', ', $addressComponents);
+    
+        // Add the concatenated address to validated data
+        $validatedData['address'] = $address;
+    
+        // Create the user
+        $user = User::create($validatedData);
+    
+        return redirect()->route('admin.users.index')->with('success', 'User created successfully');
     }
-
-    $validatedData = $request->validate([
-        'username' => 'required|string|max:50',
-        'firstName' => 'required|string|max:50',
-        'lastName' => 'required|string|max:50',
-        'middleName' => 'nullable|string|max:50',
-        'gender' => 'required|in:male,female,other',
-        'age' => 'required|integer',
-        'email' => 'required|email|max:50',
-        'role' => 'required|in:super_admin,admin,staff,patient',
-        'password' => 'required|string|max:255',
-        'branch_id' => 'nullable|exists:branches,id',
-        'contact_number' => 'nullable|string|max:20',
-        'region' => 'required|string|max:255',
-        'province' => 'required|string|max:255',
-        'city' => 'required|string|max:255',
-        'barangay' => 'required|string|max:255',
-    ]);
-
-    // Hash the password
-    $validatedData['password'] = bcrypt($validatedData['password']);
-
-    // Add the actual names of region, province, city, and barangay
-    $validatedData['region'] = $request->region_text;
-    $validatedData['province'] = $request->province_text;
-    $validatedData['city'] = $request->city_text;
-    $validatedData['barangay'] = $request->barangay_text;
-
-    // Construct the address from individual components
-    $addressComponents = [
-        'region' => $request->region_text,
-        'province' => $request->province_text,
-        'city' => $request->city_text,
-        'barangay' => $request->barangay_text,
-    ];
-
-    // Concatenate the address components into a single string
-    $address = implode(', ', $addressComponents);
-
-    // Add the concatenated address to validated data
-    $validatedData['address'] = $address;
-
-    // Create the user
-    $user = User::create($validatedData);
-
-    return redirect()->route('admin.users.index')->with('success', 'User created successfully');
-}
-
+    
 
 
 
@@ -119,56 +120,63 @@ class AdminController extends Controller
         $user = User::findOrFail($id);
         return view('admin.edit', compact('user'));
     }
-
     // Update the specified user in storage
     public function update(Request $request, $id)
-    {
+    {// Validate if needed
+        $request->validate([
+            'username' => 'required|string|unique:users,username,' . $id,
+            'firstName' => 'nullable|string',
+            'lastName' => 'nullable|string',
+            'middleName' => 'nullable|string',
+            'gender' => 'nullable|in:male,female',
+            'age' => 'nullable|integer|min:0',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'role' => 'required|string|in:admin,patient,staff,super_admin',
+            'branch_id' => 'nullable|exists:branches,id',
+            'contact_number' => 'nullable|string|max:20', // Update field name to match form
+            'region' => 'nullable|string',
+            'province' => 'nullable|string',
+            'city' => 'nullable|string',
+            'barangay' => 'nullable|string',
+            'password' => 'nullable|string|min:6|confirmed',
+            'status' => 'required|in:verified,pending',
+        ]);
+    
         $user = User::findOrFail($id);
     
-        // Update user details
-        $user->username = $request->input('username');
-        $user->email = $request->input('email');
-        $user->firstName = $request->input('firstName');
-        $user->lastName = $request->input('lastName');
-        $user->middleName = $request->input('middleName');
-        $user->gender = $request->input('gender');
-        $user->age = $request->input('age');
-        $user->role = $request->input('role');
-        $user->contact_number = $request->input('contact_number'); // Update contact number
+        // Define the fields you want to allow updating
+        $userData = $request->only([
+            'username',
+            'firstName',
+            'lastName',
+            'middleName',
+            'gender',
+            'age',
+            'email',
+            'role',
+            'branch_id',
+            'contact_number',
+            'status',
+        ]);
+        $user = User::findOrFail($id);
+
+      
+        // Update address fields with actual names
+        $userData['region'] = $request->input('region_text');
+        $userData['province'] = $request->input('province_text');
+        $userData['city'] = $request->input('city_text');
+        $userData['barangay'] = $request->input('barangay_text');
     
-        // Check if any address field is not empty
-        if (
-            $request->filled('barangay_text') ||
-            $request->filled('city_text') ||
-            $request->filled('province_text') ||
-            $request->filled('region_text')
-        ) {
-            // Concatenate address components only if they are not empty
-            $addressComponents = array_filter([
-                $request->input('barangay_text'),
-                $request->input('city_text'),
-                $request->input('province_text'),
-                $request->input('region_text')
-            ]);
-    
-            $user->barangay = $request->input('barangay_text');
-            $user->city = $request->input('city_text');
-            $user->province = $request->input('province_text');
-            $user->region = $request->input('region_text');
-            $user->address = implode(', ', $addressComponents);
-        }
-    
-        // Check if password field is not empty
+        // Check if password field is present and not empty, then update password
         if ($request->filled('password')) {
-            $user->password = bcrypt($request->input('password'));
+            $userData['password'] = bcrypt($request->password);
         }
     
-        $user->save();
+        // Update user data
+        $user->update($userData);
     
         return redirect()->route('admin.users.index')->with('success', 'User updated successfully');
     }
-    
-    
     
 
     // Remove the specified user from storage

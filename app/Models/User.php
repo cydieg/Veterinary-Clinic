@@ -11,7 +11,7 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $fillable = [
-        'username', 'firstName', 'lastName', 'middleName', 'address', 'region', 'province', 'city', 'barangay', 'gender', 'age', 'email', 'role', 'password', 'branch_id', 'contact_number',
+        'username', 'firstName', 'lastName', 'middleName', 'address', 'region', 'province', 'city', 'barangay', 'gender', 'age', 'email', 'role', 'password', 'branch_id', 'contact_number', 'status',
     ];
 
     protected $hidden = [
@@ -19,13 +19,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    // Adjust the relationship to BelongsTo
     public function branch()
     {
         return $this->belongsTo(Branch::class, 'branch_id');
     }
 
-    // Add a relationship to appointments
     public function appointments()
     {
         return $this->hasMany(Appointment::class);
@@ -36,7 +34,6 @@ class User extends Authenticatable
         return $this->hasMany(Cart::class);
     }
 
-    // Define the relationship to sales
     public function sales()
     {
         return $this->hasMany(Sale::class);
