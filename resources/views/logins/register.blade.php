@@ -117,7 +117,12 @@
         <div class="row mb-2">
             <div class="col-12">
                 <div class="input-group custom">
-                    <input type="password" class="form-control form-control-lg" placeholder="Password" name="password" required>
+                    <input type="password" class="form-control form-control-lg" placeholder="Password" name="password" id="password" required>
+                    <div class="input-group-append">
+                        <span class="input-group-text" onclick="togglePasswordVisibility()">
+                            <i id="togglePasswordIcon" class="fa fa-eye"></i> <!-- Eye icon -->
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -140,5 +145,22 @@
         </div>
     </form>
 </div>
+
+<script>
+    function togglePasswordVisibility() {
+        var passwordField = document.getElementById("password");
+        var icon = document.getElementById("togglePasswordIcon");
+
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            icon.classList.remove("fa-eye");
+            icon.classList.add("fa-eye-slash");
+        } else {
+            passwordField.type = "password";
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
+        }
+    }
+</script>
 
 @endsection

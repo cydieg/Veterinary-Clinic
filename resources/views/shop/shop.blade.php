@@ -247,6 +247,8 @@
                     <li class="dropdown">
                         <button class="btn" type="button" id="branchDropdown" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
+                            Select Branch: <!-- Added text -->
+
                             @if ($branchId)
                                 {{ $branches->where('id', $branchId)->first()->name }}
                             @else
@@ -496,6 +498,8 @@
             }
         });
     </script>
+
+
 
 
 
