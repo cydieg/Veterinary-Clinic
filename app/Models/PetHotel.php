@@ -9,7 +9,7 @@ class PetHotel extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['appointment_id', 'check_out_date', 'size'];
+    protected $fillable = ['appointment_id', 'check_out_date', 'size', 'price'];
 
     public function appointment()
     {

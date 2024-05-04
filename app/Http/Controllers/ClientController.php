@@ -105,13 +105,29 @@ class ClientController extends Controller
             $appointmentData['check_out_date'] = $request->input('check_out_date'); // Include check_out_date
             $appointmentData['size'] = $request->input('size'); // Include size
 
+            // Calculate price based on size
+            $price = 0;
+            switch ($request->input('size')) {
+                case 'small':
+                    $price = 250;
+                    break;
+                case 'medium':
+                    $price = 300;
+                    break;
+                case 'large':
+                    $price = 400;
+                    break;
+            }
+            $appointmentData['price'] = $price; // Include price
+
             // Create a new appointment
             $appointment = $user->appointments()->create($appointmentData);
 
             // Create a pet hotel reservation associated with the appointment
             $petHotel = new PetHotel([
                 'check_out_date' => $request->input('check_out_date'),
-                'size' => $request->input('size')
+                'size' => $request->input('size'),
+                'price' => $price, // Include price in PetHotel
             ]);
             $appointment->petHotel()->save($petHotel);
 

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateAppointmentsTable extends Migration
+class AddPriceToPetHotelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class UpdateAppointmentsTable extends Migration
      */
     public function up()
     {
-        Schema::table('appointments', function (Blueprint $table) {
-            $table->dropColumn('appointment_time');
-            $table->string('appointment_slot');
+        Schema::table('pet_hotels', function (Blueprint $table) {
+            $table->decimal('price', 8, 2)->nullable()->after('check_out_date');
         });
     }
 
@@ -26,9 +25,8 @@ class UpdateAppointmentsTable extends Migration
      */
     public function down()
     {
-        Schema::table('appointments', function (Blueprint $table) {
-            $table->dropColumn('appointment_slot');
-            $table->time('appointment_time');
+        Schema::table('pet_hotels', function (Blueprint $table) {
+            $table->dropColumn('price');
         });
     }
 }

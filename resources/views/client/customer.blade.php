@@ -75,11 +75,20 @@
                 <div id="size_selection" style="display: none;">
                     <div class="form-group">
                         <label for="size">Size:</label>
-                        <select name="size" id="size" class="form-control">
+                        <select name="size" id="size" class="form-control" onchange="updatePrice()">
+                            <option value="Select">Select Size</option>
                             <option value="small">Small</option>
                             <option value="medium">Medium</option>
                             <option value="large">Large</option>
                         </select>
+                    </div>
+                </div>
+                
+                <!-- Display price based on selected size -->
+                <div id="price_display" style="display: none;">
+                    <div class="form-group">
+                        <label for="price">Price:</label>
+                        <input type="text" id="price" class="form-control" readonly>
                     </div>
                 </div>
                 
@@ -128,6 +137,30 @@
             checkOutDateInput.removeAttribute('required');
             sizeSelection.style.display = 'none'; // Hide size selection
         }
+    }
+
+    function updatePrice() {
+        var size = document.getElementById('size').value;
+        var priceDisplay = document.getElementById('price_display');
+        var priceInput = document.getElementById('price');
+
+        // Calculate price based on size
+        var price = 0;
+        switch (size) {
+            case 'small':
+                price = 250;
+                break;
+            case 'medium':
+                price = 300;
+                break;
+            case 'large':
+                price = 400;
+                break;
+        }
+
+        // Display the calculated price
+        priceInput.value = price + ' peso';
+        priceDisplay.style.display = 'block';
     }
 </script>
 
