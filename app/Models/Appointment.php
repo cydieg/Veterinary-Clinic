@@ -18,9 +18,8 @@ class Appointment extends Model
         'status',
         'branch_id',
         'pet_name',
-        'animal_type', // Added animal_type to the $fillable array
+        'animal_type',
         'breed',
-        'description',
         'service_type',
     ];
 
@@ -32,5 +31,11 @@ class Appointment extends Model
     public function branch()
     {
         return $this->belongsTo(Branch::class, 'branch_id');
+    }
+
+    // Define the relationship with PetHotel
+    public function petHotel()
+    {
+        return $this->hasOne(PetHotel::class);
     }
 }

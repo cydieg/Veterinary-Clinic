@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Appointment;
+use App\Models\PetHotel;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Branch;
 
@@ -47,7 +48,6 @@ class ClientController extends Controller
         $branches = Branch::all();
         return view('client.customer', compact('appointments', 'branches', 'selectedDate', 'remainingSlots', 'futureAppointments', 'currentDateRemainingSlots'));
     }
-    
 
     public function store(Request $request)
     {
@@ -57,38 +57,36 @@ class ClientController extends Controller
             'pet_name' => 'required|string',
             'animal_type' => 'required|string',
             'breed' => 'required|string',
-            'description' => 'nullable|string',
             'service_type' => 'required|string',
         ]);
-    
+
         $status = 'pending';
-    
+
         $user = Auth::user();
-    
+
         if (!$user->firstName || !$user->lastName) {
             return redirect()->back()->with('error', 'Please update your profile with your first name and last name before making an appointment.');
         }
-    
+
         // Check if the user already has an appointment on the selected date
         $existingAppointment = $user->appointments()->where('appointment_date', $request->input('appointment_date'))->first();
-    
+
         if ($existingAppointment) {
             return redirect()->back()->with('error', 'You already have a reservation on this date.');
         }
-    
+
         // Get the number of existing appointments for the selected branch and date
         $existingAppointmentsCount = Appointment::where('appointment_date', $request->input('appointment_date'))
             ->where('branch_id', $request->input('branch_id'))
             ->count();
-    
+
         // Check if the total appointments for the selected branch and date exceeds the limit (10)
         if ($existingAppointmentsCount >= 10) {
             return redirect()->back()->with('error', 'Sorry, all reservation slots for this branch on this date are filled. Please select another date.');
         }
-    
+
         // Calculate the slot number
         $slotNumber = $existingAppointmentsCount + 1;
-    
         $appointmentData = [
             'appointment_date' => $request->input('appointment_date'),
             'branch_id' => $request->input('branch_id'),
@@ -98,17 +96,27 @@ class ClientController extends Controller
             'pet_name' => $request->input('pet_name'),
             'animal_type' => $request->input('animal_type'), // Include animal type in appointment data
             'breed' => $request->input('breed'),
-            'description' => $request->input('description'),
             'service_type' => $request->input('service_type'),
-            'appointment_slot' => 'Slot ' . $slotNumber,
+            'appointment_slot' => 'Slot ' . $slotNumber
         ];
-    
-        // Additional logic to check reservation slot limit (10 slots per day) can be added here
-    
+
+        // Check if the service type is Pet Hotel
+        if ($request->input('service_type') === 'Pet Hotel') {
+            $appointmentData['check_out_date'] = $request->input('check_out_date'); // Include check_out_date
+            
+            // Create a new appointment
+            $appointment = $user->appointments()->create($appointmentData);
+
+            // Create a pet hotel reservation associated with the appointment
+            $petHotel = new PetHotel(['check_out_date' => $request->input('check_out_date')]);
+            $appointment->petHotel()->save($petHotel);
+
+            return redirect()->route('customer')->with('success', 'Pet hotel reservation requested successfully.');
+        }
+
+        // Create a regular appointment
         $user->appointments()->create($appointmentData);
-    
+
         return redirect()->route('customer')->with('success', 'Appointment requested successfully. Please wait for a notification in your email.');
     }
-    
-
 }
