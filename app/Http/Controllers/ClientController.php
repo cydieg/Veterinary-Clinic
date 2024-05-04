@@ -103,12 +103,16 @@ class ClientController extends Controller
         // Check if the service type is Pet Hotel
         if ($request->input('service_type') === 'Pet Hotel') {
             $appointmentData['check_out_date'] = $request->input('check_out_date'); // Include check_out_date
-            
+            $appointmentData['size'] = $request->input('size'); // Include size
+
             // Create a new appointment
             $appointment = $user->appointments()->create($appointmentData);
 
             // Create a pet hotel reservation associated with the appointment
-            $petHotel = new PetHotel(['check_out_date' => $request->input('check_out_date')]);
+            $petHotel = new PetHotel([
+                'check_out_date' => $request->input('check_out_date'),
+                'size' => $request->input('size')
+            ]);
             $appointment->petHotel()->save($petHotel);
 
             return redirect()->route('customer')->with('success', 'Pet hotel reservation requested successfully.');
@@ -120,3 +124,4 @@ class ClientController extends Controller
         return redirect()->route('customer')->with('success', 'Appointment requested successfully. Please wait for a notification in your email.');
     }
 }
+
