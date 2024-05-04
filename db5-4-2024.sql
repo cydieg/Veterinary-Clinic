@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 29, 2024 at 02:51 AM
+-- Generation Time: May 04, 2024 at 02:15 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -40,7 +40,6 @@ CREATE TABLE `appointments` (
   `pet_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `animal_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `breed` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `service_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `appointment_slot` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -49,12 +48,9 @@ CREATE TABLE `appointments` (
 -- Dumping data for table `appointments`
 --
 
-INSERT INTO `appointments` (`id`, `first_name`, `last_name`, `appointment_date`, `created_at`, `updated_at`, `user_id`, `status`, `branch_id`, `pet_name`, `animal_type`, `breed`, `description`, `service_type`, `appointment_slot`) VALUES
-(1, 'Jon Wendell', 'Cabrera', '2024-04-13', '2024-04-13 00:58:27', '2024-04-13 01:07:11', 47, 'completed', 16, 'Chacha', 'Dog', 'Aspin', 'Dog wash', 'Pet Hotel', 'Slot 1'),
-(2, 'Jon Wendell', 'Cabrera', '2024-04-20', '2024-04-13 01:04:52', '2024-04-13 07:28:47', 47, 'completed', 16, 'Meow Meow', 'Cat', 'Leopard', 'Meow Meow', 'Grooming', 'Slot 1'),
-(3, 'Jon Wendell', 'Cabrera', '2024-04-16', '2024-04-13 01:12:43', '2024-04-13 07:28:49', 47, 'completed', 16, 'Mochi', 'Cat', 'Leopard', 'Hotel', 'Pet Hotel', 'Slot 1'),
-(4, 'Jon Wendell', 'Cabrera', '2024-04-30', '2024-04-13 01:17:58', '2024-04-13 01:17:58', 47, 'pending', 18, 'Meow Meow', 'Cat', 'Leopard', 'Makulit', 'Grooming', 'Slot 1'),
-(5, 'Jon Wendell', 'Cabrera', '2024-04-14', '2024-04-14 03:33:47', '2024-04-14 03:34:27', 47, 'completed', 16, 'Meow Meow', 'Dog', 'Aspin', 'Pet Groom Lang po', 'Grooming', 'Slot 1');
+INSERT INTO `appointments` (`id`, `first_name`, `last_name`, `appointment_date`, `created_at`, `updated_at`, `user_id`, `status`, `branch_id`, `pet_name`, `animal_type`, `breed`, `service_type`, `appointment_slot`) VALUES
+(1, 'Jon Wendell', 'Cabrera', '2024-05-04', '2024-05-04 05:47:32', '2024-05-04 06:14:30', 93, 'completed', 16, 'Meow Meow', 'Cat', 'Siamese', 'Pet Hotel', 'Slot 1'),
+(2, 'Jon Wendell', 'Cabrera', '2024-05-10', '2024-05-04 05:51:36', '2024-05-04 06:14:33', 93, 'completed', 16, 'Chacha', 'Dog', 'Shih Tzu', 'Grooming', 'Slot 1');
 
 -- --------------------------------------------------------
 
@@ -318,7 +314,17 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (33, '2024_04_11_125241_add_additional_fields_to_appointments_table', 32),
 (34, '2024_04_11_130504_update_appointments_table', 33),
 (35, '2024_04_11_133903_add_animal_type_to_appointments_table', 34),
-(36, '2024_04_28_135840_add_status_to_users_table', 35);
+(36, '2024_04_28_135840_add_status_to_users_table', 35),
+(37, '2024_05_04_120637_remove_description_from_appointments_table', 36),
+(38, '2024_05_04_121304_add_number_of_days_to_appointments_table', 37),
+(39, '2024_05_04_121852_remove_number_of_days_from_appointments_table', 38),
+(40, '2024_05_04_121951_add_check_out_to_appointments_table', 39),
+(41, '2024_05_04_123311_rename_check_out_column_in_appointments_table', 40),
+(42, '2024_05_04_125053_remove_check_out_date_from_appointments_table', 41),
+(43, '2024_05_04_125423_create_pet_hotels_table', 42),
+(44, '2024_05_04_125957_add_check_out_date_to_pet_hotels_table', 43),
+(45, '2024_05_04_131217_add_size_to_pet_hotels_table', 44),
+(46, '2024_05_04_132937_add_price_to_pet_hotels_table', 45);
 
 -- --------------------------------------------------------
 
@@ -370,6 +376,29 @@ CREATE TABLE `personal_access_tokens` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pet_hotels`
+--
+
+CREATE TABLE `pet_hotels` (
+  `id` bigint UNSIGNED NOT NULL,
+  `appointment_id` bigint UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `check_out_date` date DEFAULT NULL,
+  `price` decimal(8,2) DEFAULT NULL,
+  `size` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `pet_hotels`
+--
+
+INSERT INTO `pet_hotels` (`id`, `appointment_id`, `created_at`, `updated_at`, `check_out_date`, `price`, `size`) VALUES
+(1, 1, '2024-05-04 05:47:32', '2024-05-04 05:47:32', '2024-05-18', 250.00, 'small');
 
 -- --------------------------------------------------------
 
@@ -612,6 +641,13 @@ ALTER TABLE `personal_access_tokens`
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
 
 --
+-- Indexes for table `pet_hotels`
+--
+ALTER TABLE `pet_hotels`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `pet_hotels_appointment_id_foreign` (`appointment_id`);
+
+--
 -- Indexes for table `ratings`
 --
 ALTER TABLE `ratings`
@@ -638,7 +674,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `appointments`
 --
 ALTER TABLE `appointments`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `audits`
@@ -674,13 +710,19 @@ ALTER TABLE `inventories`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `pet_hotels`
+--
+ALTER TABLE `pet_hotels`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `ratings`
@@ -721,6 +763,12 @@ ALTER TABLE `audits`
 --
 ALTER TABLE `carts`
   ADD CONSTRAINT `carts_branch_id_foreign` FOREIGN KEY (`branch_id`) REFERENCES `branches` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `pet_hotels`
+--
+ALTER TABLE `pet_hotels`
+  ADD CONSTRAINT `pet_hotels_appointment_id_foreign` FOREIGN KEY (`appointment_id`) REFERENCES `appointments` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `ratings`
