@@ -94,41 +94,44 @@ class ShopController extends Controller
         $productId = $request->input('product_id');
         $quantity = $request->input('quantity');
         $branchId = $request->input('branch_id');
-
+        $courier = $request->input('courier'); // Add this line to retrieve courier selection
+    
         $user = Auth::user();
-
+    
         $product = Inventory::findOrFail($productId);
-
+    
         // Check if the requested quantity exceeds the available quantity
         if ($quantity > $product->quantity) {
             return redirect()->back()->with('error', 'Failed to add product to cart. Requested quantity exceeds available quantity. Current available quantity: ' . $product->quantity);
         }
-
+    
         // Calculate total price for the product
         $totalPrice = $product->price * $quantity;
-
+    
         // Check if the product already exists in the user's cart
         $cartItem = Cart::where('user_id', $user->id)
                         ->where('product_id', $productId)
                         ->first();
-
+    
         if ($cartItem) {
             // Increment the quantity and update total price if the product is already in the cart
             $cartItem->quantity += $quantity;
             $cartItem->total_price += $totalPrice;
             $cartItem->save();
         } else {
-            // Add the product to the user's cart
+            // Add the product to the user's cart with courier selection
             $user->cart()->create([
                 'product_id' => $productId,
                 'quantity' => $quantity,
                 'total_price' => $totalPrice,
                 'branch_id' => $branchId,
+                'courier' => $courier, // Store the selected courier
             ]);
         }
-
+    
         return redirect()->back()->with('success', 'Product added to cart successfully.');
     }
+    
 
     
 

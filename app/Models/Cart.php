@@ -11,7 +11,8 @@ class Cart extends Model
         'product_id',
         'quantity',
         'total_price', // Added total_price to fillable attributes
-        'branch_id'
+        'branch_id',
+        'courier'
     ];
 
     public function user()

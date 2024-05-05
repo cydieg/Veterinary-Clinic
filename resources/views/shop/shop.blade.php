@@ -526,6 +526,15 @@
                         <input type="hidden" name="product_id" id="productId">
                         <!-- Add this line to include the branch_id -->
                         <input type="hidden" name="branch_id" id="branchId" value="{{ $branchId }}">
+                        <!-- Add courier selection dropdown -->
+                        <div class="form-group">
+                            <label for="courier">Select Courier:</label>
+                            <select class="form-control" name="courier" id="courier">
+                                <option value="broom">Broom</option>
+                                <option value="posada">Posada</option>
+                                <option value="hatid">Hatid</option>
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label for="quantity">Quantity:</label>
                             <input type="text" class="form-control text-center" id="quantity" name="quantity"
@@ -533,7 +542,6 @@
                         </div>
                         <p>Total Price: ₱<span id="totalPrice"></span></p>
                         <button type="button" class="btn btn-primary" onclick="addToCart()">Add to Cart</button>
-
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -542,6 +550,7 @@
             </div>
         </div>
     </div>
+
 </body>
 
 </html>
