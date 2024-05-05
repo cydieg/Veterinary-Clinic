@@ -17,7 +17,7 @@
         font-size: 12px; /* Adjust button font size */
     }
     .button-container form {
-    display: inline-block; /* Make forms display inline */
+        display: inline-block; /* Make forms display inline */
     }
     .button-container form:first-child {
         margin-right: 10px; /* Add margin between buttons */
@@ -36,16 +36,19 @@
                             <th>Price</th>
                             <th>Quantity</th>
                             <th>Total</th>
+                            <th>Courier</th> <!-- Add courier column header -->
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($cart as $item)
+                        @if ($item->cart_status !== 'PlacedOrder')
                         <tr>
                             <td>{{ $item->product->name }}</td>
                             <td>₱{{ $item->product->price }}</td>
                             <td>{{ $item->quantity }}</td>
                             <td>₱{{ $item->product->price * $item->quantity }}</td>
+                            <td>{{ $item->courier }}</td> <!-- Display the courier -->
                             <td class="button-container">
                                 <form method="POST" action="{{ route('cart.order') }}">
                                     @csrf
@@ -59,6 +62,7 @@
                                 </form>
                             </td>
                         </tr>
+                        @endif
                         @endforeach
                     </tbody>
                 </table>
@@ -77,5 +81,4 @@
     </div>
 </div>
 <!-- / Shopping Cart Content -->
-</div>
 @endsection

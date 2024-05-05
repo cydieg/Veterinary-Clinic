@@ -12,14 +12,13 @@ class Sale extends Model
         'quantity',
         'branch_id',
         'total_price',
-        'status' // Include total_price in fillable attributes
+        'status',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-
 
     public function product()
     {
@@ -35,9 +34,11 @@ class Sale extends Model
     {
         return $this->hasOne(Audit::class, 'sale_id');
     }
+
     public function ratings()
     {
         return $this->hasMany(Rating::class);
     }
-  
+
+    // Define the relationship with the Cart model
 }

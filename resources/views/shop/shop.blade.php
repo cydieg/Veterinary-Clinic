@@ -445,6 +445,18 @@
 
     <!-- JavaScript to update dropdown text -->
     <script>
+        // Function to show/hide courier selection based on pickup/delivery choice
+        function toggleCourierSelection() {
+            var pickupOrDelivery = document.getElementById('pickupOrDelivery').value;
+            var courierSelection = document.getElementById('courierSelection');
+    
+            if (pickupOrDelivery === 'delivery') {
+                courierSelection.style.display = 'block';
+            } else {
+                courierSelection.style.display = 'none';
+            }
+        }
+    
         // Function to show the modal with product details
         function showProductModal(name, description, price, quantity, productId, branchId) {
             document.getElementById('productName').innerText = name;
@@ -457,22 +469,25 @@
             document.getElementById('branchId').value = branchId; // Set the branch ID
             $('#productModal').modal('show');
         }
-
+    
         // Function to add product to cart
         function addToCart() {
             var quantity = parseInt(document.getElementById('quantity').value);
             var availableQuantity = parseInt(document.getElementById('productQuantity').innerText);
-
+            var pickupOrDelivery = document.getElementById('pickupOrDelivery').value;
+            var courier = (pickupOrDelivery === 'pickup') ? 'Pick up' : document.getElementById('courier').value;
+    
             if (quantity > availableQuantity) {
                 // If quantity exceeds available quantity, show notification and return
                 alert("Failed to add to cart. Exceeds available quantity.");
                 return;
             }
-
-            // If quantity is valid, submit the form
+    
+            // If quantity is valid, set the courier value and submit the form
+            document.getElementById('courier').value = courier;
             document.getElementById('addToCartForm').submit();
         }
-
+    
         // Function to calculate total price based on quantity input
         function calculateTotal() {
             var quantity = parseInt(document.getElementById('quantity').value);
@@ -481,25 +496,7 @@
             document.getElementById('totalPrice').innerText = totalPrice.toFixed(2);
         }
     </script>
-
-    <!-- Script to hide the error message after 2.5 seconds -->
-    <script>
-        // Wait for the document to be fully loaded
-        document.addEventListener("DOMContentLoaded", function() {
-            // Get the error message element
-            var errorMessage = document.getElementById('errorMessage');
-
-            // Check if the error message exists
-            if (errorMessage) {
-                // Hide the error message after 2.5 seconds
-                setTimeout(function() {
-                    errorMessage.style.display = 'none';
-                }, 2500); // 2.5 seconds
-            }
-        });
-    </script>
-
-
+    
 
 
 
@@ -524,10 +521,16 @@
                     <form id="addToCartForm" action="{{ route('cart.add') }}" method="POST">
                         @csrf
                         <input type="hidden" name="product_id" id="productId">
-                        <!-- Add this line to include the branch_id -->
                         <input type="hidden" name="branch_id" id="branchId" value="{{ $branchId }}">
-                        <!-- Add courier selection dropdown -->
                         <div class="form-group">
+                            <label for="pickupOrDelivery">Pick up or Delivery:</label>
+                            <select class="form-control" name="pickup_or_delivery" id="pickupOrDelivery"
+                                onchange="toggleCourierSelection()">
+                                <option value="pickup">Pick up</option>
+                                <option value="delivery">Delivery</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="courierSelection" style="display: none;">
                             <label for="courier">Select Courier:</label>
                             <select class="form-control" name="courier" id="courier">
                                 <option value="broom">Broom</option>
