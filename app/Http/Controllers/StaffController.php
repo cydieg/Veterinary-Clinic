@@ -6,6 +6,7 @@ use App\Models\Appointment;
 use App\Models\Sale;
 use App\Models\User;
 use App\Models\Audit;
+use App\Models\Cart;
 use App\Models\Inventory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,6 +15,8 @@ use App\Mail\AppointmentAccepted;
 use App\Mail\AppointmentCancelled; 
 use App\Mail\FailedDeliveryNotification;
 use App\Mail\DeliveryNotification; 
+
+
 
 class StaffController extends Controller
 {

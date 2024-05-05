@@ -180,34 +180,36 @@ class ShopController extends Controller
     {
         $user = Auth::user();
         $productId = $request->input('product_id');
-    
+
         // Retrieve the selected product from the cart
         $item = $user->cart()->where('product_id', $productId)->first();
-    
+
         if (!$item) {
             return redirect()->route('cart.show')->with('error', 'Product not found in cart.');
         }
-    
+
         // Calculate total price for the selected product
-        $totalPrice = $item->product->price * $item->quantity;
-    
+        $totalPrice = $item->total_price;
+
         // Send email notification
         Mail::to($user->email)->send(new OrderProcessed([$item], $totalPrice));
-    
+
         // Create a sale record for the selected product
         Sale::create([
             'user_id' => $user->id,
             'product_id' => $item->product_id,
             'quantity' => $item->quantity,
             'branch_id' => $item->branch_id,
+            'courier' => $item->courier, // Record the courier from the cart
             'total_price' => $totalPrice, // Record the total price
         ]);
-    
+
         // Remove the ordered item from the cart
         $item->delete();
-    
+
         return redirect()->route('cart.show')->with('success', 'Order placed successfully.');
     }
+
     public function history()
     {
         // Retrieve the user's purchase history

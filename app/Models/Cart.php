@@ -13,7 +13,7 @@ class Cart extends Model
         'total_price', // Added total_price to fillable attributes
         'branch_id',
         'courier',
-        'cart_status' 
+        
     ];
 
     public function user()
@@ -29,5 +29,9 @@ class Cart extends Model
     public function branch()
     {
         return $this->belongsTo(Branch::class, 'branch_id');
+    }
+    public function inventory()
+    {
+        return $this->belongsTo(Inventory::class, 'product_id');
     }
 }

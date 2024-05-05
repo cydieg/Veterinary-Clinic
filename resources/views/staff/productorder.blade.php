@@ -35,6 +35,7 @@
                 <th>Address</th>
                 <th>Product</th>
                 <th>Quantity</th>
+                <th>Courier</th> <!-- Add courier column header -->
                 <th>Branch</th>
                 <th>Total Price</th>
                 <th>Action</th>
@@ -48,6 +49,7 @@
                     <td>{{ $sale->user->address }}</td>
                     <td>{{ $sale->product->name }}</td>
                     <td>{{ $sale->quantity }}</td>
+                    <td>{{ $sale->courier }}</td> <!-- Display the courier -->
                     <td>{{ $sale->branch->name }}</td>
                     <td>₱{{ $sale->total_price }}</td>
                     <td class="action-buttons">

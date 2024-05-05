@@ -11,6 +11,7 @@ class Sale extends Model
         'product_id',
         'quantity',
         'branch_id',
+        'courier', // Add the courier attribute to the $fillable array
         'total_price',
         'status',
     ];
@@ -39,6 +40,4 @@ class Sale extends Model
     {
         return $this->hasMany(Rating::class);
     }
-
-    // Define the relationship with the Cart model
 }
