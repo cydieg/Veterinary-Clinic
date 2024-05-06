@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 05, 2024 at 01:02 PM
+-- Generation Time: May 06, 2024 at 11:35 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -529,7 +529,8 @@ INSERT INTO `sales` (`id`, `user_id`, `product_id`, `quantity`, `total_price`, `
 (101, 93, 14, 25, 575.00, 16, NULL, '2024-05-05 03:23:40', '2024-05-05 04:58:14', 'delivering'),
 (102, 93, 25, 1, 45.00, 16, NULL, '2024-05-05 03:23:59', '2024-05-05 04:58:21', 'delivering'),
 (103, 93, 26, 21, 735.00, 16, NULL, '2024-05-05 04:35:44', '2024-05-05 04:58:28', 'delivering'),
-(104, 93, 12, 51, 1785.00, 16, 'Pick up', '2024-05-05 05:01:44', '2024-05-05 05:01:44', 'pending');
+(104, 93, 12, 51, 1785.00, 16, 'Pick up', '2024-05-05 05:01:44', '2024-05-05 05:01:44', 'pending'),
+(105, 93, 14, 21, 483.00, 16, 'hatid', '2024-05-06 03:30:48', '2024-05-06 03:30:48', 'pending');
 
 -- --------------------------------------------------------
 
@@ -695,7 +696,7 @@ ALTER TABLE `branches`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=140;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -737,7 +738,7 @@ ALTER TABLE `ratings`
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
 
 --
 -- AUTO_INCREMENT for table `users`
