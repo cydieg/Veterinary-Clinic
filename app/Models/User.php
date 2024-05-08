@@ -38,4 +38,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Sale::class);
     }
+
+    // Define the relationship between User and Fee
+    public function fees()
+    {
+        return $this->hasMany(Fee::class, 'user_id');
+    }
 }

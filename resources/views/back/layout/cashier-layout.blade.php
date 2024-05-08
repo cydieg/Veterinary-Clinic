@@ -506,6 +506,13 @@
 								<span class="mtext">Store Purchase</span>
 							</a>
 						</li>
+						<li class="dropdown">
+							<a href="{{ route('staff.fee') }}" class="dropdown-toggle no-arrow">
+								<i class="micon bi bi-cart"></i>
+								<span class="mtext">Delivering Fee</span>
+							</a>
+						</li>
+						
 						
 						
 						

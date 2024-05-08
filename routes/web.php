@@ -103,6 +103,9 @@ Route::post('/accept-appointment/{appointment}', [StaffController::class, 'pendi
 Route::get('/logout', [AuthController::class, 'logout'])->name('manual.logout');
 Route::put('/complete-appointment/{appointment}', [StaffController::class, 'completeAppointment'])->name('complete.appointment');
 Route::put('/staff/cancel/{appointment}', [StaffController::class, 'cancelAppointment'])->name('staff.cancel');
+Route::get('/staff/fee', [StaffController::class, 'deliveringFee'])->name('staff.fee');
+Route::post('/save-fee', [StaffController::class, 'saveDeliveringFee'])->name('save_fee');
+
 //staff order product
 Route::get('/staff/product-order', [StaffController::class, 'productOrder'])->name('staff.productorder');
 Route::put('/sales/{sale}', [StaffController::class, 'deliverSale'])->name('deliver.sale');

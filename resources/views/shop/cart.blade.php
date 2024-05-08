@@ -74,6 +74,8 @@
             <div class="card-body">
                 <h5 class="card-title">Total Price</h5>
                 <p class="card-text">Total: ₱{{ $totalPrice }}</p>
+                <p class="card-text">Delivering Fee: ₱{{ $deliveringFee }}</p> <!-- Display delivering fee -->
+                <p class="card-text">Grand Total: ₱{{ $totalPrice + $deliveringFee }}</p> <!-- Calculate and display grand total -->
             </div>
         </div>
         <!-- Add back button here -->

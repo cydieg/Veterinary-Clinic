@@ -7,6 +7,7 @@ use App\Models\Inventory;
 use App\Models\Branch;
 use App\Models\Cart;
 use App\Models\Sale; 
+use App\Models\Fee; 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use App\Mail\OrderProcessed;
@@ -143,18 +144,24 @@ class ShopController extends Controller
 
     
 
-    public function showCart()
-    {   
-        $user = Auth::user();
-        $cart = $user->cart()->with('product')->get();
+public function showCart()
+{
+    $user = Auth::user();
+    $cart = $user->cart()->with('product')->get();
 
-        // Calculate total price
-        $totalPrice = $cart->sum(function ($item) {
-            return $item->product->price * $item->quantity;
-        });
+    // Calculate total price
+    $totalPrice = $cart->sum(function ($item) {
+        return $item->product->price * $item->quantity;
+    });
 
-        return view('shop.cart', compact('cart', 'totalPrice'));
+    // Retrieve delivering fee based on user's barangay
+    $deliveringFee = 0;
+    if ($user->barangay) {
+        $deliveringFee = Fee::where('barangay', $user->barangay)->value('delivering_fee');
     }
+
+    return view('shop.cart', compact('cart', 'totalPrice', 'deliveringFee'));
+}
 
 
     public function removeFromCart(Request $request)

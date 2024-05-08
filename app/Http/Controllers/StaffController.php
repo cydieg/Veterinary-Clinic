@@ -15,6 +15,7 @@ use App\Mail\AppointmentAccepted;
 use App\Mail\AppointmentCancelled; 
 use App\Mail\FailedDeliveryNotification;
 use App\Mail\DeliveryNotification; 
+use App\Models\Fee;
 
 
 
@@ -325,6 +326,38 @@ class StaffController extends Controller
             return back()->with('error', 'An error occurred while marking the sale as failed delivery and notifying the user.');
         }
     }
+    public function deliveringFee()
+    {
+        // Get the authenticated user's branch ID
+        $branchId = auth()->user()->branch_id;
     
+        // Retrieve all fee records
+        $fees = Fee::all();
+    
+        // Pass the branch ID and fees to the view
+        return view('staff.fee', compact('branchId', 'fees'));
+    }
+    
+        public function saveDeliveringFee(Request $request)
+    {
+        // Validate the request data
+        $request->validate([
+            'branch_id' => 'required',
+            'barangay' => 'required',
+            'delivering_fee' => 'required|numeric',
+        ]);
+
+        // Create a new fee record
+        Fee::create([
+            'branch_id' => $request->branch_id,
+            'barangay' => $request->barangay,
+            'delivering_fee' => $request->delivering_fee,
+        ]);
+
+        // Redirect back or to a success page
+        return redirect()->back()->with('success', 'Fee saved successfully.');
+    }
+
+        
 
 }
