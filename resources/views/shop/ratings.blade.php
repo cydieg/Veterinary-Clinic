@@ -6,8 +6,6 @@
     <title>Rate Us</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Include Font Awesome for star icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!-- Your custom CSS -->
     <style>
         .rating-container {
@@ -16,20 +14,17 @@
         .rating-container .star {
             color: goldenrod;
             cursor: pointer;
+            font-size: 24px; /* Adjust the size as needed */
         }
-        .rating-container .star:hover,
-        .rating-container .star:hover ~ .star {
-            color: #ffc107;
-        }
-        .rating-container .star.checked {
-            color: #ffc107;
+        .rating-container .star.filled {
+            color: #ffc107; /* Filled star color */
         }
         .custom-card {
             border: 2px solid black;
         }
         .custom-bg-color {
-        background-color: #BC7FCD;
-        font-size: 20px;
+            background-color: #BC7FCD;
+            font-size: 20px;
         }
     </style>
 </head>
@@ -37,7 +32,7 @@
 
 <div class="container mt-5">
     <div class="card custom-card">
-    <div class="container p-3 custom-bg-color text-white">Rate {{ $sale->product->name }}</div>
+        <div class="container p-3 custom-bg-color text-white">Rate {{ $sale->product->name }}</div>
         <div class="card-body">
             @if($errors->any())
                 <div class="alert alert-danger">
@@ -60,7 +55,7 @@
                     <label for="rating">Rating:</label>
                     <div class="rating-container">
                         @for($i = 1; $i <= 5; $i++)
-                            <i class="star far fa-star" data-rating="{{ $i }}"></i>
+                            <span class="star" data-rating="{{ $i }}">&#9734;</span>
                         @endfor
                         <input type="hidden" name="rating" id="rating" value="0">
                     </div>
@@ -93,11 +88,11 @@
             star.addEventListener("click", function() {
                 const ratingValue = this.getAttribute("data-rating");
                 ratingInput.value = ratingValue;
-                stars.forEach(s => {
+                stars.forEach((s, index) => {
                     if (parseInt(s.getAttribute("data-rating")) <= ratingValue) {
-                        s.classList.add("checked");
+                        s.innerHTML = "&#9733;"; // Filled star
                     } else {
-                        s.classList.remove("checked");
+                        s.innerHTML = "&#9734;"; // Empty star
                     }
                 });
             });
