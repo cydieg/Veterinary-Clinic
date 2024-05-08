@@ -12,9 +12,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AppointmentAccepted;
-use App\Mail\AppointmentCancelled; 
+use App\Mail\AppointmentCancelled;
 use App\Mail\FailedDeliveryNotification;
-use App\Mail\DeliveryNotification; 
+use App\Mail\DeliveryNotification;
 use App\Models\Fee;
 
 
@@ -23,7 +23,7 @@ class StaffController extends Controller
 {
     public function index()
     {
-          // Get the authenticated user's branch ID
+        // Get the authenticated user's branch ID
         $branchId = auth()->user()->branch_id;
         try {
             // Get the authenticated user
@@ -69,7 +69,7 @@ class StaffController extends Controller
 
     public function acceptedAppointments()
     {
-          // Get the authenticated user's branch ID
+        // Get the authenticated user's branch ID
         $branchId = auth()->user()->branch_id;
         try {
             // Get the authenticated user
@@ -90,7 +90,7 @@ class StaffController extends Controller
 
     public function completeAppointment(Appointment $appointment)
     {
-          // Get the authenticated user's branch ID
+        // Get the authenticated user's branch ID
         $branchId = auth()->user()->branch_id;
         try {
             // Update appointment status to 'completed'
@@ -112,7 +112,7 @@ class StaffController extends Controller
     public function cancelAppointment(Appointment $appointment)
     {
         // Get the authenticated user's branch ID
-          
+
         $branchId = auth()->user()->branch_id;
         try {
             // Update appointment status to 'canceled'
@@ -128,27 +128,27 @@ class StaffController extends Controller
             return back()->with('error', 'An error occurred while canceling the appointment.');
         }
     }
-    
-   // order product
-   public function productOrder()
-   {
-       // Get the authenticated user's branch ID
-       $branchId = auth()->user()->branch_id;
-   
-       // Fetch sales related to the authenticated user's branch
-       $sales = Sale::with('user', 'product', 'branch')
-                  ->whereHas('branch', function ($query) use ($branchId) {
-                      $query->where('id', $branchId);
-                  })
-                  ->where('status', '!=', 'delivered') // Exclude 'delivered' sales
-                  ->where('status', '!=', 'delivering') // Exclude 'delivering' sales
-                  ->where('status', '!=', 'canceled') // Exclude 'canceled' sales
-                  ->get();
-   
-       // Pass sales to the view
-       return view('staff.productorder', compact('sales'));
-   }
-   
+
+    // order product
+    public function productOrder()
+    {
+        // Get the authenticated user's branch ID
+        $branchId = auth()->user()->branch_id;
+
+        // Fetch sales related to the authenticated user's branch
+        $sales = Sale::with('user', 'product', 'branch')
+            ->whereHas('branch', function ($query) use ($branchId) {
+                $query->where('id', $branchId);
+            })
+            ->where('status', '!=', 'delivered') // Exclude 'delivered' sales
+            ->where('status', '!=', 'delivering') // Exclude 'delivering' sales
+            ->where('status', '!=', 'canceled') // Exclude 'canceled' sales
+            ->get();
+
+        // Pass sales to the view
+        return view('staff.productorder', compact('sales'));
+    }
+
     //ito na
     public function deliverSale(Sale $sale, Request $request)
     {
@@ -163,7 +163,7 @@ class StaffController extends Controller
 
         return redirect()->back()->with('success', 'Sale is being delivered');
     }
-        
+
 
 
 
@@ -173,29 +173,29 @@ class StaffController extends Controller
     {
         // Get the authenticated user's branch ID
         $branchId = auth()->user()->branch_id;
-    
+
         // Fetch sales with delivering status related to the authenticated user's branch
         $deliveringSales = Sale::with('user', 'product', 'branch')
-                            ->where('branch_id', $branchId) // Filter by branch_id directly
-                            ->where('status', 'delivering')
-                            ->get();
-    
+            ->where('branch_id', $branchId) // Filter by branch_id directly
+            ->where('status', 'delivering')
+            ->get();
+
         // Pass delivering sales to the view
         return view('staff.delivering_status', compact('deliveringSales'));
     }
-   
+
     public function markAsDelivered($saleId)
     {
-          // Get the authenticated user's branch ID
+        // Get the authenticated user's branch ID
         $branchId = auth()->user()->branch_id;
         // Find the sale by ID
         $sale = Sale::findOrFail($saleId);
-        
+
         // Check if the sale status is already delivered
         if ($sale->status === 'delivered') {
             return redirect()->back()->with('error', 'Sale has already been marked as delivered.');
         }
-        
+
         // Update sale status to "delivered"
         $sale->status = 'delivered';
         $sale->save();
@@ -225,38 +225,38 @@ class StaffController extends Controller
     {
         // Get the authenticated user's branch ID
         $branchId = auth()->user()->branch_id;
-    
+
         // Get the current date
         $currentDate = now()->toDateString();
-    
+
         // Fetch delivered sales related to the authenticated user's branch for the current date
         $deliveredSales = Sale::with('product')
-                            ->where('branch_id', $branchId)
-                            ->where('status', 'delivered')
-                            ->whereDate('created_at', $currentDate)
-                            ->get();
-    
+            ->where('branch_id', $branchId)
+            ->where('status', 'delivered')
+            ->whereDate('created_at', $currentDate)
+            ->get();
+
         // Initialize an empty array to store total prices and quantity sold for each product
         $totalPrices = [];
-    
+
         // Calculate total price and quantity sold for each product
         foreach ($deliveredSales as $sale) {
             $productId = $sale->product_id;
-    
+
             // If the product is not yet added to the totalPrices array, initialize its values
             if (!isset($totalPrices[$productId])) {
-                $totalPrices[$productId] = (object)[
+                $totalPrices[$productId] = (object) [
                     'product' => $sale->product,
                     'totalPrice' => 0,
                     'quantitySold' => 0
                 ];
             }
-    
+
             // Accumulate total price and quantity sold
             $totalPrices[$productId]->totalPrice += $sale->total_price;
             $totalPrices[$productId]->quantitySold += $sale->quantity;
         }
-    
+
         // Pass total prices to the view
         return view('staff.dailysales', compact('totalPrices'));
     }
@@ -280,13 +280,13 @@ class StaffController extends Controller
         try {
             // Get the authenticated user's branch ID
             $branchId = auth()->user()->branch_id;
-    
+
             // Retrieve the inventory item by ID
             $inventoryItem = Inventory::findOrFail($request->input('inventory_id'));
-    
+
             // Calculate total price
             $totalPrice = $inventoryItem->price * $request->input('quantity');
-    
+
             // Create a new sale
             $sale = new Sale();
             $sale->branch_id = $branchId;
@@ -296,11 +296,11 @@ class StaffController extends Controller
             $sale->total_price = $totalPrice;
             $sale->status = 'delivered'; // Automatically mark as delivered
             $sale->save();
-    
+
             // Deduct the quantity from inventory
             $inventoryItem->quantity -= $request->input('quantity');
             $inventoryItem->save();
-    
+
             return redirect()->route('staff.storePurchase')->with('success', 'Purchase recorded successfully.');
         } catch (\Exception $e) {
             // Log or handle the exception
@@ -313,13 +313,13 @@ class StaffController extends Controller
         try {
             // Update sale status to 'canceled'
             $sale->update(['status' => 'canceled']);
-    
+
             // Pass necessary data to the mail constructor
             $user = $sale->user;
             $product = $sale->product; // Assuming you have a relationship defined in Sale model
             // Pass $user, $product, and $sale to the FailedDeliveryNotification constructor
             Mail::to($sale->user->email)->send(new FailedDeliveryNotification($user, $product, $sale));
-    
+
             return redirect()->back()->with('success', 'Sale marked as failed delivery successfully. User notified.');
         } catch (\Exception $e) {
             // Log or handle the exception
@@ -331,15 +331,17 @@ class StaffController extends Controller
         // Get the authenticated user's branch ID
         $branchId = auth()->user()->branch_id;
     
-        // Retrieve all fee records
-        $fees = Fee::all();
+        // Retrieve fee records for the authenticated user's branch only
+        $fees = Fee::where('branch_id', $branchId)->get();
     
         // Pass the branch ID and fees to the view
         return view('staff.fee', compact('branchId', 'fees'));
     }
     
-        public function saveDeliveringFee(Request $request)
+
+    public function saveDeliveringFee(Request $request)
     {
+        
         // Validate the request data
         $request->validate([
             'branch_id' => 'required',
@@ -357,7 +359,31 @@ class StaffController extends Controller
         // Redirect back or to a success page
         return redirect()->back()->with('success', 'Fee saved successfully.');
     }
+    // StaffController.php
 
-        
+    public function updateDeliveringFee(Request $request)
+    {
+        // Validate the request data
+        $request->validate([
+            'fee_id' => 'required',
+            'edit_barangay' => 'required',
+            'edit_delivering_fee' => 'required|numeric',
+        ]);
+
+        // Find the fee record
+        $fee = Fee::findOrFail($request->fee_id);
+
+        // Update the fee record
+        $fee->update([
+            'barangay' => $request->edit_barangay,
+            'delivering_fee' => $request->edit_delivering_fee,
+        ]);
+
+        // Redirect back or to a success page
+        return redirect()->back()->with('success', 'Fee updated successfully.');
+    }
+
+
+
 
 }

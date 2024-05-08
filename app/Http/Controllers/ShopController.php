@@ -88,7 +88,7 @@ class ShopController extends Controller
     }
     
     
-
+//add to cart 
 
     public function addToCart(Request $request)
 {
@@ -143,7 +143,7 @@ class ShopController extends Controller
     
 
     
-
+// cart storage
 public function showCart()
 {
     $user = Auth::user();
@@ -286,6 +286,7 @@ public function showCart()
         return view('shop.viewratings', compact('ratings', 'totalPercentage', 'averageRating'));
 
     }
+
     
     
     

@@ -105,6 +105,7 @@ Route::put('/complete-appointment/{appointment}', [StaffController::class, 'comp
 Route::put('/staff/cancel/{appointment}', [StaffController::class, 'cancelAppointment'])->name('staff.cancel');
 Route::get('/staff/fee', [StaffController::class, 'deliveringFee'])->name('staff.fee');
 Route::post('/save-fee', [StaffController::class, 'saveDeliveringFee'])->name('save_fee');
+Route::put('/update-fee', [StaffController::class, 'updateDeliveringFee'])->name('update_fee');
 
 //staff order product
 Route::get('/staff/product-order', [StaffController::class, 'productOrder'])->name('staff.productorder');
@@ -192,6 +193,7 @@ Route::post('/shop/order', [ShopController::class, 'orderProduct'])->name('shop.
 Route::get('/cart', [ShopController::class, 'showCart'])->name('cart.show');
 Route::post('/cart/add', [ShopController::class, 'addToCart'])->name('cart.add');
 Route::post('/cart/remove', [ShopController::class, 'removeFromCart'])->name('cart.remove'); // Add this line
+
 
 //sales routes
 Route::post('/cart/order', [ShopController::class, 'order'])->name('cart.order');
