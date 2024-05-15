@@ -154,14 +154,19 @@ public function showCart()
         return $item->product->price * $item->quantity;
     });
 
-    // Retrieve delivering fee based on user's barangay
+    // Initialize delivering fee
     $deliveringFee = 0;
-    if ($user->barangay) {
-        $deliveringFee = Fee::where('barangay', $user->barangay)->value('delivering_fee');
+
+    // Calculate delivering fee based on the courier type
+    foreach ($cart as $item) {
+        if ($item->courier === 'hatid' && $user->barangay) {
+            $deliveringFee += Fee::where('barangay', $user->barangay)->value('delivering_fee');
+        }
     }
 
     return view('shop.cart', compact('cart', 'totalPrice', 'deliveringFee'));
 }
+
 
 
     public function removeFromCart(Request $request)

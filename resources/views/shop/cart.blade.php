@@ -36,7 +36,7 @@
                             <th>Price</th>
                             <th>Quantity</th>
                             <th>Total</th>
-                            <th>Courier</th> <!-- Add courier column header -->
+                            <th>Courier</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -48,7 +48,7 @@
                             <td>₱{{ $item->product->price }}</td>
                             <td>{{ $item->quantity }}</td>
                             <td>₱{{ $item->product->price * $item->quantity }}</td>
-                            <td>{{ $item->courier }}</td> <!-- Display the courier -->
+                            <td>{{ $item->courier }}</td>
                             <td class="button-container">
                                 <form method="POST" action="{{ route('cart.order') }}">
                                     @csrf
@@ -74,13 +74,11 @@
             <div class="card-body">
                 <h5 class="card-title">Total Price</h5>
                 <p class="card-text">Total: ₱{{ $totalPrice }}</p>
-                <p class="card-text">Delivering Fee: ₱{{ $deliveringFee }}</p> <!-- Display delivering fee -->
-                <p class="card-text">Grand Total: ₱{{ $totalPrice + $deliveringFee }}</p> <!-- Calculate and display grand total -->
+                <p class="card-text">Delivering Fee: ₱{{ $deliveringFee }}</p>
+                <p class="card-text">Grand Total: ₱{{ $totalPrice + $deliveringFee }}</p>
             </div>
         </div>
-        <!-- Add back button here -->
         <a href="/showDashboard" class="btn btn-secondary mt-3">Back</a>
     </div>
 </div>
-<!-- / Shopping Cart Content -->
 @endsection
