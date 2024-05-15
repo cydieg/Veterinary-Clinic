@@ -531,10 +531,8 @@
                             </select>
                         </div>
                         <div class="form-group" id="courierSelection" style="display: none;">
-                            <label for="courier">Select Courier:</label>
+                            <label for="courier">Available Courier:</label>
                             <select class="form-control" name="courier" id="courier">
-                                <option value="broom">Broom</option>
-                                <option value="posada">Posada</option>
                                 <option value="hatid">Hatid</option>
                             </select>
                         </div>
