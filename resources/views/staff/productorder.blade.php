@@ -35,9 +35,10 @@
                 <th>Address</th>
                 <th>Product</th>
                 <th>Quantity</th>
-                <th>Courier</th> <!-- Add courier column header -->
+                <th>Courier</th>
                 <th>Branch</th>
                 <th>Total Price</th>
+                <th>Delivery Fee</th> <!-- Add delivery fee column header -->
                 <th>Action</th>
             </tr>
         </thead>
@@ -49,9 +50,10 @@
                     <td>{{ $sale->user->address }}</td>
                     <td>{{ $sale->product->name }}</td>
                     <td>{{ $sale->quantity }}</td>
-                    <td>{{ $sale->courier }}</td> <!-- Display the courier -->
+                    <td>{{ $sale->courier }}</td>
                     <td>{{ $sale->branch->name }}</td>
                     <td>₱{{ $sale->total_price }}</td>
+                    <td>₱{{ $sale->fee ? $sale->fee->delivering_fee : 'N/A' }}</td> <!-- Display the delivery fee -->
                     <td class="action-buttons">
                         <form action="{{ route('deliver.sale', $sale->id) }}" method="POST">
                             @csrf
@@ -63,5 +65,4 @@
             @endforeach
         </tbody>
     </table>
-</div>
 @endsection

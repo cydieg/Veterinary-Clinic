@@ -21,8 +21,6 @@
             margin-right: 5px; /* Add some spacing between buttons */
             font-size: 12px; /* Adjust button font size */
         }
-        <style>
-        /* Additional styling */
         .form-group {
             margin-bottom: 20px; /* Add some spacing between form groups */
         }
@@ -37,49 +35,49 @@
     </style>
 </head>
 <body>
-    <div class="container p-3 my-3 custom-bg-color text-white">Accepted Appointments</div>
-        <table class="table table-bordered table-striped">
-            <thead>
+    <div class="container p-3 my-3 custom-bg-color text-white">Delivered Products</div>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Customer Name</th>
+                <th>Contact Number</th>
+                <th>Address</th>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+                <th>Delivery Fee</th> <!-- Add delivery fee column header -->
+                <th>Action</th>
+                <!-- Add more columns if needed -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($deliveringSales as $sale)
                 <tr>
-                    <th>Customer Name</th>
-                    <th>Contact Number</th>
-                    <th>Address</th>
-                    <th>Product Name</th>
-                    <th>Quantity</th>
-                    <th>Total Price</th>
-                    <th>Action</th>
-                    <!-- Add more columns if needed -->
+                    <td>{{ $sale->user->firstName }} {{ $sale->user->lastName }}</td>
+                    <td>{{ $sale->user->contact_number }}</td>
+                    <td>{{ $sale->user->address }}</td>
+                    <td>{{ $sale->product->name }}</td>
+                    <td>{{ $sale->quantity }}</td>
+                    <td>₱{{ $sale->total_price }}</td>
+                    <td>₱{{ $sale->fee ? $sale->fee->delivering_fee : 'N/A' }}</td> <!-- Display the delivery fee -->
+                    <td class="action-buttons">
+                        @if($sale->status == 'delivering')
+                            <form action="{{ route('mark-as-delivered', $sale->id) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-primary btn-sm">Mark as Delivered</button>
+                            </form>
+                            <form action="{{ route('failed-delivery', $sale->id) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-danger btn-sm">Failed Delivery</button>
+                            </form>                                
+                        @else
+                            Delivered
+                        @endif
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach($deliveringSales as $sale)
-                    <tr>
-                        <td>{{ $sale->user->firstName }} {{ $sale->user->lastName }}</td>
-                        <td>{{ $sale->user->contact_number }}</td>
-                        <td>{{ $sale->user->address }}</td>
-                        <td>{{ $sale->product->name }}</td>
-                        <td>{{ $sale->quantity }}</td>
-                        <td>₱{{ $sale->total_price }}</td>
-                        <td class="action-buttons">
-                            @if($sale->status == 'delivering')
-                                <form action="{{ route('mark-as-delivered', $sale->id) }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="btn btn-primary btn-sm">Mark as Delivered</button>
-                                </form>
-                                <form action="{{ route('failed-delivery', $sale->id) }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="btn btn-danger btn-sm">Failed Delivery</button>
-                                </form>                                
-                            @else
-                                Delivered
-                            @endif
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-
+            @endforeach
+        </tbody>
+    </table>
     <!-- Include your JavaScript scripts or other body elements here -->
 </body>
 </html>

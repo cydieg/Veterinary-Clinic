@@ -40,4 +40,8 @@ class Sale extends Model
     {
         return $this->hasMany(Rating::class);
     }
+    public function getFeeAttribute()
+    {
+        return Fee::where('barangay', $this->user->barangay)->first();
+    }
 }

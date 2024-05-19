@@ -134,9 +134,9 @@ class StaffController extends Controller
     {
         // Get the authenticated user's branch ID
         $branchId = auth()->user()->branch_id;
-
+    
         // Fetch sales related to the authenticated user's branch
-        $sales = Sale::with('user', 'product', 'branch')
+        $sales = Sale::with(['user', 'product', 'branch']) // Removed 'fee' to avoid unnecessary eager loading
             ->whereHas('branch', function ($query) use ($branchId) {
                 $query->where('id', $branchId);
             })
@@ -144,11 +144,11 @@ class StaffController extends Controller
             ->where('status', '!=', 'delivering') // Exclude 'delivering' sales
             ->where('status', '!=', 'canceled') // Exclude 'canceled' sales
             ->get();
-
+    
         // Pass sales to the view
         return view('staff.productorder', compact('sales'));
     }
-
+    
     //ito na
     public function deliverSale(Sale $sale, Request $request)
     {
@@ -174,9 +174,11 @@ class StaffController extends Controller
         // Get the authenticated user's branch ID
         $branchId = auth()->user()->branch_id;
 
-        // Fetch sales with delivering status related to the authenticated user's branch
-        $deliveringSales = Sale::with('user', 'product', 'branch')
-            ->where('branch_id', $branchId) // Filter by branch_id directly
+        // Fetch delivering sales related to the authenticated user's branch
+        $deliveringSales = Sale::with(['user', 'product', 'branch']) // Removed 'fee' to avoid unnecessary eager loading
+            ->whereHas('branch', function ($query) use ($branchId) {
+                $query->where('id', $branchId);
+            })
             ->where('status', 'delivering')
             ->get();
 
