@@ -64,65 +64,68 @@
 </head>
 <body>
     <div class="container p-3 my-3 custom-bg-color text-white">Yearly Sales Report ({{ $currentYear }})</div>
-        <!-- Add branch filter form -->
-        <form action="{{ route('yearly.report') }}" method="get">
+    <!-- Add branch filter form -->
+    <form action="{{ route('yearly.report') }}" method="get">
         &nbsp &nbsp <label for="branch">Select Branch:</label>
-            <select name="branch" id="branch">
-                <option value="">All Branches</option>
-                @foreach($branches as $branch)
-                    <option value="{{ $branch->id }}" {{ request('branch') == $branch->id ? 'selected' : '' }}>{{ $branch->name }}</option>
-                @endforeach
-            </select>
-            <button type="submit">Filter</button>
-            <div class="row">
-                <div class="col-md-12 mb-2 text-right">
+        <select name="branch" id="branch">
+            <option value="">All Branches</option>
+            @foreach($branches as $branch)
+                <option value="{{ $branch->id }}" {{ request('branch') == $branch->id ? 'selected' : '' }}>{{ $branch->name }}</option>
+            @endforeach
+        </select>
+        
+        <label for="date">Select Date:</label>
+        <input type="date" id="date" name="date" value="{{ request('date') }}">
+        
+        <button type="submit">Filter</button>
+        <div class="row">
+            <div class="col-md-12 mb-2 text-right">
                 <a href="{{ route('yearly.report.pdf') }}" method="get" class="btn btn-info btn-sm" style="text-align: left;">Download Yearly Sales Report</a>&nbsp &nbsp
-                </div>
             </div>
-        </form>
+        </div>
+    </form>
 
-        <!-- Display selected branch name -->
-        @if(request('branch'))
-            <p>Filtered by: {{ $branches->where('id', request('branch'))->first()->name }} Sales</p>
-        @endif
+    <!-- Display selected branch name -->
+    @if(request('branch'))
+        <p>Filtered by: {{ $branches->where('id', request('branch'))->first()->name }} Sales</p>
+    @endif
 
-        <p>Total Sales for {{ $currentYear }}: ${{ number_format($totalSalesForCurrentYear, 2) }}</p>
+    <p>Total Sales for {{ $currentYear }}: ${{ number_format($totalSalesForCurrentYear, 2) }}</p>
 
-        <!-- Display months with sales and products sold -->
-        @foreach ($salesForCurrentYear->groupBy(function($sale) { return $sale->created_at->format('F'); }) as $month => $sales)
-            <h2>{{ $month }}</h2>
-            <table>
-                <thead>
+    <!-- Display months with sales and products sold -->
+    @foreach ($salesForCurrentYear->groupBy(function($sale) { return $sale->created_at->format('F'); }) as $month => $sales)
+        <h2>{{ $month }}</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @php
+                    $monthlyTotalPrice = 0;
+                @endphp
+                @foreach ($sales as $sale)
                     <tr>
-                        <th>Product</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
-                        <th>Total Price</th>
+                        <td>{{ $sale->product->name }}</td>
+                        <td>{{ $sale->quantity }}</td>
+                        <td>₱{{ number_format($sale->product->price, 2) }}</td>
+                        <td>₱{{ number_format($sale->total_price, 2) }}</td>
                     </tr>
-                </thead>
-                <tbody>
                     @php
-                        $monthlyTotalPrice = 0;
+                        $monthlyTotalPrice += $sale->total_price;
                     @endphp
-                    @foreach ($sales as $sale)
-                        <tr>
-                            <td>{{ $sale->product->name }}</td>
-                            <td>{{ $sale->quantity }}</td>
-                            <td>₱{{ number_format($sale->product->price, 2) }}</td>
-                            <td>₱{{ number_format($sale->total_price, 2) }}</td>
-                        </tr>
-                        @php
-                            $monthlyTotalPrice += $sale->total_price;
-                        @endphp
-                    @endforeach
-                    <tr>
-                        <td colspan="3" class="total-column">Total:</td>
-                        <td class="total-column">₱{{ number_format($monthlyTotalPrice, 2) }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        @endforeach
-    </div>
+                @endforeach
+                <tr>
+                    <td colspan="3" class="total-column">Total:</td>
+                    <td class="total-column">₱{{ number_format($monthlyTotalPrice, 2) }}</td>
+                </tr>
+            </tbody>
+        </table>
+    @endforeach
 </body>
 </html>
 @endsection

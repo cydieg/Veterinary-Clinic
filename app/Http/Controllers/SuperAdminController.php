@@ -220,30 +220,36 @@ class SuperAdminController extends Controller
     {
         // Get the current year
         $currentYear = Carbon::now()->year;
-
+    
         // Get branches for the dropdown
         $branches = Branch::all();
-
-        // Get selected branch ID from the request
+    
+        // Get selected branch ID and date from the request
         $branchId = $request->input('branch');
-
-        // Query for sales based on branch selection
+        $selectedDate = $request->input('date');
+    
+        // Query for sales based on branch selection and date
         $salesQuery = Sale::where('status', 'delivered')
             ->whereYear('created_at', $currentYear);
-
+    
         if ($branchId) {
             $salesQuery->where('branch_id', $branchId);
         }
-
+    
+        if ($selectedDate) {
+            $salesQuery->whereDate('created_at', $selectedDate);
+        }
+    
         // Fetch delivered sales for the current year
         $salesForCurrentYear = $salesQuery->get();
-
+    
         // Calculate total sales for the current year
         $totalSalesForCurrentYear = $salesForCurrentYear->sum('total_price');
-
+    
         // Pass the data to the view
         return view('superadmin.yearlyreport', compact('salesForCurrentYear', 'totalSalesForCurrentYear', 'currentYear', 'branches'));
     }
+    
     public function generatePDF(Request $request)
     {
         // Get the monthly sales data
