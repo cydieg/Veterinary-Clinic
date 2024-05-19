@@ -1,95 +1,110 @@
 @extends('back.layout.superadmin-layout')
 @section('pageTitle', isset($pageTitle) ? $pageTitle : 'Create New User')
 @section('content')
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visualization</title>
-    <!-- Include Chart.js library -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        .container {
-            display: flex;
-            flex-wrap: wrap; /* Allow wrapping to the next line */
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-        .chart-container {
-            width: 48%; /* Adjusted width */
-            padding: 20px; /* Added padding */
-            border-radius: 10px; /* Added border radius */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added box shadow */
-            background-color: #fff; /* Added background color */
-            box-sizing: border-box; /* Added box sizing */
-            margin-bottom: 20px; /* Adjusted margin */
-        }
-        canvas {
-            width: 100%;
-            height: 100px; /* Adjusted height */
-        }
-        select {
-            margin-bottom: 10px; /* Adjusted margin */
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="chart-container">
-            <h4>Total Sales</h4>
-            <label for="dataOption"></label>
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Visualization</title>
+        <!-- Include Chart.js library -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <style>
+            .container {
+                display: flex;
+                flex-wrap: wrap;
+                /* Allow wrapping to the next line */
+                justify-content: space-between;
+                margin-bottom: 20px;
+            }
+
+            .chart-container {
+                width: 48%;
+                /* Adjusted width */
+                padding: 20px;
+                /* Added padding */
+                border-radius: 10px;
+                /* Added border radius */
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                /* Added box shadow */
+                background-color: #fff;
+                /* Added background color */
+                box-sizing: border-box;
+                /* Added box sizing */
+                margin-bottom: 20px;
+                /* Adjusted margin */
+            }
+
+            canvas {
+                width: 100%;
+                height: 100px;
+                /* Adjusted height */
+            }
+
+            select {
+                margin-bottom: 10px;
+                /* Adjusted margin */
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="chart-container">
+                <h4>Total Sales</h4>
+                <label for="dataOption"></label>
                 <select id="dataOption">
                     <option value="day">Daily</option>
                     <option value="week">Weekly</option>
                     <option value="month">Monthly</option>
                     <option value="year">Yearly</option>
                 </select>
-            <canvas id="salesChart" width="400" height="300"></canvas>
-        </div>
-    
-        <div class="chart-container">
-            <h4>Number of Sales for Each Branch</h4>
-            <canvas id="salesPerBranchChart" width="400" height="300"></canvas>
-        </div>
-    </div>
+                <canvas id="salesChart" width="400" height="300"></canvas>
+            </div>
 
-    <div class="container">
-        <div class="chart-container">
-            <h4>Number of Users for Each Branch</h4>
-            <canvas id="usersPerBranchChart" width="400" height="300"></canvas>
+            <div class="chart-container">
+                <h4>Number of Sales for Each Branch</h4>
+                <canvas id="salesPerBranchChart" width="400" height="300"></canvas>
+            </div>
         </div>
-    
-        <div class="chart-container">
-            <h4>Sales Distribution by Selected Data</h4>
-            <select id="dataSelect">
-                <option value="region">Region</option>
-                <option value="province">Province</option>
-                <option value="city">City</option>
-                <option value="barangay">Barangay</option>
-                <option value="address">Address</option>
-            </select>
-            <canvas id="chartCanvas" width="400" height="300"></canvas>
-        </div>
-    </div>
 
-    <div class="container">
-        <div class="chart-container">
-            <h4>Appointments</h4>
-            <select id="appointmentType">
-                <option value="day">Appointments Completed by Day</option>
-                <option value="month">Appointments Completed by Month</option>
-                <option value="year">Appointments Completed by Year</option>
-            </select>
-            <canvas id="appointmentsChart" width="400" height="300"></canvas>
-        </div>
-    </div>
+        <div class="container">
+            <div class="chart-container">
+                <h4>Number of Users for Each Branch</h4>
+                <canvas id="usersPerBranchChart" width="400" height="300"></canvas>
+            </div>
 
-    <script>
-        // Your JavaScript code here...
-    </script>
-</body>
-</html>
+            <div class="chart-container">
+                <h4>Sales Distribution by Selected Data</h4>
+                <select id="dataSelect">
+                    <option value="region">Region</option>
+                    <option value="province">Province</option>
+                    <option value="city">City</option>
+                    <option value="barangay">Barangay</option>
+                </select>
+                <canvas id="chartCanvas" width="400" height="300"></canvas>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="chart-container">
+                <h4>Appointments</h4>
+                <select id="appointmentType">
+                    <option value="day">Appointments Completed by Day</option>
+                    <option value="month">Appointments Completed by Month</option>
+                    <option value="year">Appointments Completed by Year</option>
+                </select>
+                <canvas id="appointmentsChart" width="400" height="300"></canvas>
+            </div>
+        </div>
+
+        <script>
+            // Your JavaScript code here...
+        </script>
+    </body>
+
+    </html>
 
     <script>
         var salesTotalBarData = {
@@ -98,10 +113,10 @@
             month: {!! json_encode($salesByMonth) !!},
             year: {!! json_encode($salesByYear) !!}
         };
-    
+
         var ctx = document.getElementById('salesChart').getContext('2d');
         var salesChart;
-    
+
         function createChart(data, label, bgColor, borderColor) {
             return new Chart(ctx, {
                 type: 'bar',
@@ -127,7 +142,7 @@
                 }
             });
         }
-    
+
         function updateSalesChart(option) {
             if (salesChart) {
                 salesChart.destroy();
@@ -158,20 +173,19 @@
             }
             salesChart = createChart(selectedData, label, bgColor, borderColor);
         }
-    
+
         // Initial chart display
         var initialOption = document.getElementById('dataOption').value;
         updateSalesChart(initialOption);
-    
+
         // Update chart when dropdown option changes
         document.getElementById('dataOption').addEventListener('change', function() {
             var selectedOption = this.value;
             updateSalesChart(selectedOption);
         });
     </script>
-   
+
     <script>
-        
         // Parse the data from PHP to JavaScript for sales distribution by selected data
         var salesData = {!! json_encode($salesWithUserAddress) !!};
 
@@ -180,6 +194,7 @@
             var dataCounts = {};
             salesData.forEach(function(sale) {
                 var fieldValue = sale.user[dataField];
+                // Increment the count for each sale
                 dataCounts[fieldValue] = (dataCounts[fieldValue] || 0) + 1;
             });
             return dataCounts;
@@ -285,7 +300,8 @@
         // Generate random colors for each dataset
         var backgroundColors = [];
         for (var i = 0; i < branchNames.length; i++) {
-            var randomColor = 'rgba(' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ', 0.5)';
+            var randomColor = 'rgba(' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ', ' +
+                Math.floor(Math.random() * 256) + ', 0.5)';
             backgroundColors.push(randomColor);
         }
 
@@ -379,7 +395,8 @@
         // Initialize the chart with default value
         updateAppointmentsChart('day');
     </script>
-    
-</body>
-</html>
+
+    </body>
+
+    </html>
 @endsection
