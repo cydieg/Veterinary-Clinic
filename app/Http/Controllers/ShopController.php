@@ -34,10 +34,21 @@ class ShopController extends Controller
             \Log::error('Error decrypting branch ID: ' . $e->getMessage());
         }
     
-        // Retrieve all branches
-        $branches = Branch::all();
+        // Retrieve the selected branch
+        $selectedBranch = Branch::find($branchId);
     
-        // If branch ID is not provided and there are branches available, set the first branch ID and redirect
+        // If branch ID is not provided or the selected branch is inactive, set a flag to indicate inactive branch
+        $branchInactive = !$branchId || !$selectedBranch || $selectedBranch->status !== 'active';
+    
+        // Retrieve all active branches
+        $branches = Branch::where('status', 'active')->get();
+    
+        // If branch is inactive, set the branch ID to null to prevent displaying products
+        if ($branchInactive) {
+            $branchId = null;
+        }
+    
+        // If branch ID is not provided and there are active branches available, set the first branch ID and redirect
         if (!$branchId && $branches->isNotEmpty()) {
             $branchId = $branches->first()->id;
             // Redirect to the index route with the selected branch ID
@@ -84,8 +95,9 @@ class ShopController extends Controller
         $hotItems = $hotItemsQuery->get();
     
         // Pass the data to the view and render it
-        return view('shop.shop', compact('inventoryItems', 'branches', 'branchId', 'encryptedBranchId', 'hotItems', 'request'));
+        return view('shop.shop', compact('inventoryItems', 'branches', 'branchId', 'encryptedBranchId', 'hotItems', 'request', 'branchInactive'));
     }
+    
     
     
 //add to cart 

@@ -11,43 +11,44 @@ use App\Models\Branch;
 class ClientController extends Controller
 {
     public function customer(Request $request)
-    {
-        $branchId = Auth::user()->branch_id;
-        
-        // Check if a specific date is requested, otherwise default to today
-        $selectedDate = $request->input('date') ?? date('Y-m-d');
-    
-        // Get appointments for the selected date
-        $appointments = Auth::user()->appointments()->where('appointment_date', $selectedDate)->get();
-    
-        // Calculate remaining reservation slots for the selected date
-        $bookedSlots = Appointment::where('appointment_date', $selectedDate)->count(); // Number of booked slots for the selected date
-        $totalSlots = 10; // Total slots per day
-        $remainingSlots = $totalSlots - $bookedSlots;
-    
-        // Calculate remaining slots for the current date booked by the current user
-        $currentDateBookedSlots = Auth::user()->appointments()->where('appointment_date', $selectedDate)->count();
-        $currentDateRemainingSlots = $totalSlots - $currentDateBookedSlots;
-    
-        // Fetch appointments for the next 7 days to display available slots
-        $nextWeekDates = [];
-        for ($i = 1; $i <= 7; $i++) {
-            $nextWeekDates[] = date('Y-m-d', strtotime("+$i day", strtotime($selectedDate)));
-        }
-    
-        $futureAppointments = [];
-        foreach ($nextWeekDates as $date) {
-            $branches = Branch::all();
-            foreach ($branches as $branch) {
-                $bookedSlots = Appointment::where('appointment_date', $date)->where('branch_id', $branch->id)->count();
-                $remainingSlots = $totalSlots - $bookedSlots;
-                $futureAppointments[$date][$branch->id] = $remainingSlots;
-            }
-        }
-    
-        $branches = Branch::all();
-        return view('client.customer', compact('appointments', 'branches', 'selectedDate', 'remainingSlots', 'futureAppointments', 'currentDateRemainingSlots'));
+{
+    $branchId = Auth::user()->branch_id;
+
+    // Check if a specific date is requested, otherwise default to today
+    $selectedDate = $request->input('date') ?? date('Y-m-d');
+
+    // Get appointments for the selected date
+    $appointments = Auth::user()->appointments()->where('appointment_date', $selectedDate)->get();
+
+    // Calculate remaining reservation slots for the selected date
+    $bookedSlots = Appointment::where('appointment_date', $selectedDate)->count(); // Number of booked slots for the selected date
+    $totalSlots = 10; // Total slots per day
+    $remainingSlots = $totalSlots - $bookedSlots;
+
+    // Calculate remaining slots for the current date booked by the current user
+    $currentDateBookedSlots = Auth::user()->appointments()->where('appointment_date', $selectedDate)->count();
+    $currentDateRemainingSlots = $totalSlots - $currentDateBookedSlots;
+
+    // Fetch appointments for the next 7 days to display available slots
+    $nextWeekDates = [];
+    for ($i = 1; $i <= 7; $i++) {
+        $nextWeekDates[] = date('Y-m-d', strtotime("+$i day", strtotime($selectedDate)));
     }
+
+    $futureAppointments = [];
+    foreach ($nextWeekDates as $date) {
+        $activeBranches = Branch::where('status', 'active')->get(); // Filter out inactive branches
+        foreach ($activeBranches as $branch) {
+            $bookedSlots = Appointment::where('appointment_date', $date)->where('branch_id', $branch->id)->count();
+            $remainingSlots = $totalSlots - $bookedSlots;
+            $futureAppointments[$date][$branch->id] = $remainingSlots;
+        }
+    }
+
+    $branches = Branch::where('status', 'active')->get(); // Filter out inactive branches
+    return view('client.customer', compact('appointments', 'branches', 'selectedDate', 'remainingSlots', 'futureAppointments', 'currentDateRemainingSlots'));
+}
+
 
     public function store(Request $request)
     {
