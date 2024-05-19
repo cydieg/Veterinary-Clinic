@@ -6,16 +6,34 @@ use Illuminate\Http\Request;
 use App\Models\Inventory;
 use App\Models\Branch;
 use App\Models\Audit;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Storage;
 
 class InventoryController extends Controller
 {
     public function index()
-    {
-        $branches = Branch::all();
-        $inventoryItems = Inventory::all();
-        return view('inventory.index', compact('branches', 'inventoryItems'));
-    }
+{
+    $branches = Branch::all();
+    $inventoryItems = Inventory::all();
+    
+    // Find low inventory items (quantity less than or equal to 10)
+    $lowInventoryItems = $inventoryItems->filter(function ($item) {
+        return $item->quantity <= 10;
+    });
+
+    // Get the first low inventory item (if any)
+    $lowInventoryProduct = $lowInventoryItems->first();
+
+    // Check if there are low inventory items to show alert
+    $showLowInventoryAlert = $lowInventoryProduct !== null;
+
+    // Share the variable with all views
+    View::share('showLowInventoryAlert', $showLowInventoryAlert);
+    View::share('lowInventoryProduct', $lowInventoryProduct);
+
+    return view('inventory.index', compact('branches', 'inventoryItems'));
+}
+    
 
     public function store(Request $request)
 {
