@@ -96,7 +96,10 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 
 //Staff  routes
+Route::middleware(['auth.manual'])->group(function () {
 Route::get('/staff', [StaffController::class, 'index'])->name('staff');
+
+});
 Route::get('/homeStaff', [StaffController::class, 'homeStaff'])->name('homeStaff');
 Route::get('/staff/acceptedappoint', [StaffController::class, 'acceptedAppointments'])->name('staff.acceptedappoint');
 Route::post('/accept-appointment/{appointment}', [StaffController::class, 'pendingAppointment'])->name('accept.appointment');
