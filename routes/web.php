@@ -188,6 +188,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/reports/yearly', [AdminController::class, 'yearlyReports'])->name('admin.reports.yearly');
 });
 
+
 // ecom routes
 Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
 Route::post('/shop/order', [ShopController::class, 'orderProduct'])->name('shop.order');

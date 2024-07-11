@@ -21,83 +21,73 @@ use Illuminate\Support\Collection;
 class ShopController extends Controller
 {
     public function index(Request $request)
-    {
-        // Retrieve the encrypted branch ID from the request
-        $encryptedBranchId = $request->input('branch_id');
-    
-        try {
-            // Decrypt the encrypted branch ID
-            $branchId = $encryptedBranchId ? Crypt::decrypt($encryptedBranchId) : null;
-        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-            // Handle decryption error, log the error message, or fallback to a default value
-            $branchId = null; // Fallback to null in case of decryption failure
-            \Log::error('Error decrypting branch ID: ' . $e->getMessage());
-        }
-    
-        // Retrieve the selected branch
-        $selectedBranch = Branch::find($branchId);
-    
-        // If branch ID is not provided or the selected branch is inactive, set a flag to indicate inactive branch
-        $branchInactive = !$branchId || !$selectedBranch || $selectedBranch->status !== 'active';
-    
-        // Retrieve all active branches
-        $branches = Branch::where('status', 'active')->get();
-    
-        // If branch is inactive, set the branch ID to null to prevent displaying products
-        if ($branchInactive) {
-            $branchId = null;
-        }
-    
-        // If branch ID is not provided and there are active branches available, set the first branch ID and redirect
-        if (!$branchId && $branches->isNotEmpty()) {
-            $branchId = $branches->first()->id;
-            // Redirect to the index route with the selected branch ID
-            return redirect()->route('shop.index', ['branch_id' => Crypt::encrypt($branchId)]);
-        }
-    
-        // Retrieve inventory items for the selected branch
-        $inventoryQuery = Inventory::where('branch_id', $branchId);
-    
-        // Filter by category if provided in the request
-        if ($request->has('category')) {
-            $category = $request->input('category');
-            $inventoryQuery->where('category', $category);
-        }
-    
-        // Filter by search query if provided
-        if ($request->has('search')) {
-            $search = $request->input('search');
-            $inventoryQuery->where(function ($query) use ($search) {
-                $query->where('name', 'like', '%' . $search . '%')
-                    ->orWhere('description', 'like', '%' . $search . '%');
-            });
-        }
-    
-        // Ensure that only products belonging to the selected branch are retrieved
-        $inventoryQuery->where('branch_id', $branchId);
-    
-        // Retrieve the paginated inventory items
-        $inventoryItems = $inventoryQuery->paginate(9);
-    
-        // Fetch hot items based on sales data with status 'delivered' and quantity over 200 for the selected branch
-        $hotItemsQuery = Sale::where('status', 'delivered')
-                             ->where('quantity', '>=', 200)
-                             ->where('branch_id', $branchId);
-    
-        // Filter hot items by category if provided in the request
-        if ($request->has('category')) {
-            $category = $request->input('category');
-            $hotItemsQuery->whereHas('product', function ($query) use ($category) {
-                $query->where('category', $category);
-            });
-        }
-    
-        $hotItems = $hotItemsQuery->get();
-    
-        // Pass the data to the view and render it
-        return view('shop.shop', compact('inventoryItems', 'branches', 'branchId', 'encryptedBranchId', 'hotItems', 'request', 'branchInactive'));
+{
+    // Retrieve the encrypted branch ID from the request
+    $encryptedBranchId = $request->input('branch_id');
+
+    try {
+        // Decrypt the encrypted branch ID
+        $branchId = $encryptedBranchId ? Crypt::decrypt($encryptedBranchId) : null;
+    } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+        // Handle decryption error, log the error message, or fallback to a default value
+        $branchId = null; // Fallback to null in case of decryption failure
+        \Log::error('Error decrypting branch ID: ' . $e->getMessage());
     }
-    
+
+    // Retrieve all active branches
+    $branches = Branch::where('status', 'active')->get();
+
+    // Retrieve the selected branch (if branch ID is provided)
+    $selectedBranch = null;
+    if ($branchId) {
+        $selectedBranch = $branches->where('id', $branchId)->first();
+    }
+
+    // If branch ID is not valid or selected branch is inactive, set a flag to indicate inactive branch
+    $branchInactive = !$branchId || !$selectedBranch || $selectedBranch->status !== 'active';
+
+    // Retrieve inventory items for the selected branch only
+    $inventoryItemsQuery = Inventory::where('branch_id', $branchId);
+
+    // Filter by category if provided in the request
+    if ($request->has('category')) {
+        $category = $request->input('category');
+        $inventoryItemsQuery->where('category', $category);
+    }
+
+    // Filter by search query if provided
+    if ($request->has('search')) {
+        $search = $request->input('search');
+        $inventoryItemsQuery->where(function ($query) use ($search) {
+            $query->where('name', 'like', '%' . $search . '%')
+                ->orWhere('description', 'like', '%' . $search . '%');
+        });
+    }
+
+    // Retrieve the paginated inventory items
+    $inventoryItems = $inventoryItemsQuery->paginate(9);
+
+    // Fetch hot items based on sales data with status 'delivered' and quantity over 200 for the selected branch
+    $hotItemsQuery = Sale::where('status', 'delivered')
+                         ->where('quantity', '>=', 200)
+                         ->where('branch_id', $branchId);
+
+    // Filter hot items by category if provided in the request
+    if ($request->has('category')) {
+        $category = $request->input('category');
+        $hotItemsQuery->whereHas('product', function ($query) use ($category) {
+            $query->where('category', $category);
+        });
+    }
+
+    // Retrieve the hot items for the selected branch
+    $hotItems = $hotItemsQuery->get();
+
+    // Pass the data to the view and render it
+    return view('shop.shop', compact('inventoryItems', 'branches', 'branchId', 'encryptedBranchId', 'hotItems', 'request', 'branchInactive'));
+}
+
+
     
     
 //add to cart 
