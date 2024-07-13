@@ -231,18 +231,25 @@
                         <a href="#" data-toggle="dropdown">Categories <i class="fa fa-angle-down"></i></a>
                         <ul class="dropdown-menu">
                             <li><a href="{{ route('shop.index', ['branch_id' => $encryptedBranchId]) }}">All</a></li>
-                            @foreach($categories as $category)
-                                <li><a href="{{ route('shop.index', ['branch_id' => $encryptedBranchId, 'category' => $category]) }}">{{ $category }}</a></li>
-                            @endforeach
+                            <li><a
+                                    href="{{ route('shop.index', ['branch_id' => $encryptedBranchId, 'category' => 'Dog']) }}">Dog</a>
+                            </li>
+                            <li><a
+                                    href="{{ route('shop.index', ['branch_id' => $encryptedBranchId, 'category' => 'Cat']) }}">Cat</a>
+                            </li>
+                            <li><a
+                                    href="{{ route('shop.index', ['branch_id' => $encryptedBranchId, 'category' => 'Fish']) }}">Fish</a>
+                            </li>
+                            <li><a
+                                    href="{{ route('shop.index', ['branch_id' => $encryptedBranchId, 'category' => 'Bird']) }}">Bird</a>
+                            </li>
                         </ul>
                     </li>
-                    
-
                     <li class="dropdown">
                         <button class="btn" type="button" id="branchDropdown" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
-                            Select Branch: <!-- Added text -->
-
+                            Select Branch:
+                    
                             @if ($branchId)
                                 {{ $branches->where('id', $branchId)->first()->name }}
                             @else
@@ -259,6 +266,10 @@
                             @endforeach
                         </div>
                     </li>
+                    
+                    
+                    
+                    
                 </ul>
                 <!-- /NAV -->
             </div>
