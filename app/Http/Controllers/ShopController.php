@@ -92,8 +92,10 @@ class ShopController extends Controller
     // Retrieve the hot items for the selected branch
     $hotItems = $hotItemsQuery->get();
 
+    $categories = Inventory::select('category')->distinct()->get();
+
     // Pass the data to the view and render it
-    return view('shop.shop', compact('inventoryItems', 'branches', 'branchId', 'encryptedBranchId', 'hotItems', 'request'));
+    return view('shop.shop', compact('inventoryItems', 'branches', 'branchId', 'encryptedBranchId', 'hotItems', 'request', 'categories'));
 }
 
 
