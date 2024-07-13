@@ -53,6 +53,11 @@ class ShopController extends Controller
             $branchInactive = !$branchId || !$selectedBranch || $selectedBranch->status !== 'active';
         }
     
+        // Fetch distinct categories from the inventories table for the selected branch
+        $categories = Inventory::where('branch_id', $branchId)
+                        ->distinct()
+                        ->pluck('category');
+    
         // Retrieve inventory items for the selected branch only
         $inventoryItemsQuery = Inventory::where('branch_id', $branchId);
     
@@ -91,7 +96,7 @@ class ShopController extends Controller
         $hotItems = $hotItemsQuery->get();
     
         // Pass the data to the view and render it
-        return view('shop.shop', compact('inventoryItems', 'branches', 'branchId', 'encryptedBranchId', 'hotItems', 'request', 'branchInactive'));
+        return view('shop.shop', compact('inventoryItems', 'branches', 'branchId', 'encryptedBranchId', 'hotItems', 'request', 'branchInactive', 'categories'));
     }
     
 

@@ -231,20 +231,12 @@
                         <a href="#" data-toggle="dropdown">Categories <i class="fa fa-angle-down"></i></a>
                         <ul class="dropdown-menu">
                             <li><a href="{{ route('shop.index', ['branch_id' => $encryptedBranchId]) }}">All</a></li>
-                            <li><a
-                                    href="{{ route('shop.index', ['branch_id' => $encryptedBranchId, 'category' => 'Dog']) }}">Dog</a>
-                            </li>
-                            <li><a
-                                    href="{{ route('shop.index', ['branch_id' => $encryptedBranchId, 'category' => 'Cat']) }}">Cat</a>
-                            </li>
-                            <li><a
-                                    href="{{ route('shop.index', ['branch_id' => $encryptedBranchId, 'category' => 'Fish']) }}">Fish</a>
-                            </li>
-                            <li><a
-                                    href="{{ route('shop.index', ['branch_id' => $encryptedBranchId, 'category' => 'Bird']) }}">Bird</a>
-                            </li>
+                            @foreach($categories as $category)
+                                <li><a href="{{ route('shop.index', ['branch_id' => $encryptedBranchId, 'category' => $category]) }}">{{ $category }}</a></li>
+                            @endforeach
                         </ul>
                     </li>
+                    
 
                     <li class="dropdown">
                         <button class="btn" type="button" id="branchDropdown" data-toggle="dropdown"
@@ -381,19 +373,6 @@
                                 <li><a href="#"><i class="fa fa-map-marker"></i>Camilmil, Calapan City</a></li>
                                 <li><a href="#"><i class="fa fa-phone"></i>09071112979</a></li>
                                 <li><a href="#"><i class="fa fa-envelope"></i>remspetshop@email.com</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-xs-6">
-                        <div class="footer">
-                            <h3 class="footer-title">Categories</h3>
-                            <ul class="footer-links">
-                                <li><a href="#">Hot deals</a></li>
-                                <li><a href="#">Dog Products</a></li>
-                                <li><a href="#">Cat Products</a></li>
-                                <li><a href="#">Bird Products</a></li>
-                                <li><a href="#">Fish Products</a></li>
                             </ul>
                         </div>
                     </div>
