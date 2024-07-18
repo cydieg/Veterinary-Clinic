@@ -95,6 +95,7 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login.form
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 
+
 //Staff  routes
 Route::middleware(['auth.manual'])->group(function () {
 Route::get('/staff', [StaffController::class, 'index'])->name('staff');
@@ -133,10 +134,10 @@ Route::get('/search', [LandingPageController::class, 'search'])->name('search');
 
 
 //Page Controller
-Route::get('/showDashboard', [PageController::class, 'showDashboard'])->name('showDashboard');
-Route::get('/profileSetting', [PageController::class, 'profileSetting'])->name('profileSetting');
-Route::get('/changePassword', [PageController::class, 'changePassword'])->name('changePassword');
-Route::get('/message', [PageController::class, 'message'])->name('message');
+Route::get('/showDashboard', [PageController::class, 'showDashboard'])->name('showDashboard')->middleware('force.payment');
+Route::get('/profileSetting', [PageController::class, 'profileSetting'])->name('profileSetting')->middleware('force.payment');
+Route::get('/changePassword', [PageController::class, 'changePassword'])->name('changePassword')->middleware('force.payment');
+Route::get('/message', [PageController::class, 'message'])->name('message')->middleware('force.payment');
 
 
 //User Dashboard
@@ -151,27 +152,27 @@ Route::prefix('superadmin')->group(function () {
     Route::delete('/superadmin/user/{id}/archive', [UserManagementController::class, 'archive'])->name('superadmin.user.archive')->middleware('auth');
 
 });
-Route::get('/superadmin/user/{id}/show', [UserManagementController::class, 'show'])->name('superadmin.user.show');
+Route::get('/superadmin/user/{id}/show', [UserManagementController::class, 'show'])->name('superadmin.user.show')->middleware('force.payment');
 
 
 //inventory routes
-Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
-Route::post('/inventory', [InventoryController::class, 'store'])->name('inventory.store');
-Route::get('/inventory/{id}/audit', 'App\Http\Controllers\InventoryController@showAudit')->name('inventory.audit.show');
-Route::post('/inventory/addquantity/{id}', [InventoryController::class, 'addQuantity'])->name('inventory.addquantity');
+Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index')->middleware('force.payment');
+Route::post('/inventory', [InventoryController::class, 'store'])->name('inventory.store')->middleware('force.payment');
+Route::get('/inventory/{id}/audit', 'App\Http\Controllers\InventoryController@showAudit')->name('inventory.audit.show')->middleware('force.payment');
+Route::post('/inventory/addquantity/{id}', [InventoryController::class, 'addQuantity'])->name('inventory.addquantity')->middleware('force.payment');
 // Add the edit route
-Route::get('/inventory/{id}/edit', [InventoryController::class, 'edit'])->name('inventory.edit');
-Route::put('/inventory/{id}', [InventoryController::class, 'update'])->name('inventory.update');
+Route::get('/inventory/{id}/edit', [InventoryController::class, 'edit'])->name('inventory.edit')->middleware('force.payment');
+Route::put('/inventory/{id}', [InventoryController::class, 'update'])->name('inventory.update')->middleware('force.payment');
 //admin inventory
-Route::get('/admin/inventory', [InventoryController::class, 'indexadmin'])->name('admin.inventory.indexadmin');
-Route::delete('/admin/inventory/{id}', [InventoryController::class, 'destroy'])->name('admin.inventory.delete');
-Route::get('/admin/inventory/audit/{productId}', [AdminController::class, 'audit'])->name('admin.inventory.audit');
-Route::get('admin/inventory/add', [AdminController::class, 'addinven'])->name('admin.inventory.add');
-Route::post('admin/inventory/addQuantity/{productId}', [AdminController::class, 'addQuantity'])->name('admin.inventory.addQuantity');
-Route::post('/admin/inventory/store', [AdminController::class, 'storeinven'])->name('admin.inventory.store');
+Route::get('/admin/inventory', [InventoryController::class, 'indexadmin'])->name('admin.inventory.indexadmin')->middleware('force.payment');
+Route::delete('/admin/inventory/{id}', [InventoryController::class, 'destroy'])->name('admin.inventory.delete')->middleware('force.payment');
+Route::get('/admin/inventory/audit/{productId}', [AdminController::class, 'audit'])->name('admin.inventory.audit')->middleware('force.payment');
+Route::get('admin/inventory/add', [AdminController::class, 'addinven'])->name('admin.inventory.add')->middleware('force.payment');
+Route::post('admin/inventory/addQuantity/{productId}', [AdminController::class, 'addQuantity'])->name('admin.inventory.addQuantity')->middleware('force.payment');
+Route::post('/admin/inventory/store', [AdminController::class, 'storeinven'])->name('admin.inventory.store')->middleware('force.payment');
 
 //admin visualization
-Route::get('/visualize-sales', [AdminController::class, 'visualizeSales'])->name('visualize.sales');
+Route::get('/visualize-sales', [AdminController::class, 'visualizeSales'])->name('visualize.sales')->middleware('force.payment');
 //addmin usermanagement
 
 Route::prefix('admin')->group(function () {
@@ -189,55 +190,62 @@ Route::prefix('admin')->group(function () {
 });
 
 
-// ecom routes
-Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
-Route::post('/shop/order', [ShopController::class, 'orderProduct'])->name('shop.order');
+Route::middleware(['force.payment'])->group(function () {
+    Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
+    Route::post('/shop/order', [ShopController::class, 'orderProduct'])->name('shop.order');
 
-// Cart routes
-Route::get('/cart', [ShopController::class, 'showCart'])->name('cart.show');
-Route::post('/cart/add', [ShopController::class, 'addToCart'])->name('cart.add');
-Route::post('/cart/remove', [ShopController::class, 'removeFromCart'])->name('cart.remove'); // Add this line
+     // Cart routes
+     Route::get('/cart', [ShopController::class, 'showCart'])->name('cart.show');
+     Route::post('/cart/add', [ShopController::class, 'addToCart'])->name('cart.add');
+     Route::post('/cart/remove', [ShopController::class, 'removeFromCart'])->name('cart.remove');
+});
 
 
-//sales routes
-Route::post('/cart/order', [ShopController::class, 'order'])->name('cart.order');
-//visual routes
-Route::get('/fetch-addresses', [SuperAdminController::class, 'fetchAddresses'])->name('fetch.addresses');
-Route::get('/fetch-sales', [SuperAdminController::class, 'fetchSales'])->name('fetch.sales');
 
+Route::middleware(['force.payment'])->group(function () {
+    //sales routes
+    Route::post('/cart/order', [ShopController::class, 'order'])->name('cart.order');
+    //visual routes
+    Route::get('/fetch-addresses', [SuperAdminController::class, 'fetchAddresses'])->name('fetch.addresses');
+    Route::get('/fetch-sales', [SuperAdminController::class, 'fetchSales'])->name('fetch.sales');
+});
+
+
+Route::middleware(['force.payment'])->group(function () {
 //super admin report
-Route::get('/dashboard', [SuperAdminController::class, 'dashboard'])->name('dashboard');
-Route::get('/superadmin/report', [SuperAdminController::class, 'report'])->name('superadmin.report');
-Route::get('/generate_report', [SuperAdminController::class, 'report'])->name('generate_report');
-Route::get('/report', [SuperAdminController::class, 'report'])->name('report');
-Route::get('/monthly-report-pdf', [SuperAdminController::class, 'generatePDF'])->name('monthly.report.pdf');
-Route::get('/daily-sales-pdf', [SuperAdminController::class, 'generateDailySalesPDF'])->name('daily.sales.pdf');
-Route::get('/weekly-report-pdf', [SuperAdminController::class, 'generateWeeklyReportPDF'])->name('weekly.report.pdf');
-Route::get('/yearly-report-pdf', [SuperAdminController::class, 'generateYearlyReportPDF'])->name('yearly.report.pdf');
+    Route::get('/dashboard', [SuperAdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/superadmin/report', [SuperAdminController::class, 'report'])->name('superadmin.report');
+    Route::get('/generate_report', [SuperAdminController::class, 'report'])->name('generate_report');
+    Route::get('/report', [SuperAdminController::class, 'report'])->name('report');
+    Route::get('/monthly-report-pdf', [SuperAdminController::class, 'generatePDF'])->name('monthly.report.pdf');
+    Route::get('/daily-sales-pdf', [SuperAdminController::class, 'generateDailySalesPDF'])->name('daily.sales.pdf');
+    Route::get('/weekly-report-pdf', [SuperAdminController::class, 'generateWeeklyReportPDF'])->name('weekly.report.pdf');
+    Route::get('/yearly-report-pdf', [SuperAdminController::class, 'generateYearlyReportPDF'])->name('yearly.report.pdf');
+});
 
+Route::middleware(['force.payment'])->group(function () {
+    // Weekly sales report
+    Route::get('/weekly-report', [SuperAdminController::class, 'weeklyReport'])->name('weekly.report');
+    Route::get('/monthly-report', [SuperAdminController::class, 'monthlyReport'])->name('monthly.report');
+    Route::get('/yearly-report', [SuperAdminController::class, 'yearlyReport'])->name('yearly.report');
+});
 
-
-// Weekly sales report
-Route::get('/weekly-report', [SuperAdminController::class, 'weeklyReport'])->name('weekly.report');
-Route::get('/monthly-report', [SuperAdminController::class, 'monthlyReport'])->name('monthly.report');
-Route::get('/yearly-report', [SuperAdminController::class, 'yearlyReport'])->name('yearly.report');
-
-
-
+Route::middleware(['force.payment'])->group(function () {
 //history 
-Route::get('/purchase-history', [ShopController::class, 'history'])->name('purchase.history');
+    Route::get('/purchase-history', [ShopController::class, 'history'])->name('purchase.history');
 
-//mapping
-Route::get('/mapping', [MapingController::class, 'index'])->name('mapping.index');
+    //mapping
+    Route::get('/mapping', [MapingController::class, 'index'])->name('mapping.index');
 
-Route::post('sales/{sale}/failed-delivery', [StaffController::class, 'failedDelivery'])->name('failed-delivery');
-
-
-// Route for  a rating
-Route::get('sales/{sale}/ratings/create', [ShopController::class, 'create'])->name('ratings.create');
-// Route for storing ratings
-Route::post('ratings', [ShopController::class, 'store'])->name('ratings.store');
-// Route for viewing ratings
-Route::get('/shop/viewratings/{item}', [ShopController::class, 'viewRatings'])->name('shop.viewratings');
-//verify
-Route::get('verify/{id}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
+    Route::post('sales/{sale}/failed-delivery', [StaffController::class, 'failedDelivery'])->name('failed-delivery');
+});
+Route::middleware(['force.payment'])->group(function () {
+    // Route for  a rating
+    Route::get('sales/{sale}/ratings/create', [ShopController::class, 'create'])->name('ratings.create');
+    // Route for storing ratings
+    Route::post('ratings', [ShopController::class, 'store'])->name('ratings.store');
+    // Route for viewing ratings
+    Route::get('/shop/viewratings/{item}', [ShopController::class, 'viewRatings'])->name('shop.viewratings');
+    //verify
+    Route::get('verify/{id}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
+});
