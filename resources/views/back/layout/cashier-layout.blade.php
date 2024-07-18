@@ -266,8 +266,13 @@
 							<a class="dropdown-item" href="faq.html"
 								><i class="dw dw-help"></i> Help</a
 							>
-                            <a class="dropdown-item" href="{{ route('manual.logout') }}">
-								<i class="dw dw-logout"></i> Log Out
+							<a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+								<i class="fas fa-sign-out-alt"></i>
+								<span>Logout</span>
+								<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+									@csrf
+								</form>
+								
 							</a>
 
 						</div>

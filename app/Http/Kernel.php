@@ -52,9 +52,10 @@ class Kernel extends HttpKernel
         // Other middleware...
         'auth.manual' => \App\Http\Middleware\AuthenticateManual::class,
         'redirectIfAuthenticated' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'PreventBackHistory' => \App\Http\Middleware\PreventBackHistory::class,
         'force.payment' => \App\Http\Middleware\ForcePaymentMiddleware::class,
         'auth.redirect' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'prevent.back' => \App\Http\Middleware\PreventBackHistory::class,
+      
 
     ];
 
