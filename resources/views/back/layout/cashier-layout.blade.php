@@ -513,7 +513,7 @@
 						</li>
 						<li class="dropdown">
 							<a href="{{ route('staff.fee') }}" class="dropdown-toggle no-arrow">
-								<i class="micon bi bi-cart"></i>
+								<i class="micon bi bi-currency-dollar"></i>
 								<span class="mtext">Delivering Fee</span>
 							</a>
 						</li>
