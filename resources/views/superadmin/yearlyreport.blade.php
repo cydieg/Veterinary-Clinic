@@ -110,9 +110,9 @@
                 @endphp
                 @foreach ($sales as $sale)
                     <tr>
-                        <td>{{ $sale->product->name }}</td>
+                        <td>{{ $sale->product->name ?? 'N/A' }}</td>
                         <td>{{ $sale->quantity }}</td>
-                        <td>₱{{ number_format($sale->product->price, 2) }}</td>
+                        <td>₱{{ number_format($sale->product->price ?? 0, 2) }}</td>
                         <td>₱{{ number_format($sale->total_price, 2) }}</td>
                     </tr>
                     @php

@@ -104,7 +104,7 @@
                         @foreach ($monthData['sales_data'] as $sale)
                             <tr>
                                 <td>{{ $sale->created_at->format('M d, Y') }}</td>
-                                <td>{{ $sale->product->name }}</td>
+                                <td>{{ $sale->product->name ?? 'N/A' }}</td>
                                 <td>{{ $sale->quantity }}</td>
                                 <td>₱{{ number_format($sale->total_price, 2) }}</td>
                             </tr>
