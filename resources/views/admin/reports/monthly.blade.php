@@ -54,9 +54,9 @@
                     <tbody>
                         @foreach($data['sales'] as $sale)
                             <tr>
-                                <td>{{ $sale->product->name }}</td>
+                                <td>{{ $sale->product->name ?? 'N/A' }}</td>
                                 <td>{{ $sale->quantity }}</td>
-                                <td>${{ $sale->product->price }}</td>
+                                <td>${{ $sale->product->price ?? 'N/A' }}</td>
                                 <td>${{ $sale->total_price }}</td>
                             </tr>
                         @endforeach

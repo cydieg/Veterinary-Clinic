@@ -36,8 +36,8 @@
     </style>
 </head>
 <body>
-        <div class="container p-3 my-3 custom-bg-color text-white">Yearly Sales Reports</div>
-        <div class="container">
+    <div class="container p-3 my-3 custom-bg-color text-white">Yearly Sales Reports</div>
+    <div class="container">
         @foreach($yearlySales as $year => $monthlySales)
             <h5>Sales for {{ $year }}</h5>
             @foreach($monthlySales as $month => $data)
@@ -55,9 +55,9 @@
                     <tbody>
                         @foreach($data['sales'] as $sale)
                             <tr>
-                                <td>{{ $sale->product->name }}</td>
+                                <td>{{ $sale->product->name ?? 'N/A' }}</td>
                                 <td>{{ $sale->quantity }}</td>
-                                <td>${{ $sale->product->price }}</td>
+                                <td>${{ $sale->product->price ?? 'N/A' }}</td>
                                 <td>${{ $sale->total_price }}</td>
                             </tr>
                         @endforeach
