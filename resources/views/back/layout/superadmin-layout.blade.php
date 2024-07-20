@@ -230,40 +230,32 @@
 
 		
 				<div class="user-info-dropdown">
-					<div class="dropdown">
-						<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-							<span class="user-icon">
-								<i class="far fa-user"></i>
-							</span>
-							<span class="user-name">{{ auth()->user()->firstName }} {{ auth()->user()->lastName }}</span>
-						</a>
-						<div
-							class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list"
-						>
-							<a class="dropdown-item" href="profile.html"
-								><i class="dw dw-user1"></i> Profile</a
-							>
-							<a class="dropdown-item" href="profile.html"
-								><i class="dw dw-settings2"></i> Setting</a
-							>
-							<a class="dropdown-item" href="faq.html"
-								><i class="dw dw-help"></i> Help</a
-							>
-							<li>
-								<a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-									<i class="fas fa-sign-out-alt"></i>
-									<span>Logout</span>
-								</a>
-								
-								<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-									@csrf
-								</form>
-								
-							</li>
-
-						</div>
-					</div>
-				</div>
+    <div class="dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+            <span class="user-icon">
+                <i class="far fa-user"></i>
+            </span>
+            <span class="user-name">{{ auth()->user()->firstName }} {{ auth()->user()->lastName }}</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+            <a class="dropdown-item" href="profile.html">
+                <i class="dw dw-user1"></i> Profile
+            </a>
+            <a class="dropdown-item" href="profile.html">
+                <i class="dw dw-settings2"></i> Setting
+            </a>
+            <a class="dropdown-item" href="faq.html">
+                <i class="dw dw-help"></i> Help
+            </a>
+            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <i class="dw dw-logout"></i> Logout
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+        </div>
+    </div>
+</div>
 
 			</div>
 		</div>

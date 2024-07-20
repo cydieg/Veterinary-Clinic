@@ -98,7 +98,7 @@
                                 </div>
 
                                 <ul class="main-nav nav navbar-nav" style="margin-right: 80px;">
-                                    <li class="active" style="margin-right: 80px;"><a href="#">Home</a></li>
+                                    <li class="" style="margin-right: 80px;"><a href="#">Home</a></li>
 
                                     <li class="dropdown">
                                         <a href="#" data-toggle="dropdown" style="margin-right: 80px;">Categories <i class="fa fa-angle-down"></i></a>
@@ -177,10 +177,10 @@
                                     <div class="col-md-3 col-xs-6">
                                         <div class="footer">
                                             <h3 class="footer-title">About Us</h3>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.</p>
+                                            <p>Our shop was founded in Calapan City, Oriental Mindoro and has been a beloved part of the community since 2018. </p>
                                             <ul class="footer-links">
-                                                <li><a href="#"><i class="fa fa-map-marker"></i>Camilmil, Calapan City</a></li>
-                                                <li><a href="#"><i class="fa fa-phone"></i>09071112979</a></li>
+                                                <li><a href="#"><i class="fa fa-map-marker"></i>Camilmil, Calapan City and Roxas City</a></li>
+                                                <li><a href="#"><i class="fa fa-phone"></i>63 9166322586</a></li>
                                                 <li><a href="#"><i class="fa fa-envelope"></i>remspetshop@email.com</a></li>
                                             </ul>
                                         </div>

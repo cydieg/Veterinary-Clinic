@@ -46,12 +46,20 @@
             font-weight: bold;
             margin-top: 20px;
         }
+        .back-button {
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
+                <div class="back-button">
+                    <a href="javascript:history.back()" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Back
+                    </a>
+                </div>
                 <div class="card">
                     <div class="card-header">Ratings</div>
                     <div class="card-body">
@@ -115,6 +123,6 @@
             </div>
         </div>
     </div>
-    
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </body>
 </html>

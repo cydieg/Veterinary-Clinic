@@ -45,7 +45,7 @@
           <a class="navbar-brand" href="index.html">
             <img src="back/images/new logo.png" alt="">
             <span>
-              PetShop
+              PETSHOPEE
             </span>
           </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -99,7 +99,7 @@
             </div>
             <div class="detail-box">
               <p>
-                Location
+                Located at Camilmil, Calapan and Roxas City
               </p>
             </div>
           </div>
@@ -111,7 +111,7 @@
             </div>
             <div class="detail-box">
               <p>
-                +02 1234567890
+                +63 9166322586
               </p>
             </div>
           </div>
@@ -123,7 +123,7 @@
             </div>
             <div class="detail-box">
               <p>
-                demo@gmail.com
+                remspetshop@gmail.com
               </p>
             </div>
           </div>
