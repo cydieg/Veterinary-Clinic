@@ -32,6 +32,10 @@
             <input type="text" class="form-control" id="category" name="category" required>
         </div>
         <div class="form-group">
+            <label for="subcategory">Subcategory:</label> <!-- Add this block -->
+            <input type="text" class="form-control" id="subcategory" name="subcategory" required>
+        </div>
+        <div class="form-group">
             <label for="price">Price:</label>
             <input type="number" step="0.01" class="form-control" id="price" name="price" required>
         </div>
@@ -49,5 +53,4 @@
         </div>
     </form>
 </div>
-
 @endsection

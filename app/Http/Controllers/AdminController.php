@@ -335,42 +335,43 @@ class AdminController extends Controller
    // AdminController.php
 
    public function storeinven(Request $request)
-    {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string|max:255',
-            'quantity' => 'required|integer',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'category' => 'required|string|max:255',
-            'price' => 'required|numeric',
-            'expiration' => 'nullable|date',
-            // Remove the 'branch_id' validation rule
-        ]);
+{
+    $validatedData = $request->validate([
+        'name' => 'required|string|max:255',
+        'description' => 'nullable|string|max:255',
+        'quantity' => 'required|integer',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'category' => 'required|string|max:255',
+        'subcategory' => 'required|string|max:255', // Add this line
+        'price' => 'required|numeric',
+        'expiration' => 'nullable|date',
+        // Remove the 'branch_id' validation rule
+    ]);
 
-        // Handle file upload
-        if ($request->hasFile('image')) {
-            $imageName = time().'.'.$request->image->extension();
-            $request->image->move(public_path('images'), $imageName);
-            $validatedData['image'] = $imageName;
-        } else {
-            $validatedData['image'] = null; // Set default value if no image is uploaded
-        }
-
-        // Generate UPC
-        $validatedData['upc'] = rand(100000000000, 999999999999); // Generate a random UPC
-
-        // Set the creation date
-        $validatedData['created_at'] = now();
-
-        // Manually assign the branch_id
-        $validatedData['branch_id'] = auth()->user()->branch_id; // Assuming authenticated user has branch_id
-
-        // Create the product
-        Inventory::create($validatedData);
-
-        return redirect()->route('admin.inventory.indexadmin')->with('success', 'Product added successfully');
-
+    // Handle file upload
+    if ($request->hasFile('image')) {
+        $imageName = time().'.'.$request->image->extension();
+        $request->image->move(public_path('images'), $imageName);
+        $validatedData['image'] = $imageName;
+    } else {
+        $validatedData['image'] = null; // Set default value if no image is uploaded
     }
+
+    // Generate UPC
+    $validatedData['upc'] = rand(100000000000, 999999999999); // Generate a random UPC
+
+    // Set the creation date
+    $validatedData['created_at'] = now();
+
+    // Manually assign the branch_id
+    $validatedData['branch_id'] = auth()->user()->branch_id; // Assuming authenticated user has branch_id
+
+    // Create the product
+    Inventory::create($validatedData);
+
+    return redirect()->route('admin.inventory.indexadmin')->with('success', 'Product added successfully');
+}
+
 
    
 

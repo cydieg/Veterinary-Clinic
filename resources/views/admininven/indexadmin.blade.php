@@ -42,6 +42,7 @@
                                 <th>Quantity</th>
                                 <th>Image</th>
                                 <th>Category</th>
+                                <th>Sub Category</th>
                                 <th>Price</th>
                                 <th>Created At</th>
                                 <th>Branch</th>
@@ -59,6 +60,7 @@
                                     <td><img src="{{ asset('images/' . $item->image) }}" alt="{{ $item->name }}" style="max-width: 100px;"></td>
                                     <td>{{ $item->category }}</td>
                                     <td>&#8369;{{ number_format($item->price, 2) }}</td>
+                                    <td>{{ $item->subcategory }}</td>
                                     <td>{{ $item->created_at }}</td>
                                     <td>{{ $item->branch->name }}</td>
                                     <td>{{ $item->expiration }}</td>
