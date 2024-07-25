@@ -144,6 +144,16 @@
             background-color: white;
             /* Change background color to transparent */
         }
+        .dropdown-submenu {
+        position: relative;
+        }
+
+        .dropdown-submenu .dropdown-menu {
+            top: 0;
+            left: 100%;
+            margin-top: -10px;
+            margin-left: 100px;
+        }
     </style>
 </head>
 
@@ -231,8 +241,15 @@
                         <a href="#" data-toggle="dropdown">Categories <i class="fa fa-angle-down"></i></a>
                         <ul class="dropdown-menu">
                             <li><a href="{{ route('shop.index', ['branch_id' => $encryptedBranchId]) }}">All</a></li>
-                            @foreach ($categories as $category)
-                                <li><a href="{{ route('shop.index', ['branch_id' => $encryptedBranchId, 'category' => $category->category]) }}">{{ $category->category }}</a></li>
+                            @foreach ($categories as $category => $subcategories)
+                                <li class="dropdown-submenu">
+                                    <a href="{{ route('shop.index', ['branch_id' => $encryptedBranchId, 'category' => $category]) }}">{{ $category }}</a>
+                                    <ul class="dropdown-menu">
+                                        @foreach ($subcategories as $subcategory)
+                                            <li><a href="{{ route('shop.index', ['branch_id' => $encryptedBranchId, 'category' => $category, 'subcategory' => $subcategory->subcategory]) }}">{{ $subcategory->subcategory }}</a></li>
+                                        @endforeach
+                                    </ul>
+                                </li>
                             @endforeach
                         </ul>
                     </li>
@@ -480,7 +497,16 @@
             document.getElementById('totalPrice').innerText = totalPrice.toFixed(2);
         }
     </script>
-    
+   <script>
+    $(document).ready(function() {
+        $('.dropdown-submenu').on("mouseenter", function(e) {
+            $(this).children('ul').stop(true, true).slideDown(200);
+        }).on("mouseleave", function(e) {
+            $(this).children('ul').stop(true, true).slideUp(200);
+        });
+    });
+</script>
+
 
 
 
