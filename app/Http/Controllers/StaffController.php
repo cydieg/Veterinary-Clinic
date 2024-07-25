@@ -263,21 +263,37 @@ class StaffController extends Controller
         // Pass total prices to the view
         return view('staff.dailysales', compact('totalPrices'));
     }
-    public function showInventory()
+    public function showInventory(Request $request)
     {
-        // Get the authenticated user's branch ID
         $branchId = auth()->user()->branch_id;
-
+        $category = $request->input('category'); // Get the category from the request
+        $searchTerm = $request->input('search'); // Get the search term from the request
+        
         try {
-            // Fetch inventory items related to the authenticated user's branch
-            $inventory = Inventory::where('branch_id', $branchId)->get();
-
-            return view('staff.store', compact('inventory'));
+            // Fetch inventory items and distinct categories
+            $query = Inventory::where('branch_id', $branchId);
+        
+            if ($category) {
+                $query->where('category', $category);
+            }
+            
+            if ($searchTerm) {
+                $query->where(function ($q) use ($searchTerm) {
+                    $q->where('name', 'like', '%' . $searchTerm . '%')
+                      ->orWhere('description', 'like', '%' . $searchTerm . '%');
+                });
+            }
+        
+            $inventory = $query->get();
+            $categories = Inventory::where('branch_id', $branchId)->pluck('category')->unique();
+        
+            return view('staff.store', compact('inventory', 'categories', 'category', 'searchTerm'));
         } catch (\Exception $e) {
-            // Log or handle the exception
             return back()->with('error', 'An error occurred while retrieving inventory.');
         }
     }
+    
+
     public function storePurchase(Request $request)
     {
         try {
@@ -385,7 +401,7 @@ class StaffController extends Controller
         // Redirect back or to a success page
         return redirect()->back()->with('success', 'Fee updated successfully.');
     }
-
+    
 
 
 

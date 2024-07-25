@@ -127,13 +127,15 @@ Route::middleware(['prevent.back'])->group(function () {
 
     // Delivered product routes
     Route::get('/staff/delivering-status', [StaffController::class, 'deliveringStatus'])->name('staff.deliveringStatus');
-    Route::post('/sales/{id}/mark-as-delivered', [StaffController::class, 'markAsDelivered'])->name('mark-as-delivered');
+    Route::put('/sales/{id}/mark-as-delivered', [StaffController::class, 'markAsDelivered'])->name('mark-as-delivered');
     Route::get('/staff/daily-sales', [StaffController::class, 'dailySales'])->name('staff.dailySales');
 
     // Store purchase routes for staff
     Route::get('/store/purchase', [StaffController::class, 'showInventory'])->name('store.purchase');
     Route::post('/store/purchase', [StaffController::class, 'storePurchase'])->name('staff.storePurchase');
     Route::get('/staff/store-purchase', [StaffController::class, 'storePurchase'])->name('staff.storePurchase.get');
+    
+
 });
 
 //Landing_Page
