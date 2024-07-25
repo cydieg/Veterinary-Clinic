@@ -15,11 +15,12 @@ class Inventory extends Model
         'quantity',
         'image',
         'category',
+        'subcategory', 
         'price',
         'upc',
         'created_at',
         'expiration',
-        'branch_id', // Add the foreign key for the clinic
+        'branch_id',
     ];
 
     public function branch()

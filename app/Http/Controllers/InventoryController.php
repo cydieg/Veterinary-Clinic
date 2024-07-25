@@ -35,9 +35,8 @@ class InventoryController extends Controller
 }
     
 
-    public function store(Request $request)
+public function store(Request $request)
 {
-    // Validation rules for the form inputs
     $request->validate([
         // Your validation rules...
     ]);
@@ -47,15 +46,13 @@ class InventoryController extends Controller
         $imageName = time().'.'.$request->image->extension();
         $request->image->move(public_path('images'), $imageName);
     } else {
-        $imageName = null; // Set default value if no image is uploaded
+        $imageName = null;
     }
 
-    // Generate UPC code (using timestamp and inventory ID)
+    // Generate UPC code
     $upc = time() . Inventory::max('id');
 
-    // Create new inventory item...
-    
-    // Create audit record for addition of the inventory item
+    // Create new inventory item
     $inventory = Inventory::create([
         'upc' => $upc,
         'name' => $request->name,
@@ -63,6 +60,7 @@ class InventoryController extends Controller
         'quantity' => $request->quantity,
         'image' => $imageName,
         'category' => $request->category,
+        'subcategory' => $request->subcategory,
         'price' => $request->price,
         'created_at' => $request->created_at,
         'expiration' => $request->expiration,
@@ -74,9 +72,9 @@ class InventoryController extends Controller
         'upc' => $upc,
         'name' => $request->name,
         'description' => $request->description,
-        'old_quantity' => 0, // Initial quantity is 0
+        'old_quantity' => 0,
         'quantity' => $request->quantity,
-        'type' => 'inbound', // Type is inbound for addition
+        'type' => 'inbound',
     ]);
 
     return redirect()->route('inventory.index')->with('success', 'Product added successfully.');
@@ -151,30 +149,27 @@ class InventoryController extends Controller
         return view('inventory.edit', compact('inventoryItem', 'branches'));
     }
     public function update(Request $request, $id)
-    {
-        // Find the inventory item by ID
-        $inventory = Inventory::findOrFail($id);
+{
+    $inventory = Inventory::findOrFail($id);
 
-        // Validate the request data
-        $request->validate([
-            // Define your validation rules here...
-        ]);
+    $request->validate([
+        // Your validation rules...
+    ]);
 
-        // Update the inventory item with the request data
-        $inventory->update([
-            'name' => $request->name,
-            'description' => $request->description,
-            'quantity' => $request->quantity,
-            'category' => $request->category,
-            'price' => $request->price,
-            'created_at' => $request->created_at,
-            'expiration' => $request->expiration,
-            'branch_id' => $request->branch_id
-        ]);
+    $inventory->update([
+        'name' => $request->name,
+        'description' => $request->description,
+        'quantity' => $request->quantity,
+        'category' => $request->category,
+        'subcategory' => $request->subcategory,
+        'price' => $request->price,
+        'created_at' => $request->created_at,
+        'expiration' => $request->expiration,
+        'branch_id' => $request->branch_id
+    ]);
 
-        // Redirect back with a success message
-        return redirect()->route('inventory.index')->with('success', 'Product updated successfully.');
-    }
+    return redirect()->route('inventory.index')->with('success', 'Product updated successfully.');
+}
 
 
 

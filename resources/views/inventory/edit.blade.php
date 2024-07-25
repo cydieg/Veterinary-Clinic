@@ -21,7 +21,7 @@
 </head>
 <body>
     <div class="container p-3 my-3 custom-bg-color text-white">Edit Inventory Item</div>
-        <div class="container">
+    <div class="container">
         <!-- Edit form for inventory item -->
         <form method="POST" action="{{ route('inventory.update', ['id' => $inventoryItem->id]) }}" enctype="multipart/form-data">
             @csrf
@@ -57,6 +57,12 @@
                     <option value="Other" {{ $inventoryItem->category == 'Other' ? 'selected' : '' }}>Other</option>
                 </select>
             </div>
+
+            <div class="form-group">
+                <label for="subcategory">Subcategory:</label>
+                <input type="text" class="form-control" id="subcategory" name="subcategory" value="{{ $inventoryItem->subcategory }}" required>
+            </div>
+
             <div class="form-group">
                 <label for="created_at">Created At:</label>
                 <input type="datetime-local" class="form-control" id="created_at" name="created_at" value="{{ \Carbon\Carbon::parse($inventoryItem->created_at)->format('Y-m-d\TH:i') }}" required>
@@ -66,12 +72,12 @@
                 <label for="expiration">Expiration:</label>
                 <input type="date" class="form-control" id="expiration" name="expiration" value="{{ $inventoryItem->expiration }}" required>
             </div>
-            
     
             <div class="form-group">
                 <label for="price">Price:</label>
                 <input type="number" class="form-control" id="price" name="price" value="{{ $inventoryItem->price }}" required>
             </div>
+
             <div class="form-group">
                 <label for="branch">Branch:</label>
                 <select class="form-control" id="branch" name="branch_id" required>
@@ -80,14 +86,13 @@
                     @endforeach
                 </select>
             </div>
-            
-    
-            <!-- Add more fields as needed -->
-        <div class="row">
-            <div class="col-md-12 mb-3 text-right">
-                <button type="submit" class="btn btn-primary">Update</button>
+
+            <div class="row">
+                <div class="col-md-12 mb-3 text-right">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
 
     <!-- Bootstrap JS and jQuery -->

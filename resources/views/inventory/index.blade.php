@@ -63,6 +63,7 @@
                             <th>Quantity</th>
                             <th>Image</th>
                             <th>Category</th>
+                            <th>Sub Category</th>
                             <th>Price</th>
                             <th>Created At</th>
                             <th>Branch</th>
@@ -82,6 +83,7 @@
                                         style="max-width: 100px;"></td>
                                 <td>{{ $item->category }}</td>
                                 <td>&#8369;{{ number_format($item->price, 2) }}</td>
+                                <td>{{ $item->subcategory }}</td>
                                 <td>{{ $item->created_at }}</td>
                                 <td>{{ $item->branch->name }}</td>
                                 <td>{{ $item->expiration }}</td>
@@ -175,6 +177,10 @@
                                         <option value="Bird">Bird</option>
                                         <option value="Other">Other</option>
                                     </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="subcategory">Subcategory</label>
+                                    <input type="text" class="form-control" id="subcategory" name="subcategory" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="price">Price</label>
