@@ -4,26 +4,22 @@
     <style>
         /* Additional styling */
         .table {
-            margin-top: 20px; /* Add margin to the top of the table */
+            margin-top: 20px;
         }
         .table th,
         .table td {
-            vertical-align: middle; /* Align content vertically in cells */
+            vertical-align: middle;
         }
         .action-buttons button {
-            margin-right: 5px; /* Add some spacing between buttons */
-            font-size: 12px; /* Adjust button font size */
+            margin-right: 5px;
+            font-size: 12px;
         }
         .form-group {
-            margin-bottom: 20px; /* Add some spacing between form groups */
+            margin-bottom: 20px;
         }
         .custom-bg-color {
             background-color: #BC7FCD;
             font-size: 20px;
-        }
-        .action-buttons button {
-            margin-right: 5px; /* Add some spacing between buttons */
-            font-size: 12px; /* Adjust button font size */
         }
     </style>
     <div class="container p-3 my-3 custom-bg-color text-white">Product Sales</div>
@@ -34,11 +30,12 @@
                 <th>Contact</th>
                 <th>Address</th>
                 <th>Product</th>
+                <th>Category</th> <!-- Combined category and subcategory -->
                 <th>Quantity</th>
                 <th>Courier</th>
                 <th>Branch</th>
                 <th>Total Price</th>
-                <th>Delivery Fee</th> <!-- Add delivery fee column header -->
+                <th>Delivery Fee</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -49,11 +46,18 @@
                     <td>{{ $sale->user->contact_number }}</td>
                     <td>{{ $sale->user->address }}</td>
                     <td>{{ $sale->product->name }}</td>
+                    <td>{{ $sale->product->category }} ({{ $sale->product->subcategory }})</td> <!-- Combined category and subcategory -->
                     <td>{{ $sale->quantity }}</td>
                     <td>{{ $sale->courier }}</td>
                     <td>{{ $sale->branch->name }}</td>
                     <td>₱{{ $sale->total_price }}</td>
-                    <td>₱{{ $sale->fee ? $sale->fee->delivering_fee : 'N/A' }}</td> <!-- Display the delivery fee -->
+                    <td>
+                        @if(trim(strtolower($sale->courier)) === 'pick up')
+                            No Fees
+                        @else
+                            ₱{{ $sale->fee ? $sale->fee->delivering_fee : 'N/A' }}
+                        @endif
+                    </td>
                     <td class="action-buttons">
                         <form action="{{ route('deliver.sale', $sale->id) }}" method="POST">
                             @csrf

@@ -135,19 +135,20 @@ class StaffController extends Controller
         // Get the authenticated user's branch ID
         $branchId = auth()->user()->branch_id;
     
-        // Fetch sales related to the authenticated user's branch
-        $sales = Sale::with(['user', 'product', 'branch']) // Removed 'fee' to avoid unnecessary eager loading
+        // Fetch sales related to the authenticated user's branch with category and subcategory
+        $sales = Sale::with(['user', 'product', 'product.branch']) // Eager load product and its branch
             ->whereHas('branch', function ($query) use ($branchId) {
                 $query->where('id', $branchId);
             })
-            ->where('status', '!=', 'delivered') // Exclude 'delivered' sales
-            ->where('status', '!=', 'delivering') // Exclude 'delivering' sales
-            ->where('status', '!=', 'canceled') // Exclude 'canceled' sales
+            ->where('status', '!=', 'delivered')
+            ->where('status', '!=', 'delivering')
+            ->where('status', '!=', 'canceled')
             ->get();
     
         // Pass sales to the view
         return view('staff.productorder', compact('sales'));
     }
+    
     
     //ito na
     public function deliverSale(Sale $sale, Request $request)
