@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 19, 2024 at 08:40 AM
+-- Generation Time: Jul 25, 2024 at 12:38 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -75,8 +75,16 @@ CREATE TABLE `audits` (
 --
 
 INSERT INTO `audits` (`id`, `inventory_id`, `upc`, `name`, `description`, `old_quantity`, `quantity`, `type`, `created_at`, `updated_at`) VALUES
-(1, 1, '1716104819', 'Pedigree Per Kilo', 'Dog Food', 0, 500, 'inbound', '2024-05-18 23:46:59', '2024-05-18 23:46:59'),
-(2, 1, '1716104819', 'Pedigree Per Kilo', 'Dog Food', 500, 480, 'sales', '2024-05-18 23:52:02', '2024-05-18 23:52:02');
+(3, 2, '1720698925', 'Dog Food', 'Dog Food', 0, 500, 'inbound', '2024-07-11 03:55:25', '2024-07-11 03:55:25'),
+(4, 2, '1720698925', 'Dog Food', 'Dog Food', 500, 499, 'sales', '2024-07-11 04:17:28', '2024-07-11 04:17:28'),
+(5, 3, '17208470072', 'Kennel Cough', 'Medicine for cough', 0, 1000, 'inbound', '2024-07-12 21:03:27', '2024-07-12 21:03:27'),
+(6, 4, '17208481563', 'Dog Food', 'Per Killo Price', 0, 1000, 'inbound', '2024-07-12 21:22:36', '2024-07-12 21:22:36'),
+(7, 2, '1720698925', 'Dog Food', 'Dog Food', 499, 478, 'sales', '2024-07-18 00:47:04', '2024-07-18 00:47:04'),
+(8, 5, '17218988754', 'test', 'test', 0, 1000, 'inbound', '2024-07-25 01:14:35', '2024-07-25 01:14:35'),
+(9, 2, '1720698925', 'Dog Food', 'Dog Food', 478, 1, 'inbound', '2024-07-25 01:18:47', '2024-07-25 01:18:47'),
+(10, 5, '17218988754', 'test', 'test', 1000, 990, 'sales', '2024-07-25 02:53:30', '2024-07-25 02:53:30'),
+(11, 3, '17208470072', 'Kennel Cough', 'Medicine for cough', 1000, 979, 'sales', '2024-07-25 02:53:44', '2024-07-25 02:53:44'),
+(12, 5, '17218988754', 'test', 'test', 990, 969, 'sales', '2024-07-25 02:54:28', '2024-07-25 02:54:28');
 
 -- --------------------------------------------------------
 
@@ -101,7 +109,8 @@ CREATE TABLE `branches` (
 
 INSERT INTO `branches` (`id`, `name`, `location`, `contact`, `status`, `created_at`, `updated_at`, `user_id`) VALUES
 (1, 'Rem\'s Petshop Calapan', 'Test', '09305115251', 'Active', '2024-05-19 07:41:37', '2024-05-19 07:41:37', 1),
-(2, 'Rem\'s Petshop Roxas', 'Test', '09535231234', 'Active', '2024-05-19 07:41:37', '2024-05-19 07:41:37', 1);
+(2, 'Rem\'s Petshop Roxas', 'Test', '09535231234', 'Active', '2024-05-19 07:41:37', '2024-05-19 07:41:37', 1),
+(3, 'Test', 'Bongabong', '09305115251', 'Active', '2024-07-18 00:29:33', '2024-07-18 00:29:33', 1);
 
 -- --------------------------------------------------------
 
@@ -172,6 +181,7 @@ CREATE TABLE `inventories` (
   `quantity` int NOT NULL DEFAULT '0',
   `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `category` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `subcategory` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `price` decimal(10,2) DEFAULT NULL,
   `upc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `expiration` timestamp NULL DEFAULT NULL,
@@ -184,8 +194,11 @@ CREATE TABLE `inventories` (
 -- Dumping data for table `inventories`
 --
 
-INSERT INTO `inventories` (`id`, `name`, `description`, `quantity`, `image`, `category`, `price`, `upc`, `expiration`, `created_at`, `updated_at`, `branch_id`) VALUES
-(1, 'Pedigree Per Kilo', 'Dog Food', 480, '1716104819.png', 'Dog', 100.00, '1716104819', '2024-11-19 16:00:00', '2024-05-19 07:46:00', '2024-05-18 23:52:02', 1);
+INSERT INTO `inventories` (`id`, `name`, `description`, `quantity`, `image`, `category`, `subcategory`, `price`, `upc`, `expiration`, `created_at`, `updated_at`, `branch_id`) VALUES
+(2, 'Dog Food', 'Dog Food', 476, '1720698925.jpg', 'Dog', 'Dry', 300.00, '1720698925', '2024-10-25 16:00:00', '2024-07-11 11:55:00', '2024-07-25 03:54:18', 1),
+(3, 'Kennel Cough', 'Medicine for cough', 979, '1720847007.jpg', 'Cat', 'Dry', 100.00, '17208470072', '2025-03-07 16:00:00', '2024-07-13 05:03:00', '2024-07-25 02:53:44', 1),
+(4, 'Dog Food', 'Per Killo Price', 1000, '1720848156.jpg', 'Dog', 'Wet', 200.00, '17208481563', '2025-03-07 16:00:00', '2024-07-25 05:22:00', '2024-07-25 01:18:25', 2),
+(5, 'test', 'test', 969, '1721898875.png', 'Other', 'Wet', 20.00, '17218988754', '2024-08-05 16:00:00', '2024-07-25 09:14:00', '2024-07-25 02:54:28', 1);
 
 -- --------------------------------------------------------
 
@@ -252,7 +265,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (46, '2024_05_04_132937_add_price_to_pet_hotels_table', 45),
 (47, '2024_05_05_104713_add_courier_to_carts_table', 46),
 (48, '2024_05_05_125637_add_courier_to_sales_table', 47),
-(49, '2024_05_08_073429_create_fees_table', 48);
+(49, '2024_05_08_073429_create_fees_table', 48),
+(50, '2024_07_25_085742_add_subcategory_to_inventories_table', 49);
 
 -- --------------------------------------------------------
 
@@ -368,7 +382,14 @@ CREATE TABLE `sales` (
 --
 
 INSERT INTO `sales` (`id`, `user_id`, `product_id`, `quantity`, `total_price`, `branch_id`, `courier`, `created_at`, `updated_at`, `status`) VALUES
-(1, 2, 1, 20, 2000.00, 1, 'hatid', '2024-05-18 23:50:39', '2024-05-18 23:52:02', 'delivered');
+(1, 2, 1, 20, 2000.00, 1, 'hatid', '2024-05-18 23:50:39', '2024-05-18 23:52:02', 'delivered'),
+(2, 2, 2, 1, 300.00, 1, 'hatid', '2024-07-11 04:16:41', '2024-07-11 04:17:28', 'delivered'),
+(3, 2, 2, 21, 6300.00, 1, 'hatid', '2024-07-18 00:45:57', '2024-07-18 00:47:04', 'delivered'),
+(4, 2, 5, 10, 200.00, 1, 'Pick up', '2024-07-25 02:14:59', '2024-07-25 02:53:30', 'delivered'),
+(5, 2, 5, 21, 420.00, 1, 'Pick up', '2024-07-25 02:24:11', '2024-07-25 02:54:28', 'delivered'),
+(6, 2, 3, 21, 2100.00, 1, 'hatid', '2024-07-25 02:48:29', '2024-07-25 02:53:44', 'delivered'),
+(7, 3, 2, 1, 300.00, 1, NULL, '2024-07-25 03:52:52', '2024-07-25 03:52:52', 'delivered'),
+(8, 3, 2, 2, 600.00, 1, NULL, '2024-07-25 03:54:18', '2024-07-25 03:54:18', 'delivered');
 
 -- --------------------------------------------------------
 
@@ -406,7 +427,8 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `username`, `firstName`, `lastName`, `middleName`, `region`, `province`, `city`, `barangay`, `address`, `gender`, `age`, `email`, `password`, `status`, `created_at`, `updated_at`, `branch_id`, `contact_number`, `role`) VALUES
 (1, 'Rem\'s Petshop', 'Raymond', 'Mendoza', 'Arguelles', 'MIMAROPA', 'Oriental Mindoro', 'City Of Calapan (Capital)', 'Putingtubig', 'MIMAROPA, Oriental Mindoro, City Of Calapan (Capital), Putingtubig', 'male', 30, 'remspetshop@gmail.com', '$2y$12$13UMyjp0MHTS06Mc60Y.CejPa.S6UOUxTMdYcYUXjVneE0qQHBu9m', 'verified', '2024-05-18 23:44:12', '2024-05-19 07:44:47', 1, '09304212312', 'super_admin'),
 (2, 'Sett', 'Jon Wendell', 'Cabrera', 'Lontoc', 'MIMAROPA', 'Oriental Mindoro', 'City Of Calapan (Capital)', 'Balite', 'MIMAROPA, Oriental Mindoro, City Of Calapan (Capital), Balite', 'male', 21, 'nopona21@gmail.com', '$2y$12$zc11QRCXU7G3i5Uoq0Qbf.e.ifBm5ruqIQMOuq.1fkehz7wFwRPGO', 'verified', '2024-05-18 23:47:43', '2024-05-19 07:48:10', NULL, '09817523253', 'patient'),
-(3, 'staff', 'staff', 'staff', 'staff', 'Region V (Bicol Region)', 'Camarines Sur', 'Gainza', 'Loob', '05, 0517, 051713, 051713004', 'male', 25, 'staffcal@gmail.com', '$2y$12$sQALQMB0J3npoLoae3Pqse0tyElgJEfmtMoF8snrGtXrhkju/ypea', 'verified', '2024-05-18 23:49:41', '2024-05-18 23:49:41', 1, '09305321232', 'staff');
+(3, 'staff', 'staff', 'staff', 'staff', 'Region V (Bicol Region)', 'Camarines Sur', 'Gainza', 'Loob', '05, 0517, 051713, 051713004', 'male', 25, 'staffcal@gmail.com', '$2y$12$sQALQMB0J3npoLoae3Pqse0tyElgJEfmtMoF8snrGtXrhkju/ypea', 'verified', '2024-05-18 23:49:41', '2024-05-18 23:49:41', 1, '09305321232', 'staff'),
+(4, 'admin', 'admin', 'admin', 'admin', 'MIMAROPA', 'Oriental Mindoro', 'City Of Calapan (Capital)', 'Balite', '17, 1752, 175205, 175205002', 'female', 21, 'admincal@gmail.com', '$2y$12$bRhxasT0egyMMB9BUftDFOth6XCqDHIZofMz72.CBkD5YKodToFNi', 'verified', '2024-07-19 22:01:08', '2024-07-19 22:01:08', 1, '09093212312', 'admin');
 
 --
 -- Indexes for dumped tables
@@ -525,19 +547,19 @@ ALTER TABLE `appointments`
 -- AUTO_INCREMENT for table `audits`
 --
 ALTER TABLE `audits`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `branches`
 --
 ALTER TABLE `branches`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=157;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -555,13 +577,13 @@ ALTER TABLE `fees`
 -- AUTO_INCREMENT for table `inventories`
 --
 ALTER TABLE `inventories`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -585,13 +607,13 @@ ALTER TABLE `ratings`
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
